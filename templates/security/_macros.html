@@ -1,0 +1,33 @@
+<!-- render inout field -->
+{% macro render_field(field) %}
+    <div class="wrap-input100 validate-input m-b-16">
+        {{ field(**kwargs)|safe }}
+
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="fielderr">
+                    <span class="err">{{ error }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+<!-- render select field -->
+{% macro render_select_field(field, placeholder='Select...', label='Select an option below') %}
+    <div class="form-group">
+        <label class="text-semibold">{{ label }}</label>
+        <!-- Hey this is wonky but these select fields have to be coded this way in order to loop through each option -->
+        <select data-placeholder="{{ placeholder }}" class="select-size-xs" name="{{ field.name }}">
+            <option></option>
+            {% for choice in field.choices %}
+                <option value="{{ choice[0] }}">{{ choice[1] }}</option>
+                {% endfor %}
+        </select>
+        {% if field.errors %}
+        {% for error in field.errors %}
+        <span class="help-block text-danger"><i class="icon-cancel-circle2 position-left"></i>{{ error }}</span>
+        {% endfor %}
+    {% endif %}
+    </div>
+{% endmacro %}

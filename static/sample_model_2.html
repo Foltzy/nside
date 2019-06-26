@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+
+<head>
+<title>sample_model_2</title>
+
+<!-- Use these three includes on your pages under <head> section -->
+
+<link type="text/css" rel="stylesheet" href="imagerotator/html/css/basic.css"/>
+<script type="text/javascript" src="imagerotator/html/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="imagerotator/html/js/imagerotator.js"></script>
+
+
+<style type= "text/css">
+
+html, body
+{
+    padding: 0;
+    margin: 0;
+}
+
+/*-- Use .content CSS to customize size, position, border, etc of your 360 views --*/
+
+.content
+{
+    margin-bottom: 10px;
+    width: 448px;
+    height: 448px;
+    /* border: 1px dotted #cecfd2; */
+}
+
+</style>
+
+
+<!-- Copy this script block and paste under your page <head> section or somewhere inside your page <body>
+     Replace path to configFileURL to point to another 360 view you would like to show on the same page.
+     You can add as many 360 views as needed using the sample below.
+-->
+
+<script language="javascript" type="text/javascript">
+
+jQuery(document).ready(function(){
+
+    jQuery('#wr360PlayerId1').rotator({
+        licenseFileURL: 'license.lic',
+		configFileURL: '/static/360_assets/sample_model_2/sample_model_2.xml',
+		graphicsPath: '/static/img/basic',
+        zIndexLayersOn: false,
+        googleEventTracking: false,
+    });
+
+    // jQuery('#wr360PlayerId2').rotator({
+    //     licenseFileURL: 'license.lic',
+	// 	configFileURL: '360_assets/sample_model_2/sample_model_2.xml',
+	// 	graphicsPath: 'imagerotator/html/img/basic',
+    //     zIndexLayersOn: false,
+    //     googleEventTracking: false,
+    // });
+
+    /* Uncomment to add another 360 view
+    jQuery('#wr360PlayerId3').rotator({
+        licenseFileURL: 'license.lic',
+		configFileURL: '360_assets/sample_model_2/sample_model_2.xml',
+		graphicsPath: 'imagerotator/html/img/basic',
+        zIndexLayersOn: false,
+        googleEventTracking: false,
+    });
+    */
+});
+
+</script>
+
+<!-- End of script copy / paste -->
+
+
+</head>
+
+
+
+<body>
+
+    <!-- <p style='color:red;'>This template requires PRO license</p> -->
+    <!-- Just copy / paste the content divs below onto your page and define content CSS styles as needed -->
+
+    <!-- <div class="content"> -->
+
+        <div id="wr360PlayerId1" class="wr360_player" style="background-color:#FFFFFF;">
+        </div>
+
+    <!-- </div> -->
+
+    <!-- <div class="content">
+
+        <div id="wr360PlayerId2" class="wr360_player" style="background-color:#FFFFFF;">
+        </div>
+
+    </div> -->
+
+    <!-- Uncomment to add nother 360 view 
+    <div class="content">
+
+        <div id="wr360PlayerId3" class="wr360_player" style="background:#FFFFFF;">
+        </div>
+
+    </div>
+    -->
+
+
+</body>
+
+</html>

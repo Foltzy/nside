@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block base_nav %}
+    <!-- navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" data-page="nav">
+        <a class="navbar-brand navbar-brand-login js-scroll-trigger" href="{{ url_for('index') }}">VIRTUALITY</a>
+        <span class="virtuality-dorm">Dorm</span>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+    <!-- end nav -->
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+    <!-- login section -->
+    <section id="login" class="login-section text-center">
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100 p-l-30 p-r-30 p-t-40 p-b-20">
+                    <div class="icon-object text-muted">
+                        <img class="about-svg" src="{{ url_for('static', filename='img/svg/cube.svg') }}">
+                    </div>
+                    <div class="icon-object text-muted">
+                        <img class="about-svg" src="{{ url_for('static', filename='img/svg/3d-printing.svg') }}">
+                    </div>
+                    <span class="login100-form-title p-b-5">
+                        Welcome to Virtuality
+                    </span>
+                    <span class="login100-form-subtitle p-b-20">
+                        Select an option below
+                    </span>
+
+                    {% if current_user.is_authenticated %}
+                        <div class="text-up p-b-10">
+                            <a href="{{ url_for('display') }}">
+                                <button class="index100-form-btn">Room Display</button>
+                            </a>
+                        </div>
+                        <div class="text-up p-b-25">
+                            <a href="{{ url_for('logout') }}">
+                                <button class="index100-form-btn">Logout</button>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="text-up p-b-10">
+                            <a href="{{ url_for('login') }}">
+                                <button class="index100-form-btn">Login</button>
+                            </a>
+                        </div>
+                        <div class="text-up p-b-25">
+                            <a href="{{ url_for('signup') }}">
+                                <button class="index100-form-btn">Sign up</button>
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    <div class="content-divider">
+                        <span class="fs-12">
+                            What is Virtuality?
+                        </span>
+                    </div>
+
+                    <div class="index-desc">
+                        <span class="fs-12">
+                            Incoming college freshman need to plan ahead. These dedicated, passionate students already have a lot on their plate, and planning for dorm room living is one of these challenges. 
+                            <br>Most universities don’t have detailed dorm room layouts, leading to confusion and misinformation about how much space is provided and what students actually need to bring along with them. Virtuality can fix this problem.
+                            <br><a href="{{ url_for('about') }}"><span class="see-more">Read more about virtuality...</span></a>
+                        </span>
+                    </div>
+
+                    <div class="index-footer">
+                        <span class="fs-12">
+                            <i><span class="text-bold">SEE</span> your space.</i>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end login section -->
+{% endblock %}

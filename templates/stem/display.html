@@ -1,0 +1,497 @@
+{% extends "base.html" %}
+
+{% block title %} Compton 105 {% endblock %}
+
+{% block added_nav_links %}
+  {% if linked_room != None %}
+    <a href="{{ url_for('edit_link', residentof_id=linked_room.id) }}">Update/Change room link</a> 
+  {% else %}
+    <a href="{{ url_for('new_link') }}">Add room link</a> 
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+    <!-- header -->
+    <header class="masthead" id="display">
+
+      <div class="current_userid" value="{{ current_user.id }}" style="display: none;"></div>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="ribbon-flash left_ribbon-flash">
+              <p class="text-white p-college">{{ message }}</p>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      
+      <!-- viewing -->
+      <div class="ribbon left_ribbon" id="ribbon_viewing">
+        {% if linked_room != None %}
+          <p class="text-white p-viewing">Viewing:</p>
+          <p class="text-white p-college">College: <span class="p-college-name">{{ linked_room.room.building.college.name }}</span></p>
+          <p class="text-white p-building">Building: <span class="p-building-name">{{ linked_room.room.building.name }}</span></p>
+          <p class="text-white p-room">Room number: <span class="p-room-number">{{ linked_room.room.room_number }}</span></p>
+        {% else %}
+          <p class="text-white p-viewing">Viewing:</p>
+          <p class="text-white p-college">College: <span class="p-college-name"></span></p>
+          <p class="text-white p-building">Building: <span class="p-building-name"></span></p>
+          <p class="text-white p-room">Room number: <span class="p-room-number"></span></p>
+        {% endif %}
+      </div>
+
+      <div class="left_ribbon" id="ribbon_room_select">
+        <p class="text-white p-room-header">Select room to view:</p>
+
+          <select class="option-value single-select" id="colleges" name="colleges">
+              <option disabled selected>College</option>
+              {% for college in colleges %}
+                <option key="{{ college.name }}" value="{{ college.id }}">{{ college.name }}</option>
+              {% endfor %}
+          </select>
+          <select class="single-select" id="buildings" name="buildings">
+              <option class="option-placeholder" disabled selected>Building</option>
+              {% for building in buildings %}
+                <option class="option-value" key="{{ building.name }}" value="{{ building.id }}">{{ building.name }}</option>
+              {% endfor %}
+          </select>
+          <select class="single-select" id="rooms" name="rooms">
+              <option class="option-placeholder" disabled selected>Room</option>
+              {% for room in rooms %}
+                <option class="option-value" data-filterkey="{{ room }}" value="{{ room.id }}">{{ room.room_number }}</option>
+              {% endfor %}
+          </select>
+          <img class="hasTooltip icon-qtip_display" src="{{ url_for('static', filename='img/svg/info.svg') }}">
+          <div class="hidden">
+            <span>Note: Upon selecting a room the room view will update</span>
+          </div>
+          <!-- <button class="btn btn-primary room_select-btn" type="submit">
+            Submit
+          </button> -->
+      </div>
+
+      <div class="container d-flex h-100">
+        <div class="mx-auto text-center room-display"> 
+          <div id="content">
+            {% if linked_room == None %}
+              <div class="hide no_link text-center">
+                <div class="text-muted">
+                    <img class="about-svg" src="{{ url_for('static', filename='img/svg/broken-link.svg') }}">
+                </div>
+                <br>You are not linked to a room.
+              </div>
+              <div class="hide text-muted text-center">Select a college, building and room on the left to view that room here.</div>
+              <div class="hide want_link text-muted text-center">Want your room to automatically show up? Link your account to a room <a href="{{ url_for('new_link') }}">here</a></div>
+              <div id="wr360PlayerId" class="wr360_player" style="background-color:#FFFFFF; display: none;">
+              </div>
+            {% else %}
+              <div id="wr360PlayerId" class="wr360_player" style="background-color:#FFFFFF;">
+              </div>
+            {% endif %}
+          </div> 
+        </div>
+      </div>
+      {% if linked_room != None %}
+        <div class="arrow-down"></div>
+      {% endif %}
+    </header>
+    <!-- end header -->
+
+    {% if linked_room == None %}
+      <script>
+        $(document).ready(function() {
+          function hide_room_summary() {
+              $('#about').hide();
+              console.log('about hidden');
+          }
+          hide_room_summary();
+        });
+      </script>
+    {% else %}
+      <script>
+        $(document).ready(function() {
+          function show_room_summary() {
+              $('#about').show();
+              console.log('about showing');
+          }
+          show_room_summary();
+        });
+      </script>
+    {% endif %}
+      <!-- about section -->
+      <section id="about" class="about-section text-center contact-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h2 class="text-white mb-4">Room Summary</h2>
+              <p class="text-white-50"><span class="r-desc">...</span></p>
+            </div>
+          </div>
+
+          <!-- begin images + features -->
+          <div class="row no-gutters mb-4 mb-lg-5">
+            <div class="offset-md-6 col-md-6">
+              <div class="card card-before-features">
+                <div class="card-body">
+                  <div class="text-uppercase m-1"><span class="r-name">...</span></div>
+                  <div class="text-black-50 features-subtitle">Address: <span class="r-addr">...</span></div>
+                  <div class="text-black-50 features-subtitle"><a class="r-site" href="https://www.wooster.edu" target="_blank">College website</a></div>
+                  <div class="text-black-50 features-subtitle"><a class="r-floorplan" target="_blank" href="https://www.wooster.edu/_media/files/students/reslife/residence-halls/compton.pdf">Building floor plan</a></div>
+                <!-- possibly add hot links to cards below -->
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="col-xl-6 col-lg-5 row-image">
+              <img class="img-display-main mb-3 mb-lg-0" src="{{ url_for('static', filename='img/br_img1.png') }}" alt="Error loading image.">
+              <div class="row ext-imgs">
+                <div class="col-md-4 img-dis-col">
+                  <img class="img-display mb-3" src="{{ url_for('static', filename='img/br_img2.png') }}" alt="Error loading image.">
+                </div>
+                <div class="col-md-4 img-dis-col">
+                  <img class="img-display mb-3" src="{{ url_for('static', filename='img/br_img3.png') }}" alt="Error loading image.">
+                </div>
+                <div class="col-md-4 img-dis-col">
+                  <img class="img-display mb-3" src="{{ url_for('static', filename='img/br_img4.png') }}" alt="Error loading image.">
+                </div>
+              </div>
+            </div> -->
+
+            <div class="col-xl-6 col-lg-5 row-image">
+              <!-- Slideshow container -->
+              <div class="slideshow-container">
+
+                <!-- Full-width images with number and caption text -->
+                <div class="mySlides fade">
+                  <div class="numbertext">1 / 5</div>
+                  <img class="img-display-main r-img1" src="{{ url_for('static', filename='img/br_img1.png') }}" style="width:100%">
+                  <!-- <div class="text">Caption Text</div> -->
+                </div>
+              
+                <div class="mySlides fade">
+                  <div class="numbertext">2 / 5</div>
+                  <img class="img-display-main r-img2" src="{{ url_for('static', filename='img/br_img2.png') }}" style="width:100%">
+                  <!-- <div class="text">Caption Two</div> -->
+                </div>
+              
+                <div class="mySlides fade">
+                  <div class="numbertext">3 / 5</div>
+                  <img class="img-display-main r-img3" src="{{ url_for('static', filename='img/br_img3.png') }}" style="width:100%">
+                  <!-- <div class="text">Caption Three</div> -->
+                </div>
+
+                <div class="mySlides fade">
+                  <div class="numbertext">4 / 5</div>
+                  <img class="img-display-main r-img4" src="{{ url_for('static', filename='img/br_img4.png') }}" style="width:100%">
+                  <!-- <div class="text">Caption Three</div> -->
+                </div>
+              
+                <!-- change 'style' to fix map shifting options-->
+                <div class="mySlides fade" style="height: 378.5px;">
+                  <div class="numbertext">5 / 5</div>
+                  <iframe class="r-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3019.6582524317905!2d-81.93601998450407!3d40.81350303933623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8837466a2549f9c7%3A0x93db63e903527812!2sOtelia+Compton+Hall%2C+Beall+Ave%2C+Wooster%2C+OH+44691!5e0!3m2!1sen!2sus!4v1559310768255!5m2!1sen!2sus" width="100%" height="378.5" frameborder="0" style="border:0" allowfullscreen></iframe>
+                  <!-- <div class="text">Caption Three</div> -->
+                </div>
+
+                <div class="row">
+                  <!-- Next and previous buttons -->
+                  <!-- <a id="prev" class="prev" onclick="FUNCTIONS.plusSlides(-1);">&#10094;</a>
+                  <a id="next" class="next" onclick="FUNCTIONS.plusSlides(1);">&#10095;</a> -->
+                  <a id="prev" class="prev">&#10094;</a>
+                  <a id="next" class="next">&#10095;</a>
+                </div>
+              </div>
+              <br>
+              
+              <!-- The dots/circles -->
+              <div style="text-align:center">
+                  <span class="dot" onclick="currentSlide(1)"></span> 
+                  <span class="dot" onclick="currentSlide(2)"></span> 
+                  <span class="dot" onclick="currentSlide(3)"></span> 
+                  <span class="dot" onclick="currentSlide(4)"></span> 
+                  <span class="dot" onclick="currentSlide(5)"></span>
+                <!-- <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span> 
+                <span class="dot"></span>  -->
+                <span class="float-right" id="dot-hide"><img class="show-hide" src="{{ url_for('static', filename='img/svg/hide.svg') }}"></span> 
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-lg-5 row-scroll">
+              <div class="card py-4">
+                <div class="card-body">
+                  <h4>Facts and features</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                    <div class="row rs-icon">
+                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/wifi.svg') }}"> Internet:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-inte">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/power-strip.svg') }}"> Outlets:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-outl">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/mirror.svg') }}"> Mirrors:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-mirr">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/drawers.svg') }}"> Drawers:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-draw">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/closet.svg') }}"> Closets:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-clos">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/shelves.svg') }}"> Shelves:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-shel">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/users.svg') }}"> Capacity:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-capa">...</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card py-4">
+                <div class="card-body">
+                  <h4 class="text-uppercase m-1"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/cube.svg') }}">Dimensions</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Room:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-room-dims">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Beds:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-bed-dims">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Desk:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-desk-dims">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Carpet:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-carp-dims">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Shelves:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-shel-dims">...</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Closets:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-clos-dims">...</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card py-4">
+                <div class="card-body">
+                  <h4 class="text-uppercase m-1">Commute times</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> > Dining hall: </div>
+                        <div class="col-md-6 text-black-50"><span class="r-hall-com">...</span></div>
+                      </div>
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> > Gym: </div>
+                        <div class="col-md-6 text-black-50"><span class="r-gym-com">...</span></div>
+                      </div>
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> > Groceries: </div>
+                        <div class="col-md-6 text-black-50"><span class="r-groc-com">...</span></div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card py-4">
+                <div class="card-body">
+                  <h4 class="text-uppercase m-1">Provided by college</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/fridge.svg') }}"> Refridgerator:</div>
+                        <div class="col-md-6 text-black-50"><span class="r-frid-pro">...</span></div>
+                      </div>
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/toaster.svg') }}"> Toaster:</div>
+                        <div class="col-md-6 text-black-50"><span class="r-toas-pro">...</span></div>
+                      </div>
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/coffee-machine.svg') }}"> Coffee machine:</div>
+                        <div class="col-md-6 text-black-50"><span class="r-coff-pro">...</span></div>
+                      </div>
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/tv.svg') }}"> Television:</div>
+                        <div class="col-md-6 text-black-50"><span class="r-tv-pro">...</span></div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card py-4 card-layouts">
+                <div class="card-body">
+                  <h4 class="text-uppercase m-1">Suggested layouts</h4>
+                  <div class="text-black-50">A few suggested layouts based on what other students living in [room] says works best for them.</div>
+                  <hr class="my-4">
+                  <div class="row rs-row-features-3">
+                    <div class="col-md-12">
+                      <div class="model">
+                        <img class="model-img" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
+                      </div>
+                      <a class="btn btn-primary btn-features">View Layout</a>
+                    </div>
+                  </div>
+                  <div class="row rs-row-features-3">
+                    <div class="col-md-12">
+                      <div class="model">
+                        <img class="model-img" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
+                      </div>
+                      <a class="btn btn-primary btn-features">View Layout</a>
+                    </div>
+                  </div>
+                  <div class="row rs-row-features-3">
+                    <div class="col-md-12">
+                      <div class="model">
+                        <img class="model-img" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
+                      </div>
+                      <a class="btn btn-primary btn-features">View Layout</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Purchase packages card -->
+              <!-- <div class="card py-4">
+                <div class="card-body">
+                  <h4 class="text-uppercase m-1">Purchase package</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/box.svg') }}"> Blue | Grey | Green </div>
+                        <div class="col-md-6 text-black-50">Basics</div>
+                      </div>
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/trolley.svg') }}"></div>
+                        <div class="col-md-6 text-black-50">Full room</div>
+                      </div>
+                      <div class="row rs-icon">
+                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/sofa.svg') }}"></div>
+                        <div class="col-md-6 text-black-50">Additions</div>
+                      </div>
+                  </div>
+                </div>
+              </div> -->
+
+            </div>
+            <div class="offset-md-6 col-md-6">
+              <div class="card card-after-features">
+                <div class="card-body">
+                  <h4 class="text-uppercase m-1">Want to suggest a layout?</h4>
+                  <img class="hasTooltip icon-qtip_display" src="{{ url_for('static', filename='img/svg/info.svg') }}">
+                  <div class="hidden">
+                    <span>This feature is currently a work in progress</span>
+                  </div>
+                  <!-- <span title="This feature is a work in progress." disabled="true" class="btn btn-primary btn-layout-disabled">Submit a layout</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end images + features -->
+
+        <div class="container">
+          <div class="row rs-row">
+            <div class="col-md-12">
+              <h4 class="text-white mb-4 text-center" id="faq">Frequently Asked Questions</h4>
+              <p class="text-white-50">Still have a question? See what others are asking about [room], to hopefully find an answer.</p>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="card py-4 h-100">
+                <div class="card-body text-center">
+                  <h4 class="text-uppercase m-1">What are the dimensions of [room]?</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                    <div class="text-black-50">10ft x 18ft | 180ft<sup>2</sup></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="card py-4 h-100">
+                <div class="card-body text-center">
+                  <h4 class="text-uppercase m-1">How far is [room] from the gym?</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                    <div class="text-black-50">0.2 miles | 4 min walk</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="card py-4 h-100">
+                <div class="card-body text-center">
+                  <h4 class="text-uppercase m-1">How far is [room] from [a dining hall]?</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                    <div class="text-black-50">0.2 miles | 4 min walk</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row rs-row">
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="card py-4 h-100">
+                <div class="card-body text-center">
+                  <h4 class="text-uppercase m-1">How far is [room] from a grocery store?</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                    <div class="text-black-50">Walmart | 8 min drive</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="card py-4 h-100">
+                <div class="card-body text-center">
+                  <h4 class="text-uppercase m-1">How many outlets are in [room]?</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                    <div class="text-black-50">3 | 2 port, american</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 mb-3 mb-md-0">
+              <div class="card py-4 h-100">
+                <div class="card-body text-center">
+                  <h4 class="text-uppercase m-1">Where can I find a floor plan of my building?</h4>
+                  <hr class="my-4">
+                  <div class="small text-black-100">
+                    <a target="_blank" href="https://www.wooster.edu/_media/files/students/reslife/residence-halls/compton.pdf">Compton Hall Building Layout</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row rs-row-filler">
+          </div>
+        </div>
+      </section>
+      <!-- end about section -->
+{% endblock %}

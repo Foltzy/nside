@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %} Link {% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block base_nav %}
+    <!-- navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" data-page="nav">
+        <a class="navbar-brand navbar-brand-login js-scroll-trigger" href="{{ url_for('index') }}">VIRTUALITY</a>
+        <span class="virtuality-dorm">Dorm</span>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+    <!-- end nav -->
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% from "security/_macros.html" import render_field, render_select_field %}
+
+{% block content %}
+    <!-- login section -->
+    <section id="signup" class="login-section text-center">
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100 p-l-30 p-r-30 p-t-40 p-b-20">
+                    {% if action=="new" %}
+                        <form method="POST" action="{{ url_for('new_link') }}" enctype="multipart/form-data" role="form">
+                    {% else %}
+                        <form method="POST" action="{{ url_for('edit_link', residentof_id=residentof.id) }}" enctype="multipart/form-data" role="form">
+                    {% endif %}
+                        <div class="sl-object text-muted">
+                            <img class="about-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}">
+                        </div>
+                        <span class="login100-form-title p-b-5">
+                            {% if action=="new" %}
+                                new link
+                            {% else %}
+                                edit link
+                            {% endif %}
+                        </span>
+                        <span class="login100-form-subtitle p-b-20">
+                            Select a new room below to automatically view upon login
+                        </span>
+
+                        {{ form.hidden_tag() }}
+
+                        <select class="single-select" id="colleges" name="colleges">
+                                <option disabled selected>College</option>
+                            {% for college in colleges %}
+                                <option value="{{ college.id }}">{{ college.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select class="single-select" id="buildings" name="buildings">
+                                <option class="option-placeholder" disabled selected>Building</option>
+                            {% for building in buildings %}
+                                <option class="option-value" value="{{ building.id }}">{{ building.name }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <select class="single-select" id="rooms" name="room_id">
+                                <option class="option-placeholder" disabled selected>Room</option>
+                            {% for room in rooms %}
+                                <option class="option-value" value="{{ room.id }}">{{ room.room_number }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <div class="container-login100-form-btn p-t-45">
+                            <a class="login100-form-btn btn-back" href="{{ url_for('display') }}">
+                                cancel
+                            </a>
+                            <button class="login100-form-btn" type="submit">
+                                update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end login section -->
+{% endblock %}

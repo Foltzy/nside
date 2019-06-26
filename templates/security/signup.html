@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %} Sign up {% endblock %}
+
+{% block page_js %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block base_nav %}
+    <!-- navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" data-page="nav">
+        <a class="navbar-brand navbar-brand-login js-scroll-trigger" href="{{ url_for('index') }}">VIRTUALITY</a>
+        <span class="virtuality-dorm">Dorm</span>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+    <!-- end nav -->
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% from "security/_macros.html" import render_field, render_select_field %}
+
+{% block content %}
+    <!-- login section -->
+    <section id="signup" class="login-section text-center">
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100 p-l-30 p-r-30 p-t-40 p-b-20">
+                    <form class="login100-form validate-form" method="POST" action="{{ url_for('signup') }}">
+                        <div class="sl-object text-muted">
+                            <img class="about-svg" src="{{ url_for('static', filename='img/svg/clipboard.svg') }}">
+                        </div>
+                        <span class="login100-form-title p-b-5">
+                            Sign up
+                        </span>
+                        <span class="login100-form-subtitle p-b-20">
+                            All fields are required
+                        </span>
+
+                        {{ form.hidden_tag() }}
+
+                        {{ render_field(form.first_name, placeholder="First name", class_="input100") }}
+
+                        {{ render_field(form.last_name, placeholder="Last name", class_="input100") }}
+
+                        {{ render_field(form.email, placeholder="Email", class_="input100") }}
+
+                        {{ render_field(form.password, placeholder="Password", class_="input100") }}
+
+                        <div class="content-divider">
+                            <span class="fs-12">
+                                Link to room <img class="hasTooltip icon-qtip_signup" src="{{ url_for('static', filename='img/svg/info.svg') }}">
+                                <div class="hidden">
+                                    <span>Fill out the fields below if you want your room to automatically show up. If you leave these fields blank no room will automatically display. <br><br>Note: Linking to a room has NO effect on what rooms you can view.</span>
+                                </div>
+                            </span>
+                        </div>
+
+                        <select class="single-select" id="colleges" name="colleges">
+                                <option disabled selected>College</option>
+                            {% for college in colleges %}
+                                <option value="{{ college.id }}">{{ college.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select class="single-select" id="buildings" name="buildings">
+                                <option class="option-placeholder" disabled selected>Building</option>
+                            {% for building in buildings %}
+                                <option class="option-value" value="{{ building.id }}">{{ building.name }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <select class="single-select" id="rooms" name="room_id">
+                                <option class="option-placeholder" disabled selected>Room</option>
+                            {% for room in rooms %}
+                                <option class="option-value" value="{{ room.id }}">{{ room.room_number }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <div class="container-login100-form-btn p-t-25">
+                            <button class="login100-form-btn" type="submit">
+                                Sign up
+                            </button>
+                        </div>
+
+                        <div class="text-center w-full p-t-75">
+                            <span class="txt1">
+                                Already have an account? 
+                            </span>
+
+                            <a class="txt1 bo1 hov1" href="{{ url_for('login') }}">
+                                Login						
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end login section -->
+{% endblock %}
