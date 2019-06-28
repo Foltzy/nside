@@ -19,7 +19,7 @@
   {% endblock %}
 
   <!-- favicon -->
-  <link rel="shortcut icon" href="{{ url_for('static', filename='img/virtuality_logo.png') }}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 
   <!-- bootstrap and jquery -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
@@ -74,7 +74,7 @@
   {% block base_nav %}
     <!-- navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" data-page="nav">
-      <a class="navbar-brand js-scroll-trigger text-white-50 text-bold" href="{{ url_for('index') }}">VIRTUALITY</a>
+      <a class="navbar-brand js-scroll-trigger text-white-50 text-bold" href="{{ url_for('main.index') }}">VIRTUALITY</a>
       <span class="virtuality-dorm">Dorm</span>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars"></i>
@@ -83,11 +83,11 @@
       <ul class="navbar-nav ml-auto">
         {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{{ url_for('logout') }}">Logout</a>
+            <a class="nav-link js-scroll-trigger" href="{{ url_for('security.logout') }}">Logout</a>
           </li>
         {% else %}
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-link js-scroll-trigger" href="{{ url_for('security.login') }}">Login</a>
           </li>
         {% endif %}
 
@@ -109,21 +109,6 @@
           </div>
         </div>
       {% endif %}
-
-      <!-- select2 fields in nav -->
-      <!-- <div class="col justify-content-end collapse navbar-collapse" id="navbarResponsive">
-          <select class="single-select" id="college" name="college">
-              <option value="default"></option>
-              <option value="one">one</option> 
-          </select>
-          <select class="single-select" id="room" name="room">
-              <option value="default"></option>
-              <option value="105">Compton 105</option>
-          </select>
-      </div>
-      <div>
-          <a class="btn btn-primary btn-nav" href="{{ url_for('login') }}">LOGIN</a>
-      </div> -->
     </nav>
     <!-- end nav -->
   {% endblock %}

@@ -1,7 +1,8 @@
 # models.py
 from flask_security import UserMixin, RoleMixin, current_user
+from datetime import datetime
 from flask_admin.contrib import sqla
-from extensions import db 
+from . import db 
 
 # create a table to support a many-to-many relationship between Users and Roles
 roles_users = db.Table(
@@ -46,6 +47,9 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(155))
     password = db.Column(db.String())
     active = db.Column(db.Boolean(), default=True)
+    dob = db.Column(db.DateTime())
+    confirmed_at = db.Column(db.DateTime())
+    last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
 
     roles = db.relationship(
         'Role',

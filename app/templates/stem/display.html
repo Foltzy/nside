@@ -4,9 +4,9 @@
 
 {% block added_nav_links %}
   {% if linked_room != None %}
-    <a href="{{ url_for('edit_link', residentof_id=linked_room.id) }}">Update/Change room link</a> 
+    <a href="{{ url_for('main.edit_link', residentof_id=linked_room.id) }}">Update/Change room link</a> 
   {% else %}
-    <a href="{{ url_for('new_link') }}">Add room link</a> 
+    <a href="{{ url_for('main.new_link') }}">Add room link</a> 
   {% endif %}
 {% endblock %}
 
@@ -29,7 +29,7 @@
       <!-- viewing -->
       <div class="ribbon left_ribbon" id="ribbon_viewing">
         {% if linked_room != None %}
-          <p class="text-white p-viewing">Viewing:</p>
+          <p class="text-white p-viewing">Linked Room:</p>
           <p class="text-white p-college">College: <span class="p-college-name">{{ linked_room.room.building.college.name }}</span></p>
           <p class="text-white p-building">Building: <span class="p-building-name">{{ linked_room.room.building.name }}</span></p>
           <p class="text-white p-room">Room number: <span class="p-room-number">{{ linked_room.room.room_number }}</span></p>
@@ -64,7 +64,7 @@
           </select>
           <img class="hasTooltip icon-qtip_display" src="{{ url_for('static', filename='img/svg/info.svg') }}">
           <div class="hidden">
-            <span>Note: Upon selecting a room the room view will update</span>
+            <span>Note: Upon selecting a room the model view will update</span>
           </div>
           <!-- <button class="btn btn-primary room_select-btn" type="submit">
             Submit
@@ -82,7 +82,7 @@
                 <br>You are not linked to a room.
               </div>
               <div class="hide text-muted text-center">Select a college, building and room on the left to view that room here.</div>
-              <div class="hide want_link text-muted text-center">Want your room to automatically show up? Link your account to a room <a href="{{ url_for('new_link') }}">here</a></div>
+              <div class="hide want_link text-muted text-center">Want your room to automatically show up? Link your account to a room <a href="{{ url_for('main.new_link') }}">here</a></div>
               <div id="wr360PlayerId" class="wr360_player" style="background-color:#FFFFFF; display: none;">
               </div>
             {% else %}

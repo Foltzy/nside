@@ -1,13 +1,14 @@
 # views.py
-from app import app, db
-from flask import Flask, request, render_template, flash, redirect, url_for, jsonify
+from flask import Flask, request, render_template, flash, redirect, \
+    url_for, jsonify, current_app
 from flask_security import current_user, utils
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from stem.models import College, Building, Room, ResidentOf
 # files
-from stem.forms import LoginForm, RegisterForm, ResidentOfForm
-from stem.models import User
+from .forms import LoginForm, RegisterForm, ResidentOfForm
+from . import main as app
+from .. import db
+from ..models import College, Building, Room, ResidentOf, User
 
 import json
 
@@ -44,7 +45,7 @@ def login():
             if utils.verify_password(form.password.data, user.password):
                 login_user(user)
 
-                return redirect(request.args.get('next') or url_for('display'))
+                return redirect(request.args.get('next') or url_for('main.display'))
         else:
             flash('Invalid email or password')
     return render_template('security/login.html', form=form)
@@ -83,7 +84,7 @@ def signup():
         db.session.commit()
 
         flash("Welcome, " + form.email.data, 'success')
-        return redirect(url_for('display'))
+        return redirect(url_for('main.display'))
 
     return render_template('security/signup.html', form=form, colleges=colleges, buildings=buildings)
 
@@ -119,7 +120,7 @@ def room(building_id):
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('main.login'))
 
 @app.route('/new_link/', methods=('GET', 'POST'))
 @login_required
@@ -142,7 +143,7 @@ def new_link():
         new_room = Room.query.filter_by(id=form.room_id.data).first_or_404()
 
         flash("You are now linked to " + str(new_room), 'success')
-        return redirect(url_for('display'))
+        return redirect(url_for('main.display'))
     
     return render_template('stem/residentof_form.html', form=form, colleges=colleges, buildings=buildings, action="new")
 
@@ -167,7 +168,7 @@ def edit_link(residentof_id):
         db.session.commit()
 
         flash("Link updated", 'success')
-        return redirect(url_for('display'))
+        return redirect(url_for('main.display'))
     
     return render_template('stem/residentof_form.html', form=form, colleges=colleges, buildings=buildings, residentof=residentof, action="edit")
 

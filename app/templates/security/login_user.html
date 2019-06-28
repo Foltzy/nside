@@ -11,7 +11,7 @@
 {% block base_nav %}
     <!-- navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" data-page="nav">
-        <a class="navbar-brand navbar-brand-login js-scroll-trigger" href="{{ url_for('index') }}">VIRTUALITY</a>
+        <a class="navbar-brand navbar-brand-login js-scroll-trigger" href="{{ url_for('main.index') }}">VIRTUALITY</a>
         <span class="virtuality-dorm">Dorm</span>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
@@ -31,7 +31,7 @@
         <div class="limiter">
             <div class="container-login100">
                 <div class="wrap-login100 p-l-30 p-r-30 p-t-40 p-b-20">
-                    <form class="login100-form" method="POST" action="{{ url_for('login') }}">
+                    <form class="login100-form" method="POST" action="{{ url_for('security.login') }}" name="login_user_form">
                         <div class="sl-object text-muted">
                             <img class="about-svg" src="{{ url_for('static', filename='img/svg/shield.svg') }}">
                         </div>
@@ -42,11 +42,11 @@
                             All fields are required
                         </span>
 
-                        {{ form.hidden_tag() }}
+                        {{ login_user_form.hidden_tag() }}
 
-                        {{ render_field(form.email, placeholder="Email", class_="input100") }}
+                        {{ render_field(login_user_form.email, placeholder="Email", class_="input100") }}
 
-                        {{ render_field(form.password, placeholder="Password", class_="input100") }}
+                        {{ render_field(login_user_form.password, placeholder="Password", class_="input100") }}
                         
                         <div class="container-login100-form-btn p-t-25">
                             <button class="login100-form-btn" type="submit">
@@ -59,7 +59,7 @@
                                 Don't have an account? 
                             </span>
 
-                            <a class="txt1 bo1 hov1" href="{{ url_for('signup') }}">
+                            <a class="txt1 bo1 hov1" href="{{ url_for('security.register') }}">
                                 Sign up						
                             </a>
                         </div>

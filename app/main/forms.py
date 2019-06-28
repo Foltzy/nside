@@ -2,7 +2,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SelectField, IntegerField
 from wtforms.validators import InputRequired, Email, Length
-from stem.models import User
+from ..models import User
 
 # check current emails and throw (err) if already in use
 def check_email(form, field):
