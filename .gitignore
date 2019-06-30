@@ -1,10 +1,7 @@
-venv
-*.pyc
-.DS_Store
-private.py
 __pycache__/
-extensions.py
-migrations/
+.idea/
+private.py
+.env
 *.env
-instance/
-.webassets-cache
+node_modules/
+migrations/
