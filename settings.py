@@ -2,7 +2,17 @@ import os
 import private
 
 SECRET_KEY = private.SECRET_KEY
-SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/db'
+
+POSTGRES = {
+    'user': private.DB_USERNAME,
+    'pw': private.DB_PASSWORD,
+    'db': private.DATABASE_NAME,
+    'host': os.environ.get("DB_HOST", os.getenv('IP', '0.0.0.0')),
+    'port': os.environ.get("DB_PORT", '5432')
+}
+SQLALCHEMY_DATABASE_URI = 'postgresql://%(user)s:\
+%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+
 SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS", True)
 
 STARTING_ADMIN1 = private.STARTING_ADMIN1
