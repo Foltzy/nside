@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Virtuality | {% block title %} Welcome {% endblock %}</title>
+  <title>Abode | {% block title %} Welcome {% endblock %}</title>
 
   <!-- custom css and js per page -->
   {% block page_js %}
@@ -19,7 +19,7 @@
   {% endblock %}
 
   <!-- favicon -->
-  <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/squares.png') }}" type="image/x-icon">
 
   <!-- bootstrap and jquery -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
@@ -73,8 +73,9 @@
 
   {% block base_nav %}
     <!-- navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" data-page="nav">
-      <a class="navbar-brand js-scroll-trigger text-white-50 text-bold" href="{{ url_for('main.index') }}">VIRTUALITY</a>
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" data-page="nav">
+      <img class="logo" src="{{ url_for('static', filename='img/squares.png') }}">
+      <a class="navbar-brand js-scroll-trigger text-bold" href="{{ url_for('main.index') }}">Abode</a>
       <span class="virtuality-dorm">Dorm</span>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars"></i>
@@ -131,7 +132,7 @@
         </div>
       </div> -->
       <div class="container">
-        Icons: <a href="https://www.flaticon.com" target="_blank">FlatIcon</a> | Copyright &copy; Virtuality 2019 <!-- | <a href="#">Terms and Conditions</a> -->
+        Copyright &copy; Abode Interior 2019 <!-- | <a href="#">Terms and Conditions</a> -->
       </div>
     </footer>
     <!-- end footer -->

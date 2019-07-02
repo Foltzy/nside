@@ -1,14 +1,14 @@
 // custom.js
 // watch nav scroll
-$(function () {
-    $(document).scroll(function () {
-      var $nav = $(".fixed-top");
-      var $dropdown = $(".select2-dropdown");
-      var $masthead = $(".masthead");
-      $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-      $dropdown.toggleClass('scrolled', $(this).scrollTop() > $masthead.height());
-    });
-  });
+// $(function () {
+//     $(document).scroll(function () {
+//       var $nav = $(".fixed-top");
+//       var $dropdown = $(".select2-dropdown");
+//       var $masthead = $(".masthead");
+//       $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+//       $dropdown.toggleClass('scrolled', $(this).scrollTop() > $masthead.height());
+//     });
+//   });
 
 // fade flash messages out
 $(document).ready(function(){
@@ -236,4 +236,18 @@ $(document).ready(function(){
         $('#buildings').empty();
         $('#rooms').empty();
     });
+
+    // $('.arrow-down').hide();
+    // console.log('arrow hidden');
+
+    $('#rooms').on('change', function(){
+        $('.arrow-down').show();
+        console.log('arrow showing');
+    });
+
+    if ($('.p-college-name').text() == '') {
+        $('.arrow-down').hide();
+    } else {
+        $('.arrow-down').show();
+    }
 });

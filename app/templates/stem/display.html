@@ -76,13 +76,13 @@
           <div id="content">
             {% if linked_room == None %}
               <div class="hide no_link text-center">
-                <div class="text-muted">
-                    <img class="about-svg" src="{{ url_for('static', filename='img/svg/broken-link.svg') }}">
+                <div class="sl-object obj-muted">
+                    <img class="about-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}">
                 </div>
                 <br>You are not linked to a room.
               </div>
               <div class="hide text-muted text-center">Select a college, building and room on the left to view that room here.</div>
-              <div class="hide want_link text-muted text-center">Want your room to automatically show up? Link your account to a room <a href="{{ url_for('main.new_link') }}">here</a></div>
+              <div class="hide want_link text-muted text-center">Want your room to automatically show up? Link your account to a room <a href="{{ url_for('main.new_link') }}">here</a> or in the settings above.</div>
               <div id="wr360PlayerId" class="wr360_player" style="background-color:#FFFFFF; display: none;">
               </div>
             {% else %}
@@ -92,9 +92,9 @@
           </div> 
         </div>
       </div>
-      {% if linked_room != None %}
-        <div class="arrow-down"></div>
-      {% endif %}
+
+      <div class="arrow-down"></div>
+
     </header>
     <!-- end header -->
 

@@ -37,7 +37,11 @@ hr {
 }
 
 .text-muted {
-    color: #999 !important;
+    color: #999999 !important;
+}
+
+.obj-muted {
+    color: #1b5fa8 !important;
 }
 
 /**********/
@@ -62,7 +66,11 @@ hr {
 /* nav */
 /*******/
 .navbar-brand {
-    color: rgb(21, 38, 77) !important;
+    color: #339aff !important;
+}
+
+.navbar-brand:hover {
+    color: #1a7ada !important;
 }
 
 .navbar-brand-login {
@@ -88,11 +96,11 @@ hr {
 }
 
 .nav-item a {
-    color: #15264d !important;
+    color: #2978cc !important;
 }
 
 .nav-item a:hover {
-    color: #0e1831 !important;
+    color: #4e8dd1 !important;
 }
 
 .scrolled .nav-item a {
@@ -136,7 +144,13 @@ hr {
     margin-left: -25px;
     margin-top: 30px;
     font-size: 10px;
-    color: #999;
+    color: #2978cc;
+}
+
+.logo {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
 }
 
 /*************/
@@ -145,7 +159,7 @@ hr {
 .arrow-down {
     width: 100%;
     position: absolute;
-    bottom: 100px;
+    bottom: 135px;
     margin: 50px 0 0 0;
     text-align: center;
 }
@@ -179,8 +193,8 @@ hr {
     right: 0;
     bottom: 0;
     left: 0;
-    border-right: 4px solid rgb(21, 38, 77);
-    border-bottom: 4px solid rgb(21, 38, 77);
+    border-right: 4px solid #2978cc;
+    border-bottom: 4px solid #2978cc;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     -webkit-animation: 3s arrow infinite ease;
@@ -293,7 +307,7 @@ hr {
 
 .about-section {
     background: -webkit-gradient(linear,left top,left bottom,from(#161616),color-stop(75%,rgba(22,22,22,.9)),to(rgba(22,22,22,.8)));
-    background: linear-gradient(to bottom,#fff 0,#15264d 7%,#15264d 50%) !important;
+    background: linear-gradient(to bottom,#fff 0,#0c437e 7%,#0c437e 50%) !important;
     padding-top: 20rem !important;
 }
 
@@ -317,7 +331,7 @@ hr {
     padding-right: 20px !important;
     padding-bottom: 0px !important;
     box-shadow: 0px 0px 4px #3a3a3a !important;
-    border-bottom: .25rem solid rgb(255, 0, 0) !important;
+    border-bottom: .25rem solid #2978cc !important;
 }
 
 .card-layouts {
@@ -351,13 +365,16 @@ hr {
 
 .btn-features {
     font-family: 'Roboto', sans-serif !important;
-    background-color: #15264d !important;
-    color: #ffffff !important;
-    border: 1px solid #15264d !important;
+    background-color: #2978cc !important;
+    color: #fff !important;
     letter-spacing: .01rem !important;
     font-size: 10px !important;
     padding: 5px 10px 5px 10px !important;
     margin: 10px !important;
+}
+
+.btn-features:hover {
+    background: #4e8dd1;
 }
 
 .btn-layout-disabled {
@@ -424,9 +441,9 @@ hr {
     width: 260px;
     top: 12rem;
 	position: absolute;
-	background: #15264d;
+	background: #999;
 	border: 1px solid rgba(0,0,0,.3);
-	box-shadow: -2px 1px 5px rgba(0, 0, 0, 0.399);
+	/* box-shadow: -2px 1px 5px rgba(0, 0, 0, 0.399); */
 	padding: 25px 10px 10px 40px;
 	clear: both;
 }
@@ -467,7 +484,7 @@ div.left_ribbon::after{
 	-webkit-transform: skew(0deg,45deg); /* Safari and Chrome */
 	-o-transform: skew(0deg,45deg); /* Opera */
 	-moz-transform: skew(0deg,45deg); /* Firefox */
-	background: #070d1a;
+	background: #426a67;
 }
 
 .room_summary_ribbon {
@@ -627,7 +644,7 @@ div.room_summary_ribbon::after{
 }
 
 .room-display {
-    margin-top: 8rem !important;
+    margin-top: 6rem !important;
 }
 
 #room-title {
@@ -704,7 +721,7 @@ div.room_summary_ribbon::after{
 
 .index-desc {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .index-footer {
@@ -1030,7 +1047,7 @@ div.left_ribbon#ribbon_room_select::after{
     font-size: 16px; 
     border: none;
     outline: none;
-    color: #999;
+    color: #2978cc;
     padding: 14px 16px;
     background-color: inherit;
     font-family: inherit; /* Important for vertical align on mobile phones */
@@ -1041,6 +1058,7 @@ div.left_ribbon#ribbon_room_select::after{
   
   /* Add a red background color to navbar links on hover */
   .dropdown:hover .dropbtn {
+    color: #999; 
     background-color: #e7e7e7;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   }
@@ -1055,7 +1073,7 @@ div.left_ribbon#ribbon_room_select::after{
     min-width: 215px;
     z-index: 1;
 
-    border-bottom: .25rem solid rgb(255, 0, 0) !important;
+    border-bottom: .25rem solid #2978cc !important;
     border-bottom-left-radius: .25rem !important;
     border-bottom-right-radius: .25rem !important;
     border-top-left-radius: .25rem !important;
@@ -1309,11 +1327,12 @@ div.left_ribbon#ribbon_room_select::after{
 }
 
 .wrap-login100 {
+    margin: 100px;
     width: 350px;
     background: #fff;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    border-bottom: .25rem solid rgb(255, 0, 0) !important; 
+    border-bottom: .25rem solid #2978cc!important; 
     border-bottom-left-radius: .25rem !important;
     border-bottom-right-radius: .25rem !important;
 }

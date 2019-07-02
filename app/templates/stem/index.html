@@ -8,8 +8,9 @@
 
 {% block base_nav %}
     <!-- navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav" data-page="nav">
-        <a class="navbar-brand navbar-brand-login js-scroll-trigger" href="{{ url_for('main.index') }}">VIRTUALITY</a>
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" data-page="nav">
+        <img class="logo" src="{{ url_for('static', filename='img/squares.png') }}">
+        <a class="navbar-brand js-scroll-trigger" href="{{ url_for('main.index') }}">Abode</a>
         <span class="virtuality-dorm">Dorm</span>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
@@ -27,14 +28,14 @@
         <div class="limiter">
             <div class="container-login100">
                 <div class="wrap-login100 p-l-30 p-r-30 p-t-40 p-b-20">
-                    <div class="icon-object text-muted">
+                    <div class="icon-object obj-muted">
                         <img class="about-svg" src="{{ url_for('static', filename='img/svg/cube.svg') }}">
                     </div>
-                    <div class="icon-object text-muted">
+                    <div class="icon-object obj-muted">
                         <img class="about-svg" src="{{ url_for('static', filename='img/svg/3d-printing.svg') }}">
                     </div>
                     <span class="login100-form-title p-b-5">
-                        Welcome to Virtuality
+                        Welcome to Abode
                     </span>
                     <span class="login100-form-subtitle p-b-20">
                         Select an option below
@@ -66,15 +67,15 @@
 
                     <div class="content-divider">
                         <span class="fs-12">
-                            What is Virtuality?
+                            What is Abode?
                         </span>
                     </div>
 
                     <div class="index-desc">
                         <span class="fs-12">
                             Incoming college freshman need to plan ahead. These dedicated, passionate students already have a lot on their plate, and planning for dorm room living is one of these challenges. 
-                            <br>Most universities don’t have detailed dorm room layouts, leading to confusion and misinformation about how much space is provided and what students actually need to bring along with them. Virtuality can fix this problem.
-                            <br><a href="{{ url_for('main.about') }}"><span class="see-more">Read more about virtuality...</span></a>
+                            <br>Most universities don’t have detailed dorm room layouts, leading to confusion and misinformation about how much space is provided and what students actually need to bring along with them. Abode can fix this problem.
+                            <br><a href="{{ url_for('main.about') }}"><span class="see-more">Read more about Abode...</span></a>
                         </span>
                     </div>
 
