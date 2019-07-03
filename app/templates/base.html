@@ -120,19 +120,11 @@
   {% block footer %}
     <!-- Footer -->
     <footer class="footer-s small text-center text-navy">
-      <!-- <div class="row footer-options">
-        <div class="offset-md-3 col-md-2 text-center">
-          <a href="#">Request a college</a>
-        </div>
-        <div class="col-md-2 text-center">
-          <a href="#">Ask a question</a>
-        </div>
-        <div class="col-md-2 offset-right-md-3 text-center">
-          <a href="#">Contact</a>
-        </div>
-      </div> -->
-      <div class="container">
-        Copyright &copy; Abode Interior 2019 <!-- | <a href="#">Terms and Conditions</a> -->
+      <img class="footer-logo" src="{{ url_for('static', filename='img/squares.png') }}">
+      <div class="text-center text-black">
+        <span class="footer-text" title="Dedicated to Bumpy.">
+          Copyright &copy; Abode, Abode Interior, abodeinterior.net 2019 <!-- | <a href="#">Terms and Conditions</a> -->
+        </span>
       </div>
     </footer>
     <!-- end footer -->

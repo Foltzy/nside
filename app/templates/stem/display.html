@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} Compton 105 {% endblock %}
+{% block title %} Display {% endblock %}
 
 {% block added_nav_links %}
   {% if linked_room != None %}
@@ -25,11 +25,11 @@
           {% endfor %}
         {% endif %}
       {% endwith %}
-      
+
       <!-- viewing -->
       <div class="ribbon left_ribbon" id="ribbon_viewing">
         {% if linked_room != None %}
-          <p class="text-white p-viewing">Linked Room:</p>
+          <p class="text-white p-viewing"><span class="link-view">Linked Room:</span></p>
           <p class="text-white p-college">College: <span class="p-college-name">{{ linked_room.room.building.college.name }}</span></p>
           <p class="text-white p-building">Building: <span class="p-building-name">{{ linked_room.room.building.name }}</span></p>
           <p class="text-white p-room">Room number: <span class="p-room-number">{{ linked_room.room.room_number }}</span></p>
@@ -122,22 +122,17 @@
       <!-- about section -->
       <section id="about" class="about-section text-center contact-section">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <h2 class="text-white mb-4">Room Summary</h2>
-              <p class="text-white-50"><span class="r-desc">...</span></p>
-            </div>
-          </div>
 
           <!-- begin images + features -->
           <div class="row no-gutters mb-4 mb-lg-5">
-            <div class="offset-md-6 col-md-6">
+            <div class="col-md-12">
               <div class="card card-before-features">
                 <div class="card-body">
-                  <div class="text-uppercase m-1"><span class="r-name">...</span></div>
-                  <div class="text-black-50 features-subtitle">Address: <span class="r-addr">...</span></div>
-                  <div class="text-black-50 features-subtitle"><a class="r-site" href="https://www.wooster.edu" target="_blank">College website</a></div>
-                  <div class="text-black-50 features-subtitle"><a class="r-floorplan" target="_blank" href="https://www.wooster.edu/_media/files/students/reslife/residence-halls/compton.pdf">Building floor plan</a></div>
+                  <div class="room-sum text-black">Room summary for <span class="r-name">{{ linked_room.room.building.name }} {{ linked_room.room.room_number }}</span></div>
+                  <div class="text-black-50 features-subtitle"><span class="r-addr">{{ linked_room.room.building.address }}</span></div>
+                  <hr class="my-3">
+                  <div class="text-black-50 features-subtitle"><span class="r-desc">{{ linked_room.room.building.description }}</span></div>
+                  <div class="text-black-50 features-spf"><a class="r-site" href="{{ linked_room.room.building.college.website }}" target="_blank">College website</a> | <a class="r-floorplan" target="_blank" href="{{ linked_room.room.building.college.floorplan }}">Building floor plan</a></div>
                 <!-- possibly add hot links to cards below -->
                 </div>
               </div>
@@ -165,32 +160,32 @@
                 <!-- Full-width images with number and caption text -->
                 <div class="mySlides fade">
                   <div class="numbertext">1 / 5</div>
-                  <img class="img-display-main r-img1" src="{{ url_for('static', filename='img/br_img1.png') }}" style="width:100%">
+                  <img class="img-display-main r-img1" src="{{ linked_room.room.img1 }}" style="width:100%">
                   <!-- <div class="text">Caption Text</div> -->
                 </div>
               
                 <div class="mySlides fade">
                   <div class="numbertext">2 / 5</div>
-                  <img class="img-display-main r-img2" src="{{ url_for('static', filename='img/br_img2.png') }}" style="width:100%">
+                  <img class="img-display-main r-img2" src="{{ linked_room.room.img2 }}" style="width:100%">
                   <!-- <div class="text">Caption Two</div> -->
                 </div>
               
                 <div class="mySlides fade">
                   <div class="numbertext">3 / 5</div>
-                  <img class="img-display-main r-img3" src="{{ url_for('static', filename='img/br_img3.png') }}" style="width:100%">
+                  <img class="img-display-main r-img3" src="{{ linked_room.room.img3 }}" style="width:100%">
                   <!-- <div class="text">Caption Three</div> -->
                 </div>
 
                 <div class="mySlides fade">
                   <div class="numbertext">4 / 5</div>
-                  <img class="img-display-main r-img4" src="{{ url_for('static', filename='img/br_img4.png') }}" style="width:100%">
+                  <img class="img-display-main r-img4" src="{{ linked_room.room.img4 }}" style="width:100%">
                   <!-- <div class="text">Caption Three</div> -->
                 </div>
               
                 <!-- change 'style' to fix map shifting options-->
                 <div class="mySlides fade" style="height: 378.5px;">
                   <div class="numbertext">5 / 5</div>
-                  <iframe class="r-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3019.6582524317905!2d-81.93601998450407!3d40.81350303933623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8837466a2549f9c7%3A0x93db63e903527812!2sOtelia+Compton+Hall%2C+Beall+Ave%2C+Wooster%2C+OH+44691!5e0!3m2!1sen!2sus!4v1559310768255!5m2!1sen!2sus" width="100%" height="378.5" frameborder="0" style="border:0" allowfullscreen></iframe>
+                  <iframe class="r-iframe" src="{{ linked_room.room.iframe_src }}" width="100%" height="378.5" frameborder="0" style="border:0" allowfullscreen></iframe>
                   <!-- <div class="text">Caption Three</div> -->
                 </div>
 
@@ -198,28 +193,34 @@
                   <!-- Next and previous buttons -->
                   <!-- <a id="prev" class="prev" onclick="FUNCTIONS.plusSlides(-1);">&#10094;</a>
                   <a id="next" class="next" onclick="FUNCTIONS.plusSlides(1);">&#10095;</a> -->
-                  <a id="prev" class="prev">&#10094;</a>
-                  <a id="next" class="next">&#10095;</a>
+                  <!-- <a id="prev" class="prev">&#10094;</a>
+                  <a id="next" class="next">&#10095;</a> -->
                 </div>
               </div>
-              <br>
-              
-              <!-- The dots/circles -->
-              <div style="text-align:center">
-                  <span class="dot" onclick="currentSlide(1)"></span> 
-                  <span class="dot" onclick="currentSlide(2)"></span> 
-                  <span class="dot" onclick="currentSlide(3)"></span> 
-                  <span class="dot" onclick="currentSlide(4)"></span> 
-                  <span class="dot" onclick="currentSlide(5)"></span>
-                <!-- <span class="dot"></span> 
-                <span class="dot"></span> 
-                <span class="dot"></span> 
-                <span class="dot"></span> 
-                <span class="dot"></span> 
-                <span class="dot"></span> 
-                <span class="dot"></span>  -->
-                <span class="float-right" id="dot-hide"><img class="show-hide" src="{{ url_for('static', filename='img/svg/hide.svg') }}"></span> 
-              </div>
+
+              <div class="card card-controls">
+                  <div class="card-controls-body">
+                    <!-- The dots/circles -->
+                    <div style="text-align:center">
+                      <!-- <span class="dot" onclick="currentSlide(1)"></span> 
+                      <span class="dot" onclick="currentSlide(2)"></span> 
+                      <span class="dot" onclick="currentSlide(3)"></span> 
+                      <span class="dot" onclick="currentSlide(4)"></span> 
+                      <span class="dot" onclick="currentSlide(5)"></span> -->
+
+                      <!-- <span class="dot"></span> 
+                      <span class="dot"></span> 
+                      <span class="dot"></span> 
+                      <span class="dot"></span> 
+                      <span class="dot"></span> 
+                      <span class="dot"></span> 
+                      <span class="dot"></span>  -->
+
+                      <a id="prev" class="previous"><img class="previoussvg" src="{{ url_for('static', filename='img/svg/previous.svg') }}"></a>
+                      <a id="next" class="nextious"><img class="nextioussvg" src="{{ url_for('static', filename='img/svg/nextious.svg') }}"></a>
+                    </div>
+                  </div>
+                </div>
             </div>
 
             <div class="col-xl-6 col-lg-5 row-scroll">
@@ -230,64 +231,66 @@
                   <div class="small text-black-100">
                     <div class="row rs-icon">
                       <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/wifi.svg') }}"> Internet:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-inte">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-inte">{{ linked_room.room.building.internet }}</span></div>
                     </div>
                     <div class="row rs-icon">
-                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/power-strip.svg') }}"> Outlets:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-outl">...</span></div>
+                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/outlet.svg') }}"> Outlets:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-outl">{{ linked_room.room.outlet_count }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/mirror.svg') }}"> Mirrors:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-mirr">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-mirr">{{ linked_room.room.mirror_count }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/drawers.svg') }}"> Drawers:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-draw">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-draw">{{ linked_room.room.drawer_count }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/closet.svg') }}"> Closets:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-clos">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-clos">{{ linked_room.room.closet_count }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/shelves.svg') }}"> Shelves:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-shel">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-shel">{{ linked_room.room.shelf_count }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/users.svg') }}"> Capacity:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-capa">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-capa">{{ linked_room.room.capacity }}</span></div>
                     </div>
                   </div>
                 </div>
               </div>
 
+              <!-- <div class="arrow-down"></div> -->
+
               <div class="card py-4">
                 <div class="card-body">
-                  <h4 class="text-uppercase m-1"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/cube.svg') }}">Dimensions</h4>
+                  <h4 class="text-uppercase m-1"><img class="dims-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/dims.svg') }}">Dimensions</h4>
                   <hr class="my-4">
                   <div class="small text-black-100">
                     <div class="row rs-icon">
                       <div class="col-md-6">Room:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-room-dims">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-room-dims">{{ linked_room.room.full_dims }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6">Beds:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-bed-dims">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-bed-dims">{{ linked_room.room.bed_dims }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6">Desk:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-desk-dims">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-desk-dims">{{ linked_room.room.desk_dims }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6">Carpet:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-carp-dims">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-carp-dims">{{ linked_room.room.carpet_dims }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6">Shelves:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-shel-dims">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-shel-dims">{{ linked_room.room.shelf_count }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6">Closets:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-clos-dims">...</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-clos-dims">{{ linked_room.room.closet_dims }}</span></div>
                     </div>
                   </div>
                 </div>
@@ -299,16 +302,16 @@
                   <hr class="my-4">
                   <div class="small text-black-100">
                       <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> > Dining hall: </div>
-                        <div class="col-md-6 text-black-50"><span class="r-hall-com">...</span></div>
+                        <div class="col-md-6"><img class="svg-walk text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> to nearest dining hall: </div>
+                        <div class="col-md-6 text-black-50"><span class="r-hall-com">{{ linked_room.room.to_hall }}</span></div>
                       </div>
                       <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> > Gym: </div>
-                        <div class="col-md-6 text-black-50"><span class="r-gym-com">...</span></div>
+                        <div class="col-md-6"><img class="svg-walk text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> to nearest gym: </div>
+                        <div class="col-md-6 text-black-50"><span class="r-gym-com">{{ linked_room.room.to_gym }}</span></div>
                       </div>
                       <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> > Groceries: </div>
-                        <div class="col-md-6 text-black-50"><span class="r-groc-com">...</span></div>
+                        <div class="col-md-6"><img class="svg-car text-primary mb-2" src="{{ url_for('static', filename='img/svg/car.svg') }}"> to groceries: </div>
+                        <div class="col-md-6 text-black-50"><span class="r-groc-com">{{ linked_room.room.to_grocery }}</span></div>
                       </div>
                   </div>
                 </div>
@@ -321,19 +324,19 @@
                   <div class="small text-black-100">
                       <div class="row rs-icon">
                         <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/fridge.svg') }}"> Refridgerator:</div>
-                        <div class="col-md-6 text-black-50"><span class="r-frid-pro">...</span></div>
+                        <div class="col-md-6 text-black-50"><span class="r-frid-pro">{{ linked_room.room.fridge }}</span></div>
                       </div>
                       <div class="row rs-icon">
                         <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/toaster.svg') }}"> Toaster:</div>
-                        <div class="col-md-6 text-black-50"><span class="r-toas-pro">...</span></div>
+                        <div class="col-md-6 text-black-50"><span class="r-toas-pro">{{ linked_room.room.toaster }}</span></div>
                       </div>
                       <div class="row rs-icon">
                         <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/coffee-machine.svg') }}"> Coffee machine:</div>
-                        <div class="col-md-6 text-black-50"><span class="r-coff-pro">...</span></div>
+                        <div class="col-md-6 text-black-50"><span class="r-coff-pro">{{ linked_room.room.coffee }}</span></div>
                       </div>
                       <div class="row rs-icon">
                         <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/tv.svg') }}"> Television:</div>
-                        <div class="col-md-6 text-black-50"><span class="r-tv-pro">...</span></div>
+                        <div class="col-md-6 text-black-50"><span class="r-tv-pro">{{ linked_room.room.tv }}</span></div>
                       </div>
                   </div>
                 </div>
@@ -342,7 +345,7 @@
               <div class="card py-4 card-layouts">
                 <div class="card-body">
                   <h4 class="text-uppercase m-1">Suggested layouts</h4>
-                  <div class="text-black-50">A few suggested layouts based on what other students living in [room] says works best for them.</div>
+                  <div class="sugg-subtitle">A few suggested layouts based on what other students living in [room] says works best for them.</div>
                   <hr class="my-4">
                   <div class="row rs-row-features-3">
                     <div class="col-md-12">
@@ -394,7 +397,7 @@
               </div> -->
 
             </div>
-            <div class="offset-md-6 col-md-6">
+            <div class="col-md-12">
               <div class="card card-after-features">
                 <div class="card-body">
                   <h4 class="text-uppercase m-1">Want to suggest a layout?</h4>
@@ -413,7 +416,12 @@
         <div class="container">
           <div class="row rs-row">
             <div class="col-md-12">
-              <h4 class="text-white mb-4 text-center" id="faq">Frequently Asked Questions</h4>
+              <h4 class="text-white mb-4 text-center" id="faq">Frequently Asked Questions
+                <img class="hasTooltip icon-qtip_display ml-1 mb-4" src="{{ url_for('static', filename='img/svg/info.svg') }}">
+                <div class="hidden">
+                  <span>This feature is currently a work in progress</span>
+                </div>
+              </h4>
               <p class="text-white-50">Still have a question? See what others are asking about [room], to hopefully find an answer.</p>
             </div>
             <div class="col-md-4 mb-3 mb-md-0">

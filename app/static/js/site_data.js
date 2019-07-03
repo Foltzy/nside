@@ -52,6 +52,7 @@ $(document).ready(function(){
 
     // on change of room select field
     $('#rooms').on('change', function() {
+        $('.link-view').text('Viewing:');
         // updates the first two fields of 'viewing' 
         // to represent selected college name and building name
         // update college name
@@ -180,7 +181,7 @@ $(document).ready(function(){
                 $(".r-iframe").attr("src", room.iframe_src);
 
                 // log that updates complete
-                console.log('website selection render complete');
+                console.log('room selection render complete');
             });
         }); 
         // /fetch
