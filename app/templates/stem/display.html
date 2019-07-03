@@ -119,6 +119,7 @@
         });
       </script>
     {% endif %}
+    {% if linked_room != None %}
       <!-- about section -->
       <section id="about" class="about-section text-center contact-section">
         <div class="container">
@@ -502,4 +503,6 @@
         </div>
       </section>
       <!-- end about section -->
+    {% else %}
+    {% endif %}
 {% endblock %}
