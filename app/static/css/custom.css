@@ -159,7 +159,7 @@ hr {
 .arrow-down {
     width: 100%;
     position: absolute;
-    bottom: 135px;
+    bottom: 11rem;
     margin: 50px 0 0 0;
     text-align: center;
 }
@@ -387,40 +387,9 @@ hr {
     border-bottom: 0px solid transparent !important;
 }
 
-.btn-features {
-    font-family: 'Roboto', sans-serif !important;
-    background-color: #2978cc !important;
-    color: #fff !important;
-    letter-spacing: .01rem !important;
-    font-size: 10px !important;
-    padding: 5px 10px 5px 10px !important;
-    margin: 10px !important;
-}
-
-.btn-features:hover {
-    background: #4e8dd1;
-}
-
-.btn-layout-disabled {
-    font-family: 'Roboto', sans-serif !important;
-    background-color: #999;
-    color: rgb(122, 122, 122);
-    border: 1px solid #999 !important;
-    letter-spacing: .01rem !important;
-    font-size: 10px !important;
-    padding: 5px 10px 5px 10px !important;
-    margin: 10px !important;
-}
-
-.btn-layout-disabled:hover {
-    font-family: 'Roboto', sans-serif !important;
-    background-color: #999;
-    color: rgb(122, 122, 122);
-    border: 1px solid #999 !important;
-    letter-spacing: .01rem !important;
-    font-size: 10px !important;
-    padding: 5px 10px 5px 10px !important;
-    margin: 10px !important;
+.btn-viewlayout {
+    width: 100px;
+    height: 30px;
 }
 
 /*******/
@@ -1413,4 +1382,13 @@ div.left_ribbon#ribbon_room_select::after{
 .features-spf {
     margin-top: 12px;
     font-size: 0.8rem;
+}
+
+.modelimg-flipped {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
 }

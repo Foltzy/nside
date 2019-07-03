@@ -2,6 +2,10 @@
 
 {% block title %} Display {% endblock %}
 
+{% block page_css %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
 {% block added_nav_links %}
   {% if linked_room != None %}
     <a href="{{ url_for('main.edit_link', residentof_id=linked_room.id) }}">Update/Change room link</a> 
@@ -131,9 +135,9 @@
                 <div class="card-body">
                   <div class="room-sum text-black">Room summary for <span class="r-name">{{ linked_room.room.building.name }} {{ linked_room.room.room_number }}</span></div>
                   <div class="text-black-50 features-subtitle"><span class="r-addr">{{ linked_room.room.building.address }}</span></div>
+                  <div class="text-black-50 features-spf"><a class="r-site" href="{{ linked_room.room.building.college.website }}" target="_blank">College website</a> | <a class="r-floorplan" target="_blank" href="{{ linked_room.room.building.college.floorplan }}">Building floor plan</a></div>
                   <hr class="my-3">
                   <div class="text-black-50 features-subtitle"><span class="r-desc">{{ linked_room.room.building.description }}</span></div>
-                  <div class="text-black-50 features-spf"><a class="r-site" href="{{ linked_room.room.building.college.website }}" target="_blank">College website</a> | <a class="r-floorplan" target="_blank" href="{{ linked_room.room.building.college.floorplan }}">Building floor plan</a></div>
                 <!-- possibly add hot links to cards below -->
                 </div>
               </div>
@@ -353,23 +357,19 @@
                       <div class="model">
                         <img class="model-img" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
                       </div>
-                      <a class="btn btn-primary btn-features">View Layout</a>
+                      <div class="container-login100-form-btn">
+                        <button class="btn-viewlayout index100-form-btn">View</button>
+                      </div>
                     </div>
                   </div>
                   <div class="row rs-row-features-3">
                     <div class="col-md-12">
                       <div class="model">
-                        <img class="model-img" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
+                        <img class="model-img modelimg-flipped" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
                       </div>
-                      <a class="btn btn-primary btn-features">View Layout</a>
-                    </div>
-                  </div>
-                  <div class="row rs-row-features-3">
-                    <div class="col-md-12">
-                      <div class="model">
-                        <img class="model-img" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
+                      <div class="container-login100-form-btn">
+                        <button class="btn-viewlayout index100-form-btn">View</button>
                       </div>
-                      <a class="btn btn-primary btn-features">View Layout</a>
                     </div>
                   </div>
                 </div>
