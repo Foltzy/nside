@@ -17,6 +17,12 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
         </button>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" target="_blank" href="https://www.surveymonkey.com/r/C9CM2BX">Feedback</a>
+            </li>
+        </ul>
     </nav>
     <!-- end nav -->
 {% endblock %}
@@ -38,6 +44,10 @@
                         </div>
                         <span class="login100-form-title p-b-5">
                             Login to your account
+                            <img class="hasTooltip icon-qtip_display ml-1 mb-4" src="{{ url_for('static', filename='img/svg/info.svg') }}">
+                            <div class="hidden">
+                                <span>Use email: <i>abode@survey.com</i> and password: <i>survey</i> for fast access.</span>
+                            </div>
                         </span>
                         <span class="login100-form-subtitle p-b-20">
                             All fields are required

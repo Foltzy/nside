@@ -82,6 +82,9 @@
       </button>
 
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" target="_blank" href="https://www.surveymonkey.com/r/C9CM2BX">Feedback</a>
+        </li>
         {% if current_user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="{{ url_for('security.logout') }}">Logout</a>

@@ -1392,3 +1392,24 @@ div.left_ribbon#ribbon_room_select::after{
     filter: FlipH;
     -ms-filter: "FlipH";
 }
+
+.r-question {
+    margin-bottom: 15px;
+    text-align: left !important;
+}
+
+.faq {
+    font-size: 1.2rem;
+}
+
+.faq-body {
+    text-align: left;
+}
+
+.faq-space {
+    margin-bottom: 20px;
+}
+
+.faq-subtitle {
+    font-size: 12px !important;
+}

@@ -143,21 +143,6 @@
               </div>
             </div>
 
-            <!-- <div class="col-xl-6 col-lg-5 row-image">
-              <img class="img-display-main mb-3 mb-lg-0" src="{{ url_for('static', filename='img/br_img1.png') }}" alt="Error loading image.">
-              <div class="row ext-imgs">
-                <div class="col-md-4 img-dis-col">
-                  <img class="img-display mb-3" src="{{ url_for('static', filename='img/br_img2.png') }}" alt="Error loading image.">
-                </div>
-                <div class="col-md-4 img-dis-col">
-                  <img class="img-display mb-3" src="{{ url_for('static', filename='img/br_img3.png') }}" alt="Error loading image.">
-                </div>
-                <div class="col-md-4 img-dis-col">
-                  <img class="img-display mb-3" src="{{ url_for('static', filename='img/br_img4.png') }}" alt="Error loading image.">
-                </div>
-              </div>
-            </div> -->
-
             <div class="col-xl-6 col-lg-5 row-image">
               <!-- Slideshow container -->
               <div class="slideshow-container">
@@ -204,28 +189,14 @@
               </div>
 
               <div class="card card-controls">
-                  <div class="card-controls-body">
-                    <!-- The dots/circles -->
-                    <div style="text-align:center">
-                      <!-- <span class="dot" onclick="currentSlide(1)"></span> 
-                      <span class="dot" onclick="currentSlide(2)"></span> 
-                      <span class="dot" onclick="currentSlide(3)"></span> 
-                      <span class="dot" onclick="currentSlide(4)"></span> 
-                      <span class="dot" onclick="currentSlide(5)"></span> -->
-
-                      <!-- <span class="dot"></span> 
-                      <span class="dot"></span> 
-                      <span class="dot"></span> 
-                      <span class="dot"></span> 
-                      <span class="dot"></span> 
-                      <span class="dot"></span> 
-                      <span class="dot"></span>  -->
-
-                      <a id="prev" class="previous"><img class="previoussvg" src="{{ url_for('static', filename='img/svg/previous.svg') }}"></a>
-                      <a id="next" class="nextious"><img class="nextioussvg" src="{{ url_for('static', filename='img/svg/nextious.svg') }}"></a>
-                    </div>
+                <div class="card-controls-body">
+                  <!-- The dots/circles -->
+                  <div style="text-align:center">
+                    <a id="prev" class="previous"><img class="previoussvg" src="{{ url_for('static', filename='img/svg/previous.svg') }}"></a>
+                    <a id="next" class="nextious"><img class="nextioussvg" src="{{ url_for('static', filename='img/svg/nextious.svg') }}"></a>
                   </div>
                 </div>
+              </div>
             </div>
 
             <div class="col-xl-6 col-lg-5 row-scroll">
@@ -265,8 +236,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="arrow-down"></div> -->
 
               <div class="card py-4">
                 <div class="card-body">
@@ -372,134 +341,55 @@
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              <!-- Purchase packages card -->
-              <!-- <div class="card py-4">
-                <div class="card-body">
-                  <h4 class="text-uppercase m-1">Purchase package</h4>
                   <hr class="my-4">
-                  <div class="small text-black-100">
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/box.svg') }}"> Blue | Grey | Green </div>
-                        <div class="col-md-6 text-black-50">Basics</div>
-                      </div>
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/trolley.svg') }}"></div>
-                        <div class="col-md-6 text-black-50">Full room</div>
-                      </div>
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/sofa.svg') }}"></div>
-                        <div class="col-md-6 text-black-50">Additions</div>
-                      </div>
-                  </div>
-                </div>
-              </div> -->
-
-            </div>
-            <div class="col-md-12">
-              <div class="card card-after-features">
-                <div class="card-body">
                   <h4 class="text-uppercase m-1">Want to suggest a layout?</h4>
                   <img class="hasTooltip icon-qtip_display" src="{{ url_for('static', filename='img/svg/info.svg') }}">
                   <div class="hidden">
                     <span>This feature is currently a work in progress</span>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="card card-after-features">
+                <div class="card-body faq-body">
+                  <div class="faq text-black">Frequently Asked Questions
+                    <img class="hasTooltip icon-qtip_display ml-1 mb-4" src="{{ url_for('static', filename='img/svg/info.svg') }}">
+                    <div class="hidden">
+                      <span>This feature is currently a work in progress</span>
+                    </div>
+                  </div>
+                  <hr class="my-3">
+                  <div class="text-black">Does the room come equipped with a trash can/recycling bin?</div>
+                  <div class="text-black-50 faq-subtitle faq-space">The room comes with a small trash can as well as a small recycling bin. There is also a large hallway trashcan for residents only.</div>
+                  
+                  <div class="text-black">Is there overhead lighting?</div>
+                  <div class="text-black-50 faq-subtitle faq-space">There is a standard over head light strong enough to illuminate the entire room.</div>
+
+                  <div class="text-black">How cold/drafty is the room and how much extra bedding is needed for the winter?</div>
+                  <div class="text-black-50 faq-subtitle faq-space">There is supplied air conditioning and it is recommended that students come prepared with a single heavy blanket/sheet for the winter.</div>
+
+                  <div class="text-black">Is there any room for suitcases or will they need to be brought back home?</div>
+                  <div class="text-black-50 faq-subtitle faq-space">There are three deep cabinets above the closets. Each can hold one standard suitcase and one standard carry on bag.</div>
+
+                  <div class="text-black">Are regular extension cords outlawed?</div>
+                  <div class="text-black-50 faq-subtitle">No. It is recommended to bring two power strips.</div>
+
+                  <!-- <h4 class="text-uppercase m-1">Want to suggest a layout?</h4>
+                  <img class="hasTooltip icon-qtip_display" src="{{ url_for('static', filename='img/svg/info.svg') }}">
+                  <div class="hidden">
+                    <span>This feature is currently a work in progress</span>
+                  </div> -->
                   <!-- <span title="This feature is a work in progress." disabled="true" class="btn btn-primary btn-layout-disabled">Submit a layout</span> -->
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <!-- end images + features -->
-
-        <div class="container">
-          <div class="row rs-row">
-            <div class="col-md-12">
-              <h4 class="text-white mb-4 text-center" id="faq">Frequently Asked Questions
-                <img class="hasTooltip icon-qtip_display ml-1 mb-4" src="{{ url_for('static', filename='img/svg/info.svg') }}">
-                <div class="hidden">
-                  <span>This feature is currently a work in progress</span>
-                </div>
-              </h4>
-              <p class="text-white-50">Still have a question? See what others are asking about [room], to hopefully find an answer.</p>
-            </div>
-            <div class="col-md-4 mb-3 mb-md-0">
-              <div class="card py-4 h-100">
-                <div class="card-body text-center">
-                  <h4 class="text-uppercase m-1">What are the dimensions of [room]?</h4>
-                  <hr class="my-4">
-                  <div class="small text-black-100">
-                    <div class="text-black-50">10ft x 18ft | 180ft<sup>2</sup></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4 mb-3 mb-md-0">
-              <div class="card py-4 h-100">
-                <div class="card-body text-center">
-                  <h4 class="text-uppercase m-1">How far is [room] from the gym?</h4>
-                  <hr class="my-4">
-                  <div class="small text-black-100">
-                    <div class="text-black-50">0.2 miles | 4 min walk</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4 mb-3 mb-md-0">
-              <div class="card py-4 h-100">
-                <div class="card-body text-center">
-                  <h4 class="text-uppercase m-1">How far is [room] from [a dining hall]?</h4>
-                  <hr class="my-4">
-                  <div class="small text-black-100">
-                    <div class="text-black-50">0.2 miles | 4 min walk</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row rs-row">
-            <div class="col-md-4 mb-3 mb-md-0">
-              <div class="card py-4 h-100">
-                <div class="card-body text-center">
-                  <h4 class="text-uppercase m-1">How far is [room] from a grocery store?</h4>
-                  <hr class="my-4">
-                  <div class="small text-black-100">
-                    <div class="text-black-50">Walmart | 8 min drive</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4 mb-3 mb-md-0">
-              <div class="card py-4 h-100">
-                <div class="card-body text-center">
-                  <h4 class="text-uppercase m-1">How many outlets are in [room]?</h4>
-                  <hr class="my-4">
-                  <div class="small text-black-100">
-                    <div class="text-black-50">3 | 2 port, american</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4 mb-3 mb-md-0">
-              <div class="card py-4 h-100">
-                <div class="card-body text-center">
-                  <h4 class="text-uppercase m-1">Where can I find a floor plan of my building?</h4>
-                  <hr class="my-4">
-                  <div class="small text-black-100">
-                    <a target="_blank" href="https://www.wooster.edu/_media/files/students/reslife/residence-halls/compton.pdf">Compton Hall Building Layout</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row rs-row-filler">
-          </div>
+        <div class="row rs-row-filler">
         </div>
       </section>
       <!-- end about section -->

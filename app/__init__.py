@@ -60,7 +60,14 @@ def create_app(config_name):
         # In each case, use Flask-Security utility function to encrypt the password.
         encrypted_password = utils.encrypt_password(app.config['STARTING_ADMIN_PASS'])
         if not user_datastore.get_user(app.config['STARTING_ADMIN1']):
-            user_datastore.create_user(email=app.config['STARTING_ADMIN1'], password=encrypted_password)
+            user_datastore.create_user(email=app.config['STARTING_ADMIN1'], password=encrypted_password, first_name='admin', last_name='user')
+        
+        if not user_datastore.get_user('abode@survey.com'):
+            user_datastore.create_user(email='abode@survey.com', password='survey', first_name='Survey', last_name='User')
+            user_datastore.add_role_to_user('abode@survey.com', 'end-user')
+            confirmed_survey = user_datastore.get_user('abode@survey.com')
+            if not confirmed_survey.confirmed_at:
+                confirmed_survey.confirmed_at = datetime.utcnow()
      
         # Commit any database changes; the User and Roles must exist before we can add a Role to the User
         db.session.commit()
