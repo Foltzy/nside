@@ -1,17 +1,9 @@
-{% extends "base.html" %}
+{% extends "gabase.html" %}
 
-{% block title %} Display {% endblock %}
+{% block title %} Room Display {% endblock %}
 
 {% block page_css %}
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-{% endblock %}
-
-{% block added_nav_links %}
-  {% if linked_room != None %}
-    <a href="{{ url_for('main.edit_link', residentof_id=linked_room.id) }}">Update/Change room link</a> 
-  {% else %}
-    <a href="{{ url_for('main.new_link') }}">Add room link</a> 
-  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -20,227 +12,262 @@
 
       <div class="current_userid" value="{{ current_user.id }}" style="display: none;"></div>
 
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="ribbon-flash left_ribbon-flash">
-              <p class="text-white p-college">{{ message }}</p>
+      <div id="header" class="row header-container">
+        <!-- display -->
+        <div class="col-xs-12 col-sm-12 col-md-6">
+
+          <!-- slideshow + room display script -->
+          <script>
+            $(document).ready(function(){
+              // hide the slideshow by default
+              $('#slideshow-container').hide();
+              $('#map-container').hide();
+              console.log('slideshow hidden')
+
+              $('#images').on('click', function() {
+                  $('#display-container').hide();
+                  $('#slideshow-container').show();
+                  $('#map-container').hide();
+              });
+
+              $('.back-trigger').on('click', function() {
+                  $('#display-container').show();
+                  $('#slideshow-container').hide();
+                  $('#map-container').hide();
+              });
+
+              $('#map').on('click', function() {
+                  $('#map-container').show();
+                  $('#slideshow-container').hide();
+                  $('#display-container').hide();
+              });
+
+              $('#directions').on('click', function() {
+                  $('#map-container').show();
+                  $('#slideshow-container').hide();
+                  $('#display-container').hide();
+              });
+
+              // TODO: add js to lower back button opacity when inactive
+            });
+          </script>
+          <!-- end script -->
+
+          {% if linked_room != None %}
+            <!-- slideshow -->
+            <div class="slideshow-container" id="slideshow-container">
+              <div class="mySlides fade">
+                <div class="numbertext">1 / 4</div>
+                <img class="img-display-main r-img1" src="{{ linked_room.room.img1 }}" style="width:100%">
+              </div>
+            
+              <div class="mySlides fade">
+                <div class="numbertext">2 / 4</div>
+                <img class="img-display-main r-img2" src="{{ linked_room.room.img2 }}" style="width:100%">
+              </div>
+            
+              <div class="mySlides fade">
+                <div class="numbertext">3 / 4</div>
+                <img class="img-display-main r-img3" src="{{ linked_room.room.img3 }}" style="width:100%">
+              </div>
+
+              <div class="mySlides fade">
+                <div class="numbertext">4 / 4</div>
+                <img class="img-display-main r-img4" src="{{ linked_room.room.img4 }}" style="width:100%">
+              </div>
+
+              <div style="text-align:center">
+                <a id="prev" onclick="plusSlides(-1)" class="previous"><img class="previoussvg" src="{{ url_for('static', filename='img/retina/left.svg') }}"></a>
+                <a id="next" onclick="plusSlides(1)" class="nextious"><img class="nextioussvg" src="{{ url_for('static', filename='img/retina/right.svg') }}"></a>
+              </div>
             </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
+            <!-- end slideshow -->
+          {% else %}
+          {% endif %}
 
-      <!-- viewing -->
-      <div class="ribbon left_ribbon" id="ribbon_viewing">
-        {% if linked_room != None %}
-          <p class="text-white p-viewing"><span class="link-view">Linked Room:</span></p>
-          <p class="text-white p-college">College: <span class="p-college-name">{{ linked_room.room.building.college.name }}</span></p>
-          <p class="text-white p-building">Building: <span class="p-building-name">{{ linked_room.room.building.name }}</span></p>
-          <p class="text-white p-room">Room number: <span class="p-room-number">{{ linked_room.room.room_number }}</span></p>
-        {% else %}
-          <p class="text-white p-viewing">Viewing:</p>
-          <p class="text-white p-college">College: <span class="p-college-name"></span></p>
-          <p class="text-white p-building">Building: <span class="p-building-name"></span></p>
-          <p class="text-white p-room">Room number: <span class="p-room-number"></span></p>
-        {% endif %}
-      </div>
+          <!-- room display -->
+          <div class="row r-display" id="display-container">
+            <div class="container d-flex h-100">
+              <div class="mx-auto text-center room-display">
+                <div id="content">
+                  <!-- wr360 container -->
+                  {% if linked_room == None %}
+                    <div class="hide no_link text-center">
+                      <div class="sl-object obj-muted">
+                          <img class="about-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}">
+                      </div>
+                      <br>You are not linked to a room.
+                    </div>
+                  {% else %}
+                    <div id="wr360PlayerId" class="wr360_player" style="background-color:#FFFFFF;">
+                    </div>
+                  {% endif %}
+                  <!-- end wr360 container -->
+                </div> 
 
-      <div class="left_ribbon" id="ribbon_room_select">
-        <p class="text-white p-room-header">Select room to view:</p>
-
-          <select class="option-value single-select" id="colleges" name="colleges">
-              <option disabled selected>College</option>
-              {% for college in colleges %}
-                <option key="{{ college.name }}" value="{{ college.id }}">{{ college.name }}</option>
-              {% endfor %}
-          </select>
-          <select class="single-select" id="buildings" name="buildings">
-              <option class="option-placeholder" disabled selected>Building</option>
-              {% for building in buildings %}
-                <option class="option-value" key="{{ building.name }}" value="{{ building.id }}">{{ building.name }}</option>
-              {% endfor %}
-          </select>
-          <select class="single-select" id="rooms" name="rooms">
-              <option class="option-placeholder" disabled selected>Room</option>
-              {% for room in rooms %}
-                <option class="option-value" data-filterkey="{{ room }}" value="{{ room.id }}">{{ room.room_number }}</option>
-              {% endfor %}
-          </select>
-          <img class="hasTooltip icon-qtip_display" src="{{ url_for('static', filename='img/svg/info.svg') }}">
-          <div class="hidden">
-            <span>Note: Upon selecting a room the model view will update</span>
-          </div>
-          <!-- <button class="btn btn-primary room_select-btn" type="submit">
-            Submit
-          </button> -->
-      </div>
-
-      <div class="container d-flex h-100">
-        <div class="mx-auto text-center room-display"> 
-          <div id="content">
-            {% if linked_room == None %}
-              <div class="hide no_link text-center">
-                <div class="sl-object obj-muted">
-                    <img class="about-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}">
+                <!-- room sum -->
+                <div class="card info-card">
+                  <div class="info-card-sub">
+                    <img class="info-svg text-primary" src="{{ url_for('static', filename='img/svg/i-info.svg') }}">Objects in model reflect number and size, although location may vary.
+                  </div>
                 </div>
-                <br>You are not linked to a room.
+                <!-- end room sum -->
               </div>
-              <div class="hide text-muted text-center">Select a college, building and room on the left to view that room here.</div>
-              <div class="hide want_link text-muted text-center">Want your room to automatically show up? Link your account to a room <a href="{{ url_for('main.new_link') }}">here</a> or in the settings above.</div>
-              <div id="wr360PlayerId" class="wr360_player" style="background-color:#FFFFFF; display: none;">
-              </div>
-            {% else %}
-              <div id="wr360PlayerId" class="wr360_player" style="background-color:#FFFFFF;">
-              </div>
-            {% endif %}
-          </div> 
+            </div>
+          </div>
+          <!-- end room display -->
+
+          <div class="map-container" id="map-container">
+            <iframe class="frame border-iframe" src="{{ linked_room.room.iframe_src }}" width="100%" height="625" allowfullscreen></iframe>
+          </div>
         </div>
-      </div>
+        <!-- end display -->
+        
+        {% if linked_room != None %}
+          <!-- info -->
+          <div class="col-xs-12 col-sm-12 col-md-6">
+            <div class="row r-tabs">
+              <script>
+                // tabs 
+                function openTab(evt, section) {
+                  var i, x, baritems;
+                  x = document.getElementsByClassName("tab-content");
+                  for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                  }
+                  baritems = document.getElementsByClassName("bar-item");
+                  for (i = 0; i < x.length; i++) {
+                    baritems[i].className = baritems[i].className.replace(" tab-active", "");
+                  }
+                  document.getElementById(section).style.display = "block";
+                  evt.currentTarget.className += " tab-active";
+                }
+              </script>
+              <!-- tabs -->
+              <div class="tab-bar">
+                  <button class="bar-item tab-active" onclick="openTab(event, 'section1')">Summary</button>
+                  <button class="bar-item" onclick="openTab(event, 'section2')">Images</button>
+                  <button class="bar-item" onclick="openTab(event, 'section3')">Contact</button>
+                  <button class="bar-item" onclick="openTab(event, 'section4')">Help</button>
+              </div> 
+              <!-- end tabs -->
+            </div>
 
-      <div class="arrow-down"></div>
+            <!-- tab content -->
+            <div id="section1" class="tab-content">
+              <!-- viewing -->
+              <div class="card">
+                <div class="card-body model-btn-card">
+                  {% if linked_room != None %}
+                    <!-- todo[p]: fix this for each tab & get rid of no link option -->
+                    <!-- add a little "Viewing" above the line -->
+                    <div class="viewing text-black">
+                      <img class="mini-model-left-arrow back-trigger" title="Back to model" src="{{ url_for('static', filename='img/svg/left_arrow.svg') }}">
+                      <img class="mini-model back-trigger" title="Back to model" src="{{ url_for('static', filename='img/svg/back_model.svg') }}">
+                      <span class="p-college-name">{{ linked_room.room.building.college.name }} /</span>
+                      <span class="p-building-name">{{ linked_room.room.building.name }} /</span>
+                      <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                    </div>
+                  {% else %}
+                    <div class="viewing text-black">
+                      <img class="mini-model" src="{{ url_for('static', filename='img/model-btn.png') }}">
+                      <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > 
+                      <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
+                      <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <!-- end viewing -->
 
-    </header>
-    <!-- end header -->
-
-    {% if linked_room == None %}
-      <script>
-        $(document).ready(function() {
-          function hide_room_summary() {
-              $('#about').hide();
-              console.log('about hidden');
-          }
-          hide_room_summary();
-        });
-      </script>
-    {% else %}
-      <script>
-        $(document).ready(function() {
-          function show_room_summary() {
-              $('#about').show();
-              console.log('about showing');
-          }
-          show_room_summary();
-        });
-      </script>
-    {% endif %}
-    {% if linked_room != None %}
-      <!-- about section -->
-      <section id="about" class="about-section text-center contact-section">
-        <div class="container">
-
-          <!-- begin images + features -->
-          <div class="row no-gutters mb-4 mb-lg-5">
-            <div class="col-md-12">
-              <div class="card card-before-features">
-                <div class="card-body">
-                  <div class="room-sum text-black">Room summary for <span class="r-name">{{ linked_room.room.building.name }} {{ linked_room.room.room_number }}</span></div>
-                  <div class="text-black-50 features-subtitle"><span class="r-addr">{{ linked_room.room.building.address }}</span></div>
-                  <div class="text-black-50 features-spf"><a class="r-site" href="{{ linked_room.room.building.college.website }}" target="_blank">College website</a> | <a class="r-floorplan" target="_blank" href="{{ linked_room.room.building.college.floorplan }}">Building floor plan</a></div>
+              <!-- room sum -->
+              <div class="card">
+                <div class="card-body addr_padding">
+                  <div class="text-black hall-title">{{ linked_room.room.building.name }}</div>
+                  <div class="text-black-50 addr features-spf"><span class="r-addr">{{ linked_room.room.building.address }}</span></div>
+                  <div class="text-black-50 features-spf"><a id="directions" href="#"><img class="plan-svg" src="{{ url_for('static', filename='img/svg/map.svg') }}"> View on map</a></div>
+                  <div class="text-black-50 features-spf"><img class="plan-svg" src="{{ url_for('static', filename='img/svg/map-allgrey.svg') }}"> No floor plan supplied</div>
+                  <div class="text-black-50 features-spf"><a class="r-site" href="{{ linked_room.room.building.college.website }}" target="_blank"><img class="earth-svg" src="{{ url_for('static', filename='img/svg/earth-forweb.svg') }}"></a>   <a class="r-site" href="{{ linked_room.room.building.college.website }}" target="_blank">{{ linked_room.room.building.college.website }}</a></div>
                   <hr class="my-3">
                   <div class="text-black-50 features-subtitle"><span class="r-desc">{{ linked_room.room.building.description }}</span></div>
-                <!-- possibly add hot links to cards below -->
                 </div>
               </div>
-            </div>
+              <!-- end room sum -->
 
-            <div class="col-xl-6 col-lg-5 row-image">
-              <!-- Slideshow container -->
-              <div class="slideshow-container">
-
-                <!-- Full-width images with number and caption text -->
-                <div class="mySlides fade">
-                  <div class="numbertext">1 / 5</div>
-                  <img class="img-display-main r-img1" src="{{ linked_room.room.img1 }}" style="width:100%">
-                  <!-- <div class="text">Caption Text</div> -->
-                </div>
-              
-                <div class="mySlides fade">
-                  <div class="numbertext">2 / 5</div>
-                  <img class="img-display-main r-img2" src="{{ linked_room.room.img2 }}" style="width:100%">
-                  <!-- <div class="text">Caption Two</div> -->
-                </div>
-              
-                <div class="mySlides fade">
-                  <div class="numbertext">3 / 5</div>
-                  <img class="img-display-main r-img3" src="{{ linked_room.room.img3 }}" style="width:100%">
-                  <!-- <div class="text">Caption Three</div> -->
-                </div>
-
-                <div class="mySlides fade">
-                  <div class="numbertext">4 / 5</div>
-                  <img class="img-display-main r-img4" src="{{ linked_room.room.img4 }}" style="width:100%">
-                  <!-- <div class="text">Caption Three</div> -->
-                </div>
-              
-                <!-- change 'style' to fix map shifting options-->
-                <div class="mySlides fade" style="height: 378.5px;">
-                  <div class="numbertext">5 / 5</div>
-                  <iframe class="r-iframe" src="{{ linked_room.room.iframe_src }}" width="100%" height="378.5" frameborder="0" style="border:0" allowfullscreen></iframe>
-                  <!-- <div class="text">Caption Three</div> -->
-                </div>
-
-                <div class="row">
-                  <!-- Next and previous buttons -->
-                  <!-- <a id="prev" class="prev" onclick="FUNCTIONS.plusSlides(-1);">&#10094;</a>
-                  <a id="next" class="next" onclick="FUNCTIONS.plusSlides(1);">&#10095;</a> -->
-                  <!-- <a id="prev" class="prev">&#10094;</a>
-                  <a id="next" class="next">&#10095;</a> -->
-                </div>
-              </div>
-
-              <div class="card card-controls">
-                <div class="card-controls-body">
-                  <!-- The dots/circles -->
-                  <div style="text-align:center">
-                    <a id="prev" class="previous"><img class="previoussvg" src="{{ url_for('static', filename='img/svg/previous.svg') }}"></a>
-                    <a id="next" class="nextious"><img class="nextioussvg" src="{{ url_for('static', filename='img/svg/nextious.svg') }}"></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-xl-6 col-lg-5 row-scroll">
-              <div class="card py-4">
+              <!-- facts -->
+              <div class="card">
                 <div class="card-body">
-                  <h4>Facts and features</h4>
-                  <hr class="my-4">
+                <div class="room-sum text-black">Room features</div>
+                  <hr class="my-3">
                   <div class="small text-black-100">
                     <div class="row rs-icon">
-                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/wifi.svg') }}"> Internet:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-inte">{{ linked_room.room.building.internet }}</span></div>
+                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/gender.svg') }}"> Gender:</div>
+                      <div class="col-md-4 text-black-50 mt-1"><span class="r-gend">{{ linked_room.room.gender }}</span></div>
                     </div>
                     <div class="row rs-icon">
-                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/outlet.svg') }}"> Outlets:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-outl">{{ linked_room.room.outlet_count }}</span></div>
+                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/capacity.svg') }}"> Capacity:</div>
+                      <div class="col-md-4 text-black-50 mt-1"><span class="r-capa">{{ linked_room.room.capacity }}</span></div>
                     </div>
                     <div class="row rs-icon">
-                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/mirror.svg') }}"> Mirrors:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-mirr">{{ linked_room.room.mirror_count }}</span></div>
+                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/wifi.svg') }}"> Internet:</div>
+                      <div class="col-md-4 text-black-50 mt-1"><span class="r-inte">{{ linked_room.room.building.internet }}</span></div>
                     </div>
                     <div class="row rs-icon">
-                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/drawers.svg') }}"> Drawers:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-draw">{{ linked_room.room.drawer_count }}</span></div>
+                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/ac.svg') }}"> Air Conditioning:</div>
+                      <div class="col-md-4 text-black-50 mt-1"><span class="r-ac">{{ linked_room.room.ac }}</span></div>
                     </div>
                     <div class="row rs-icon">
-                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/closet.svg') }}"> Closets:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-clos">{{ linked_room.room.closet_count }}</span></div>
+                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/heating.svg') }}"> Heating:</div>
+                      <div class="col-md-4 text-black-50 mt-1"><span class="r-heat">{{ linked_room.room.heating }}</span></div>
+                    </div>
+
+                    <div class="row rs-icon mt-4">
+                      <div class="col-md-4 si">
+                        Shared items
+                      </div>
+                      <div class="col-md-4 text-black mt-1">
+                        Individual
+                      </div>
+                      <div class="col-md-4 text-black mt-1">
+                        Total 
+                      </div>
+                    </div>
+
+                    <div class="row rs-icon">
+                      <div class="col-md-4">Outlets:</div>
+                      <div class="col-md-4 text-black-50"><span class="r-outl">{{ linked_room.room.outlet_count }}</span></div>
+                      <div class="col-md-4 text-black-50"><span class="r-outl-t">{{ linked_room.room.outlet_total }}</span></div>
                     </div>
                     <div class="row rs-icon">
-                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/shelves.svg') }}"> Shelves:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-shel">{{ linked_room.room.shelf_count }}</span></div>
+                      <div class="col-md-4">Mirrors:</div>
+                      <div class="col-md-4 text-black-50"><span class="r-mirr">{{ linked_room.room.mirror_count }}</span></div>
+                      <div class="col-md-4 text-black-50"><span class="r-mirr-t">{{ linked_room.room.mirror_total }}</span></div>
                     </div>
                     <div class="row rs-icon">
-                      <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/users.svg') }}"> Capacity:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-capa">{{ linked_room.room.capacity }}</span></div>
+                      <div class="col-md-4">Drawers:</div>
+                      <div class="col-md-4 text-black-50"><span class="r-draw">{{ linked_room.room.drawer_count }}</span></div>
+                      <div class="col-md-4 text-black-50"><span class="r-draw-t">{{ linked_room.room.drawer_total }}</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-4">Closets:</div>
+                      <div class="col-md-4 text-black-50"><span class="r-clos">{{ linked_room.room.closet_count }}</span></div>
+                      <div class="col-md-4 text-black-50"><span class="r-clos-t">{{ linked_room.room.closet_total }}</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-4">Shelves:</div>
+                      <div class="col-md-4 text-black-50"><span class="r-shel">{{ linked_room.room.shelf_count }}</span></div>
+                      <div class="col-md-4 text-black-50"><span class="r-shel-t">{{ linked_room.room.shelf_total }}</span></div>
                     </div>
                   </div>
                 </div>
               </div>
+              <!-- end facts -->
 
-              <div class="card py-4">
+              <!-- dims -->
+              <div class="card">
                 <div class="card-body">
-                  <h4 class="text-uppercase m-1"><img class="dims-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/dims.svg') }}">Dimensions</h4>
-                  <hr class="my-4">
+                  <div class="room-sum text-black">Dimensions</div>
+                  <hr class="my-3">
                   <div class="small text-black-100">
                     <div class="row rs-icon">
                       <div class="col-md-6">Room:</div>
@@ -260,7 +287,7 @@
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6">Shelves:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-shel-dims">{{ linked_room.room.shelf_count }}</span></div>
+                      <div class="col-md-6 text-black-50"><span class="r-shel-dims">{{ linked_room.room.shelf_dims }}</span></div>
                     </div>
                     <div class="row rs-icon">
                       <div class="col-md-6">Closets:</div>
@@ -269,11 +296,14 @@
                   </div>
                 </div>
               </div>
+              <!-- end dims -->
 
-              <div class="card py-4">
+              <!-- commute -->
+              <div class="card">
                 <div class="card-body">
-                  <h4 class="text-uppercase m-1">Commute times</h4>
-                  <hr class="my-4">
+                  <div class="room-sum text-black">Commute times</div>
+                  <!-- #TODO: add the to maps // check the guides -->
+                  <hr class="my-3">
                   <div class="small text-black-100">
                       <div class="row rs-icon">
                         <div class="col-md-6"><img class="svg-walk text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> to nearest dining hall: </div>
@@ -285,114 +315,194 @@
                       </div>
                       <div class="row rs-icon">
                         <div class="col-md-6"><img class="svg-car text-primary mb-2" src="{{ url_for('static', filename='img/svg/car.svg') }}"> to groceries: </div>
-                        <div class="col-md-6 text-black-50"><span class="r-groc-com">{{ linked_room.room.to_grocery }}</span></div>
+                        <div class="col-md-3 text-black-50"><span class="r-groc-com">{{ linked_room.room.to_grocery }}</span></div>
+                        <!-- <div class="col-md-3"><a href="{{ linked_room.room.to_grocery_map }}"><img class="commute-map-svg" src="{{ url_for('static', filename='img/svg/map.svg') }}"> View on map</a> </div> -->
                       </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end commute -->
+
+              <!-- provided -->
+              <div class="card">
+                <div class="card-body">
+                  <div class="room-sum text-black">Provided by school</div>
+                  <hr class="my-3">
+                  <div class="small text-black-100">
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Refridgerator:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-frid-pro">{{ linked_room.room.fridge }}</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Toaster:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-toas-pro">{{ linked_room.room.toaster }}</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Coffee machine:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-coff-pro">{{ linked_room.room.coffee }}</span></div>
+                    </div>
+                    <div class="row rs-icon">
+                      <div class="col-md-6">Television:</div>
+                      <div class="col-md-6 text-black-50"><span class="r-tv-pro">{{ linked_room.room.tv }}</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end provided -->
+            </div>
+            
+            <div id="section2" class="tab-content" style="display: none">
+              <!-- viewing -->
+              <div class="card">
+                  <div class="card-body model-btn-card">
+                    {% if linked_room != None %}
+                      <!-- <span class="link-view"><img class="viewing-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}"></span> -->
+                      <div class="viewing text-black">
+                        <img class="mini-model-left-arrow back-trigger" src="{{ url_for('static', filename='img/svg/left_arrow.svg') }}">
+                        <img class="mini-model back-trigger" src="{{ url_for('static', filename='img/svg/back_model.svg') }}">
+                        <span class="p-college-name">{{ linked_room.room.building.college.name }} /</span>
+                        <span class="p-building-name">{{ linked_room.room.building.name }} /</span>
+                        <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                      </div>
+                    {% else %}
+                      <div class="viewing text-black">
+                        <img class="mini-model" src="{{ url_for('static', filename='img/model-btn.png') }}">
+                        <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > 
+                        <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
+                        <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <!-- end viewing -->
+
+              <!-- images sliders -->
+              <div class="card">
+                <div class="card-body">
+                  <div class="view-item">Map
+                    <div class="view-btn-wrap">
+                      <button id="map" class="view-btn">View</button>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div class="card py-4">
+              <div class="card">
                 <div class="card-body">
-                  <h4 class="text-uppercase m-1">Provided by college</h4>
-                  <hr class="my-4">
-                  <div class="small text-black-100">
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/fridge.svg') }}"> Refridgerator:</div>
-                        <div class="col-md-6 text-black-50"><span class="r-frid-pro">{{ linked_room.room.fridge }}</span></div>
-                      </div>
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/toaster.svg') }}"> Toaster:</div>
-                        <div class="col-md-6 text-black-50"><span class="r-toas-pro">{{ linked_room.room.toaster }}</span></div>
-                      </div>
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/coffee-machine.svg') }}"> Coffee machine:</div>
-                        <div class="col-md-6 text-black-50"><span class="r-coff-pro">{{ linked_room.room.coffee }}</span></div>
-                      </div>
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/tv.svg') }}"> Television:</div>
-                        <div class="col-md-6 text-black-50"><span class="r-tv-pro">{{ linked_room.room.tv }}</span></div>
-                      </div>
+                  <div class="view-item">Room Images
+                    <div class="view-btn-wrap">
+                        <button id="images" class="view-btn">View</button>
+                    </div>
                   </div>
                 </div>
               </div>
-              
-              <div class="card py-4 card-layouts">
+
+              <div class="card">
                 <div class="card-body">
-                  <h4 class="text-uppercase m-1">Suggested layouts</h4>
-                  <div class="sugg-subtitle">A few suggested layouts based on what other students living in [room] says works best for them.</div>
-                  <hr class="my-4">
-                  <div class="row rs-row-features-3">
-                    <div class="col-md-12">
-                      <div class="model">
-                        <img class="model-img" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
-                      </div>
-                      <div class="container-login100-form-btn">
-                        <button class="btn-viewlayout index100-form-btn">View</button>
-                      </div>
+                  <div class="view-item">Lounge Images
+                    <div class="view-btn-wrap">
+                        <button id="lounge-images" class="view-btn">View</button>
                     </div>
                   </div>
-                  <div class="row rs-row-features-3">
-                    <div class="col-md-12">
-                      <div class="model">
-                        <img class="model-img modelimg-flipped" src="{{ url_for('static', filename='img/model-clean.png') }}" height="300px" width="300px">
-                      </div>
-                      <div class="container-login100-form-btn">
-                        <button class="btn-viewlayout index100-form-btn">View</button>
-                      </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <div class="view-item">Dining Hall Images
+                    <div class="view-btn-wrap">
+                        <button id="hall-images" class="view-btn">View</button>
                     </div>
-                  </div>
-                  <hr class="my-4">
-                  <h4 class="text-uppercase m-1">Want to suggest a layout?</h4>
-                  <img class="hasTooltip icon-qtip_display" src="{{ url_for('static', filename='img/svg/info.svg') }}">
-                  <div class="hidden">
-                    <span>This feature is currently a work in progress</span>
                   </div>
                 </div>
               </div>
             </div>
+            
+            <div id="section3" class="tab-content" style="display: none">
+              <!-- viewing -->
+              <div class="card">
+                  <div class="card-body model-btn-card">
+                    {% if linked_room != None %}
+                      <!-- <span class="link-view"><img class="viewing-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}"></span> -->
+                      <div class="viewing text-black">
+                        <img class="mini-model-left-arrow back-trigger" src="{{ url_for('static', filename='img/svg/left_arrow.svg') }}">
+                        <img class="mini-model back-trigger" src="{{ url_for('static', filename='img/svg/back_model.svg') }}">
+                        <span class="p-college-name">{{ linked_room.room.building.college.name }} /</span>
+                        <span class="p-building-name">{{ linked_room.room.building.name }} /</span>
+                        <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                      </div>
+                    {% else %}
+                      <div class="viewing text-black">
+                        <img class="mini-model" src="{{ url_for('static', filename='img/model-btn.png') }}">
+                        <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > 
+                        <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
+                        <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <!-- end viewing -->
 
-            <div class="col-md-12">
-              <div class="card card-after-features">
-                <div class="card-body faq-body">
-                  <div class="faq text-black">Frequently Asked Questions
+              <div class="card">
+                <div class="card-body">
+                  <div class="faq text-black">Contact
                     <img class="hasTooltip icon-qtip_display ml-1 mb-4" src="{{ url_for('static', filename='img/svg/info.svg') }}">
                     <div class="hidden">
                       <span>This feature is currently a work in progress</span>
                     </div>
                   </div>
                   <hr class="my-3">
-                  <div class="text-black">Does the room come equipped with a trash can/recycling bin?</div>
-                  <div class="text-black-50 faq-subtitle faq-space">The room comes with a small trash can as well as a small recycling bin. There is also a large hallway trashcan for residents only.</div>
+                  <div class="text-black">Res Life Coordinator: </div>
+                  <div class="text-black-50 faq-subtitle faq-space">1-800-000-000</div>
                   
-                  <div class="text-black">Is there overhead lighting?</div>
-                  <div class="text-black-50 faq-subtitle faq-space">There is a standard over head light strong enough to illuminate the entire room.</div>
-
-                  <div class="text-black">How cold/drafty is the room and how much extra bedding is needed for the winter?</div>
-                  <div class="text-black-50 faq-subtitle faq-space">There is supplied air conditioning and it is recommended that students come prepared with a single heavy blanket/sheet for the winter.</div>
-
-                  <div class="text-black">Is there any room for suitcases or will they need to be brought back home?</div>
-                  <div class="text-black-50 faq-subtitle faq-space">There are three deep cabinets above the closets. Each can hold one standard suitcase and one standard carry on bag.</div>
-
-                  <div class="text-black">Are regular extension cords outlawed?</div>
-                  <div class="text-black-50 faq-subtitle">No. It is recommended to bring two power strips.</div>
-
-                  <!-- <h4 class="text-uppercase m-1">Want to suggest a layout?</h4>
-                  <img class="hasTooltip icon-qtip_display" src="{{ url_for('static', filename='img/svg/info.svg') }}">
-                  <div class="hidden">
-                    <span>This feature is currently a work in progress</span>
-                  </div> -->
-                  <!-- <span title="This feature is a work in progress." disabled="true" class="btn btn-primary btn-layout-disabled">Submit a layout</span> -->
-                </div>
+                  <div class="text-black">Secretary: </div>
+                  <div class="text-black-50 faq-subtitle faq-space">1-800-000-000</div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- end images + features -->
-        <div class="row rs-row-filler">
+          <div id="section4" class="tab-content" style="display: none">
+            <!-- viewing -->
+            <div class="card">
+                <div class="card-body model-btn-card">
+                  {% if linked_room != None %}
+                    <!-- <span class="link-view"><img class="viewing-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}"></span> -->
+                    <div class="viewing text-black">
+                      <img class="mini-model-left-arrow back-trigger" src="{{ url_for('static', filename='img/svg/left_arrow.svg') }}">
+                      <img class="mini-model back-trigger" src="{{ url_for('static', filename='img/svg/back_model.svg') }}">
+                      <span class="p-college-name">{{ linked_room.room.building.college.name }} /</span>
+                      <span class="p-building-name">{{ linked_room.room.building.name }} /</span>
+                      <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                    </div>
+                  {% else %}
+                    <div class="viewing text-black">
+                      <img class="mini-model" src="{{ url_for('static', filename='img/model-btn.png') }}">
+                      <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > 
+                      <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
+                      <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <!-- end viewing -->
+
+              <div class="card">
+                <div class="card-body">
+                  <!-- <div class="text-black">First half:</div> -->
+                  <img class="help-img" src="{{ url_for('static', filename='img/abode_help_1.png') }}">
+
+                  <hr class="my-3">
+                  <!-- <div class="text-black">Second half:</div> -->
+                  <img class="help-img" src="{{ url_for('static', filename='img/abode_help_2.png') }}">
+              </div>
+            </div>
+          </div>
+          <!-- end tab content -->
         </div>
-      </section>
-      <!-- end about section -->
-    {% else %}
-    {% endif %}
+          <!-- end info -->
+        {% else %}
+        {% endif %}
+      </div>
+    </header>
+    <!-- end header -->
 {% endblock %}

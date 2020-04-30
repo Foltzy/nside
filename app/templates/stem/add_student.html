@@ -1,0 +1,87 @@
+{% extends "gabase.html" %}
+
+{% block title %} Add Student {% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% from "security/_macros.html" import render_field %}
+
+{% block content %}
+    <!-- login section -->
+    <section id="signup" class="login-section text-center">
+        <div class="limiter">
+            <div id="content-center" class="container-login100">
+                <div class="wrap-register100 p-l-30 p-r-30 p-t-40 p-b-10">
+                    <form class="login100-form validate-form" method="POST" action="{{ url_for('main.add_student') }}">
+                        <div class="sl-object obj-muted">
+                            <img class="about-svg" src="{{ url_for('static', filename='img/svg/add-group.svg') }}">
+                        </div>
+                        <span class="login100-form-title p-b-5">
+                            Add Student
+                        </span>
+                        <span class="login100-form-subtitle p-b-20">
+                            All fields are required
+                        </span>
+
+                        {{ form.hidden_tag() }}
+                    
+                        {{ render_field(form.first_name, placeholder="Student first name", class_="input100") }}
+
+                        {{ render_field(form.last_name, placeholder="Student last name", class_="input100") }}
+
+                        {{ render_field(form.email, placeholder="Student email", class_="input100") }}
+
+                        {{ render_field(form.password, placeholder="Student password", class_="input100") }}
+
+                        <div class="content-divider">
+                            <span class="fs-12">
+                                Select Students Room
+                            </span>
+                        </div>
+
+                        <select class="single-select" id="colleges" name="colleges">
+                                <option disabled selected>College</option>
+                            {% for college in colleges %}
+                                <option value="{{ college.id }}">{{ college.name }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select class="single-select" id="buildings" name="buildings">
+                                <option class="option-placeholder" disabled selected>Building</option>
+                            {% for building in buildings %}
+                                <option class="option-value" value="{{ building.id }}">{{ building.name }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <select class="single-select" id="rooms" name="room_id">
+                                <option class="option-placeholder" disabled selected>Room</option>
+                            {% for room in rooms %}
+                                <option class="option-value" value="{{ room.id }}">{{ room.room_number }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        <div class="container-login100-form-btn p-t-25">
+                            <a class="btn-cancel" href="{{ url_for('main.dean_panel') }}">
+                                CANCEL
+                            </a>
+
+                            <!-- todo[p]: add check before submitting to make sure the info is correct -->
+                            <button class="login100-form-btn" type="submit">
+                                Add
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end login section -->
+{% endblock %}
+

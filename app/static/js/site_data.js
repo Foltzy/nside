@@ -39,9 +39,12 @@ $(document).ready(function(){
         // /fetch
     }
 
+    // imagerotator 
+    // tells webrotate what room to load first then replace with the linked room
+    // tells webrotate API how to load xml's as well
     jQuery('#wr360PlayerId').rotator({
-        licenseFileURL: 'license.lic',
-        configFileURL: '/static/360_assets/sample_model_1/sample_model_1.xml',
+        licenseFileURL: '/static/360_assets/license.lic',
+        configFileURL: '/static/360_assets/E24_1_final_wr/E24_1_final_wr.xml',
         graphicsPath: '/static/img/basic',
         zIndexLayersOn: false,
         responsiveBaseWidth: 600,
@@ -52,7 +55,7 @@ $(document).ready(function(){
 
     // on change of room select field
     $('#rooms').on('change', function() {
-        $('.link-view').text('Viewing:');
+        $('.link-view').empty();
         // updates the first two fields of 'viewing' 
         // to represent selected college name and building name
         // update college name
@@ -90,7 +93,9 @@ $(document).ready(function(){
         $('.wr360_player').show();
         $('#about').show();
 
-        
+        ///////////////////////
+        // DYNAMIC SITE DATA //
+        ///////////////////////
         // get the selected room id
         var room_id = $(this).val();
         // check the room id
@@ -139,6 +144,17 @@ $(document).ready(function(){
                 $('.r-shel').text(room.shelf_count);
                 // update capacity
                 $('.r-capa').text(room.capacity);
+
+                // update gender
+                $('.r-gend').text(room.gender);
+                $('.r-ac').text(room.ac);
+                $('.r-heat').text(room.heating);
+
+                $('.r-outl-t').text(room.outlet_total);
+                $('.r-mirr-t').text(room.mirror_total);
+                $('.r-draw-t').text(room.drawer_total);
+                $('.r-clos-t').text(room.closet_total);
+                $('.r-shel-t').text(room.shelf_total);
 
                 // update room dims
                 $('.r-room-dims').text(room.full_dims);

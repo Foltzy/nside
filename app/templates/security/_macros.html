@@ -13,6 +13,29 @@
     </div>
 {% endmacro %}
 
+<!-- render inout field -->
+{% macro render_land_field(field, label="Label") %}
+    <div class="form-group">
+        <label for="{{ type }}">{{ label }}</label>
+        {{ field(**kwargs)|safe }}
+
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="fielderr">
+                    <span class="err">{{ error }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+
+
+
+
+
+
 <!-- render select field -->
 {% macro render_select_field(field, placeholder='Select...', label='Select an option below') %}
     <div class="form-group">
@@ -31,3 +54,19 @@
     {% endif %}
     </div>
 {% endmacro %}
+
+<!-- render error field field -->
+{% macro render_field_with_errors(field) %}
+    <div class="wrap-input100 validate-input m-b-16">
+        {{ field(**kwargs)|safe }}
+
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="fielderr">
+                    <span class="err">{{ error }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+

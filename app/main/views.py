@@ -1,22 +1,60 @@
 # views.py
 from flask import Flask, request, render_template, flash, redirect, \
     url_for, jsonify, current_app
-from flask_security import current_user, utils
+from flask_security import current_user, utils, roles_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from datetime import datetime
+from flask_mail import Message
 # files
-from .forms import LoginForm, RegisterForm, ResidentOfForm
+from .forms import LoginForm, RegisterForm, AddStudentForm, ContactForm
 from . import main as app
-from .. import db
-from ..models import College, Building, Room, ResidentOf, User
+from .. import db, mail
+from ..models import College, Building, Room, ResidentOf, User, Role
 
 import json
+import private
 
+
+# LANDING
+######################
 @app.route('/')
 @app.route('/index/')
 def index():
-    return render_template('stem/index.html')
+    form = ContactForm()
+    return render_template('stem/index.html', form=form)
 
+# ====================
+# ========== for students
+@app.route('/students')
+def students():
+    form = ContactForm()
+    return render_template('landing/students.html', form=form)
+
+# ====================
+# ========== for parents
+@app.route('/parents')
+def parents():
+    return render_template('landing/parents.html')
+
+# ====================
+# ========== for schools
+@app.route('/schools')
+def schools():
+    return render_template('landing/schools.html')
+
+# ====================
+# ========== about us
+@app.route('/aboutus')
+def about_us():
+    form = ContactForm()
+    return render_template('landing/about_us.html', form=form)
+
+
+# GA / STEM
+######################
+# ====================
+# ========== display
 @app.route('/display/')
 @login_required
 def display():
@@ -25,9 +63,10 @@ def display():
     buildings = Building.query.all()
     all_rooms = Room.query.all()
 
-    name = current_user.first_name
+    name = current_user.first_name + " " + current_user.last_name
 
     # see if the  user is linked  to a room if not set to 'None'
+    # todo[p]: have a fail safe in place to catch users that don't have a linked room
     if len(current_user.rooms) != 0:
         linked_room = current_user.rooms[0]
     else:
@@ -35,6 +74,8 @@ def display():
 
     return render_template('stem/display.html', name=name, linked_room=linked_room, colleges=colleges, buildings=buildings, rooms=all_rooms)
 
+# ====================
+# ========== login
 @app.route('/login/', methods=('GET', 'POST'))
 def login():
     form = LoginForm()
@@ -50,6 +91,8 @@ def login():
             flash('Invalid email or password')
     return render_template('security/login.html', form=form)
 
+# ====================
+# ========== sign up
 @app.route('/signup/', methods=('GET', 'POST'))
 def signup():
     form = RegisterForm()
@@ -88,6 +131,8 @@ def signup():
 
     return render_template('security/signup.html', form=form, colleges=colleges, buildings=buildings)
 
+# ====================
+# ========== building
 @app.route('/building/<int:college_id>')
 def building(college_id):
     buildings = Building.query.filter_by(college_id=college_id).all()
@@ -102,6 +147,8 @@ def building(college_id):
     
     return jsonify({'buildings' : buildingsArray})
 
+# ====================
+# ========== room
 @app.route('/room/<int:building_id>')
 def room(building_id):
     rooms = Room.query.filter_by(building_id=building_id).all()
@@ -116,66 +163,22 @@ def room(building_id):
     
     return jsonify({'rooms' : roomsArray})
 
+# ====================
+# ========== logout
 @app.route('/logout/')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('main.login'))
 
-@app.route('/new_link/', methods=('GET', 'POST'))
-@login_required
-def new_link():
-    form = ResidentOfForm()
-    # for select2 fields
-    colleges = College.query.all()
-    buildings = Building.query.all()
-
-    # query all rooms in database for selectfield
-    form.room_id.choices = [(str(room.id), repr(room)) for room in Room.query.all()]
-
-    if form.validate_on_submit():
-        relationship = ResidentOf()
-        relationship.user_id = current_user.id
-        relationship.room_id = form.room_id.data
-        db.session.add(relationship)
-        db.session.commit()
-
-        new_room = Room.query.filter_by(id=form.room_id.data).first_or_404()
-
-        flash("You are now linked to " + str(new_room), 'success')
-        return redirect(url_for('main.display'))
-    
-    return render_template('stem/residentof_form.html', form=form, colleges=colleges, buildings=buildings, action="new")
-
-@app.route('/edit_link/<int:residentof_id>', methods=('GET', 'POST'))
-@login_required
-def edit_link(residentof_id):
-    # for select2 fields
-    colleges = College.query.all()
-    buildings = Building.query.all()
-    residentof = ResidentOf.query.filter_by(id=residentof_id).first_or_404()
-    form = ResidentOfForm()
-
-    form = ResidentOfForm(obj=residentof)
-
-    # query all rooms in database for selectfield
-    form.room_id.choices = [(str(room.id), repr(room)) for room in Room.query.all()]
-
-    if form.validate_on_submit():
-        form.populate_obj(residentof)
-
-        room_id = residentof.room_id
-        db.session.commit()
-
-        flash("Link updated", 'success')
-        return redirect(url_for('main.display'))
-    
-    return render_template('stem/residentof_form.html', form=form, colleges=colleges, buildings=buildings, residentof=residentof, action="edit")
-
+# ====================
+# ========== about
 @app.route('/about/')
 def about():
     return render_template('stem/about.html')
 
+# ====================
+# ========== for dynamic data
 # for dynamic site data
 # ''' returns room object for use in js functions to render dynamic site data '''
 @app.route('/selected_room/<int:room_id>')
@@ -205,12 +208,21 @@ def selected_room(room_id):
         'number': selected_room.room_number,
         'capacity': selected_room.capacity,
         'xml_path': selected_room.xml_path,
+        'gender': selected_room.gender,
+        'ac': selected_room.ac,
+        'heating': selected_room.heating,
         
         'outlet_count': selected_room.outlet_count,
         'mirror_count': selected_room.mirror_count,
         'drawer_count': selected_room.drawer_count,
         'closet_count': selected_room.closet_count,
         'shelf_count': selected_room.shelf_count,
+
+        'outlet_total': selected_room.outlet_total,
+        'mirror_total': selected_room.mirror_total,
+        'drawer_total': selected_room.drawer_total,
+        'closet_total': selected_room.closet_total,
+        'shelf_total': selected_room.shelf_total,
 
         'full_dims': selected_room.full_dims,
         'bed_dims': selected_room.bed_dims,
@@ -239,6 +251,8 @@ def selected_room(room_id):
 
     return jsonify(room_data)
 
+# ====================
+# ========== linked room
 @app.route('/linked_room/<int:user_id>')
 def linked_room(user_id):
     linked_room = ResidentOf.query.filter_by(user_id=user_id).first_or_404()
@@ -250,7 +264,89 @@ def linked_room(user_id):
 
     return jsonify(linked_room_data)
 
+# ====================
+# ========== dean panel
+@app.route('/deanpanel/')
+@roles_required('dean')
+def dean_panel():
+    all_students = User.query.filter_by(student=True).all()
+    name = current_user.first_name
+    return render_template('stem/dean_panel.html', name=name, students=all_students)
 
+# ====================
+# ========== add student
+@app.route('/addstudent/', methods=('GET', 'POST'))
+@roles_required('dean')
+def add_student():
+    form = AddStudentForm()
+    name = current_user.first_name
 
+    # for select2 fields
+    colleges = College.query.all()
+    buildings = Building.query.all()
 
+    # query all rooms in database for selectfield
+    form.room_id.choices = [(str(room.id), repr(room)) for room in Room.query.all()]
 
+    if form.validate_on_submit():
+
+        first_name = form.first_name.data
+        last_name =  form.last_name.data
+        email = form.email.data
+        password = form.password.data
+        student = True
+        confirmed_at = datetime.utcnow()
+
+        user = User(first_name=first_name, last_name=last_name, email=email, password=password, student=student, confirmed_at=confirmed_at)
+        db.session.add(user)
+        db.session.commit()
+
+        relationship = ResidentOf()
+        relationship.user_id = user.id
+        if form.room_id.data != "Room":
+            relationship.room_id = form.room_id.data
+        else:
+            relationship.room_id = None
+
+        db.session.add(relationship)
+        db.session.commit()
+
+        flash("Added " + form.first_name.data + " " + form.last_name.data, 'success')
+        return redirect(url_for('main.dean_panel'))
+
+    return render_template('stem/add_student.html', form=form, colleges=colleges, buildings=buildings, name=name, action="new")
+
+# ====================
+# ========== delete user
+@app.route('/user/delete/<int:user_id>')
+@roles_required('dean')
+def delete_user(user_id):
+    user = User.query.filter_by(id=user_id).first_or_404()
+    db.session.delete(user)
+    db.session.commit()
+    flash("User deleted", 'success')
+    return redirect(url_for('main.dean_panel'))
+
+# ====================
+# ========== contact
+@app.route('/contact/', methods=('GET', 'POST'))
+def contact():
+    form = ContactForm()
+
+    if form.validate_on_submit():
+
+        # build an email using invoice template and send to invoice recepient
+        msg = Message(subject="Note from " + form.full_name.data + "!",
+                    sender=form.email.data, 
+                    recipients=[private.ADMIN_EMAIL], 
+                    body="From " + form.email.data + ", message: " + form.message.data)
+        mail.send(msg)
+
+        flash("Your message has been sent. Thank you!", 'success')
+        return redirect(url_for('main.index', form=form))
+
+#### flash message test route
+# @app.route('/flash/')
+# def flash_message():
+#     flash("This is a flashed message to help with styling and other needs", 'success')
+#     return redirect(url_for('main.display'))

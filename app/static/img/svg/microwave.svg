@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 496.2 496.2" style="enable-background:new 0 0 496.2 496.2;" xml:space="preserve" width="512px" height="512px" class="hovered-paths"><g><path style="fill:#2978CC" d="M496.2,248.1C496.2,111.1,385.1,0,248.1,0S0,111.1,0,248.1s111.1,248.1,248.1,248.1  S496.2,385.1,496.2,248.1z" data-original="#25B7D3" class="hovered-path" data-old_color="#25B7D3"/><path style="fill:#DDDDDD;" d="M406.1,339.9c0,6.6-5.4,12-12,12h-292c-6.6,0-12-5.4-12-12V156.3c0-6.6,5.4-12,12-12h292  c6.6,0,12,5.4,12,12V339.9z" data-original="#DDDDDD"/><g>
+	<rect x="116.1" y="170.1" style="fill:#3A3536;" width="224" height="156" data-original="#3A3536"/>
+	<rect x="355.6" y="170.1" style="fill:#3A3536;" width="35.5" height="22.5" data-original="#3A3536"/>
+</g><polygon style="fill:#494345;" points="391.1,170.1 355.6,170.1 355.6,192.6 " data-original="#494345"/><rect x="140.3" y="189.1" style="fill:#CCCACA;" width="175.5" height="118" data-original="#CCCACA"/><path style="fill:#5E5B5C;" d="M361.7,229.2c5.7-5.7,15-5.7,20.7,0s5.7,15,0,20.7s-15,5.7-20.7,0S356,234.9,361.7,229.2z" data-original="#5E5B5C"/><path style="fill:#6D6B6B;" d="M387,254.5l-1.9-1.9c3.5-3.5,5.4-8.2,5.4-13.1c0-5-1.9-9.6-5.4-13.1c-7.2-7.2-19-7.2-26.2,0  s-7.2,19,0,26.2l-1.9,1.9c-8.3-8.3-8.3-21.7,0-30s21.7-8.3,30,0c4,4,6.2,9.3,6.2,15C393.2,245.2,391,250.5,387,254.5z" data-original="#6D6B6B" class=""/><path style="fill:#3A3536;" d="M372.1,233.4c9.1,0,16.5,2.8,16.5,6.2c0,3.5-7.4,6.3-16.5,6.3s-16.5-2.8-16.5-6.2  C355.6,236.2,363,233.4,372.1,233.4z" data-original="#3A3536"/><path style="fill:#262626" d="M372.1,235.7c9.1,0,16.5,1.7,16.5,3.8s-7.4,3.8-16.5,3.8s-16.5-1.7-16.5-3.8S363,235.7,372.1,235.7z" data-original="#262626" class="active-path"/><g>
+	<circle style="fill:#494345;" cx="362.1" cy="280.3" r="6.5" data-original="#494345"/>
+	<circle style="fill:#494345;" cx="386.3" cy="280.3" r="6.5" data-original="#494345"/>
+	<circle style="fill:#494345;" cx="362.1" cy="299.9" r="6.5" data-original="#494345"/>
+	<circle style="fill:#494345;" cx="386.3" cy="299.9" r="6.5" data-original="#494345"/>
+	<circle style="fill:#494345;" cx="362.1" cy="319.2" r="6.5" data-original="#494345"/>
+	<circle style="fill:#494345;" cx="386.3" cy="319.2" r="6.5" data-original="#494345"/>
+</g></g> </svg>

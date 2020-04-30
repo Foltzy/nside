@@ -47,6 +47,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(155))
     password = db.Column(db.String())
     active = db.Column(db.Boolean(), default=True)
+    student = db.Column(db.Boolean(), default=False)
     dob = db.Column(db.DateTime())
     confirmed_at = db.Column(db.DateTime())
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
@@ -135,20 +136,29 @@ class Room(db.Model):
     Note: This should not infringe on what rooms they can view.
     """
     id = db.Column(db.Integer, primary_key=True)
-    room_number = db.Column(db.Integer, unique=True)
+    room_number = db.Column(db.String, unique=True)
     # foreign key for 'rooms'
     building_id = db.Column(db.Integer, db.ForeignKey('building.id'))
 
     # dynamic site data (room)
     capacity = db.Column(db.Integer)
+    gender = db.Column(db.String()) 
+    ac = db.Column(db.String()) 
+    heating = db.Column(db.String()) 
     # xml file path
     xml_path = db.Column(db.String()) # format = 'folder_name/folder_name.xml' no quotes
-    # count/totals
+    # counts
     outlet_count = db.Column(db.Integer)
     mirror_count = db.Column(db.Integer)
     drawer_count = db.Column(db.Integer)
     closet_count = db.Column(db.Integer)
     shelf_count = db.Column(db.Integer)
+    # totals
+    outlet_total = db.Column(db.Integer) 
+    mirror_total = db.Column(db.Integer) 
+    drawer_total = db.Column(db.Integer) 
+    closet_total = db.Column(db.Integer) 
+    shelf_total = db.Column(db.Integer) 
     # dimensions (dims)
     full_dims = db.Column(db.String())
     bed_dims = db.Column(db.String())
@@ -160,6 +170,10 @@ class Room(db.Model):
     to_grocery = db.Column(db.String())
     to_gym = db.Column(db.String())
     to_hall = db.Column(db.String()) # to nearest dining hall
+    # commute maps
+    to_grocery_map = db.Column(db.String())
+    to_gym_map = db.Column(db.String())
+    to_hall_map = db.Column(db.String()) 
     # provided by college
     fridge = db.Column(db.String())
     toaster = db.Column(db.String())

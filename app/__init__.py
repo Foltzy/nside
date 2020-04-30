@@ -55,19 +55,17 @@ def create_app(config_name):
         # Create the Roles "admin" and "end-user" -- unless they already exist
         user_datastore.find_or_create_role(name='admin')
         user_datastore.find_or_create_role(name='end-user')
+        user_datastore.find_or_create_role(name='dean')
+        user_datastore.find_or_create_role(name='student')
 
         # Create two Users for testing purposes -- unless they already exists.
         # In each case, use Flask-Security utility function to encrypt the password.
         encrypted_password = utils.encrypt_password(app.config['STARTING_ADMIN_PASS'])
         if not user_datastore.get_user(app.config['STARTING_ADMIN1']):
             user_datastore.create_user(email=app.config['STARTING_ADMIN1'], password=encrypted_password, first_name='admin', last_name='user')
-        
-        if not user_datastore.get_user('abode@survey.com'):
-            user_datastore.create_user(email='abode@survey.com', password='survey', first_name='Survey', last_name='User')
-            user_datastore.add_role_to_user('abode@survey.com', 'end-user')
-            confirmed_survey = user_datastore.get_user('abode@survey.com')
-            if not confirmed_survey.confirmed_at:
-                confirmed_survey.confirmed_at = datetime.utcnow()
+
+        if not user_datastore.get_user('ryane@gilmour.org'):
+            user_datastore.create_user(email='ryane@gilmour.org', password='ryane', first_name='Ed', last_name='Ryan')
      
         # Commit any database changes; the User and Roles must exist before we can add a Role to the User
         db.session.commit()
@@ -80,6 +78,11 @@ def create_app(config_name):
         confirmed_admin = user_datastore.get_user(app.config['STARTING_ADMIN1'])
         if not confirmed_admin.confirmed_at:
             confirmed_admin.confirmed_at = datetime.utcnow()
+
+        user_datastore.add_role_to_user('ryane@gilmour.org', 'dean')
+        confirmed_dean = user_datastore.get_user('ryane@gilmour.org')
+        if not confirmed_dean.confirmed_at:
+            confirmed_dean.confirmed_at = datetime.utcnow()
 
         db.session.commit()
     

@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %} Students {% endblock %}
+
+{% from "security/_macros.html" import render_land_field %}
+
+{% block content %}
+
+    <!-- WELCOME
+    ================================================== -->
+    <section class="py-10 py-md-14 bg-primary" id="welcome">
+
+        <!-- Shape -->
+        <div class="shape shape-blur-3 svg-shim text-white">
+          <svg viewBox="0 0 1738 487" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0H1420.92C1420.92 0 2134.35 457.505 1420.92 485.868C707.502 514.231 0 0 0 0Z" fill="url(#paint0_linear)"/>
+            <defs>
+              <linearGradient id="paint0_linear" x1="0" y1="0" x2="1049.98" y2="912.68" gradientUnits="userSpaceOnUse">
+              <stop stop-color="currentColor" stop-opacity="0.075"/>
+              <stop offset="1" stop-color="currentColor" stop-opacity="0"/>
+            </linearGradient>
+            </defs>
+          </svg>
+        </div>
+  
+        <!-- Content -->
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+              
+              <!-- Heading -->
+              <h1 class="display-2 font-weight-bold text-white">
+                *students*
+              </h1>
+  
+              <!-- Text -->
+              <p class="lead text-white mb-8">
+                *everything you need to see for your room and more*
+              </p>
+
+              <!-- Text -->
+              <p class="lead text-white mb-8">
+                *its your room so why don't you already know everything about it?*
+              </p>
+  
+            </div>
+          </div> <!-- / .row -->
+        </div> <!-- / .container -->
+  
+      </section>
+  
+      <!-- SHAPE
+      ================================================== -->
+      <div class="position-relative">
+        <div class="shape shape-bottom shape-fluid-x svg-shim text-white">
+          <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+  
+      <!-- ABOUT
+      ================================================== -->
+      <section class="pt-8 pt-md-10" id="about">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 text-center">
+              
+              <!-- Button -->
+              <a href="#about" class="btn btn-white btn-rounded-circle shadow mt-n12 mt-md-n14" data-toggle="smooth-scroll">
+                <i class="fe fe-arrow-down"></i>
+              </a>
+  
+            </div>
+          </div> <!-- / .row -->
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+              
+              <!-- Badge -->
+              <span class="badge badge-primary-desat-soft badge-pill mb-3">
+                  <span class="h6 text-uppercase">
+                      *what you can do*
+                  </span>
+              </span>
+
+              <!-- Heading -->
+              <h2 class="font-weight-bold">
+                The hub for all your <span class="text-primary">dorm room details</span>.
+              </h2>
+  
+              <!-- Text -->
+              <p class="font-size-lg text-muted mb-9">
+                Abode Interior is where you can come for all those overlooked, important details about your room.
+              </p>
+  
+            </div>
+          </div> <!-- / .row -->
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              
+              <!-- Item -->
+              <div class="row align-items-center mb-8"data-aos="fade-up">
+                <div class="col-4 col-lg-5">
+                  
+                  <!-- Image -->
+                  <img src="{{ url_for('static', filename='landing_static/img/placeholder.png') }}" alt="..." class="img-fluid">
+  
+                </div>
+                <div class="col-8 col-lg-7">
+                  
+                  <!-- Heading -->
+                  <h3 class="font-weight-bold mb-2">
+                    *visualize your room*
+                  </h3>
+  
+                  <!-- Text -->
+                  <p class="text-gray-700 mb-0">
+                    Communicate with your team in public or private chats with individuals or groups.
+                  </p>
+  
+                </div>
+              </div> <!-- / .row -->
+  
+              <!-- Item -->
+              <div class="row align-items-center mb-8" data-aos="fade-up">
+                <div class="col-4 col-lg-5">
+                  
+                  <!-- Image -->
+                  <img src="{{ url_for('static', filename='landing_static/img/placeholder.png') }}" alt="..." class="img-fluid">
+  
+                </div>
+                <div class="col-8 col-lg-7">
+                  
+                  <!-- Heading -->
+                  <h3 class="font-weight-bold mb-2">
+                    *see distances*
+                  </h3>
+  
+                  <!-- Text -->
+                  <p class="text-gray-700 mb-0">
+                    Keep everything in one place and feel at peace and organized rather than scattered.
+                  </p>
+  
+                </div>
+              </div> <!-- / .row -->
+  
+  
+            </div>
+            <div class="col-12 col-lg-6">
+              <!-- Item -->
+              <div class="row align-items-center mb-8" data-aos="fade-up">
+                <div class="col-4 col-lg-5">
+                  
+                  <!-- Image -->
+                  <img src="{{ url_for('static', filename='landing_static/img/placeholder.png') }}" alt="..." class="img-fluid">
+  
+                </div>
+                <div class="col-8 col-lg-7">
+                  
+                  <!-- Heading -->
+                  <h3 class="font-weight-bold mb-2">
+                    *dimensions of things in your room*
+                  </h3>
+  
+                  <!-- Text -->
+                  <p class="text-gray-700 mb-0">
+                    Keep track of what's happening in your company from a centralized dashboard.
+                  </p>
+  
+                </div>
+              </div> <!-- / .row -->
+  
+              <!-- Item -->
+              <div class="row align-items-center mb-8" data-aos="fade-up">
+                <div class="col-4 col-lg-5">
+                  
+                  <!-- Image -->
+                  <img src="{{ url_for('static', filename='landing_static/img/placeholder.png') }}" alt="..." class="img-fluid">
+  
+                </div>
+                <div class="col-8 col-lg-7">
+                  
+                  <!-- Heading -->
+                  <h3 class="font-weight-bold mb-2">
+                    *what you can and cannot move*
+                  </h3>
+  
+                  <!-- Text -->
+                  <p class="text-gray-700 mb-0">
+                    Control who has access to which projects and data through our control panel.
+                  </p>
+  
+                </div>
+              </div> <!-- / .row -->
+  
+            </div>
+          </div> <!-- / .row -->
+        </div> <!-- / .container -->
+      </section>
+
+      <!-- SHAPE
+      ================================================== -->
+      <div class="position-relative mt-10">
+        <div class="shape shape-bottom shape-fluid-x svg-shim text-off-white">
+          <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- FORM
+    ================================================== -->
+    <section class="pt-8 pt-md-11 pb-6 pb-md-12 bg-off-white">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 text-center">
+              
+              <!-- Heading -->
+              <h2 class="font-weight-bold">
+                *help me add more schools/want to add your school*
+              </h2>
+  
+              <!-- Text -->
+              <p class="font-size-lg text-muted mb-7 mb-md-9">
+                *we can help you visualize your room, we just need you! idk not quite*
+              </p>
+  
+            </div>
+          </div> <!-- / .row -->
+          <div class="row mb-7 mb-md-9">
+            <div class="col-12 col-md-4 text-center">
+              
+              <!-- Heading -->
+              <h6 class="text-uppercase text-gray-700 mb-1">
+                Message us
+              </h6>
+  
+              <!-- Link -->
+              <div class="mb-5 mb-md-0">
+                <a href="#!" class="h4 text-primary">
+                  Start a chat!
+                </a>
+              </div>
+  
+            </div>
+            <div class="col-12 col-md-4 text-center border-left-md border-orange">
+              
+              <!-- Heading -->
+              <h6 class="text-uppercase text-gray-700 mb-1">
+                Call anytime
+              </h6>
+  
+              <!-- Link -->
+              <div class="mb-5 mb-md-0">
+                <a href="#!" class="h4">
+                  (555) 123-4567
+                </a>
+              </div>
+  
+            </div>
+            <div class="col-12 col-md-4 text-center border-left-md border-orange">
+              
+              <!-- Heading -->
+              <h6 class="text-uppercase text-gray-700 mb-1">
+                Email us
+              </h6>
+  
+              <!-- Link -->
+              <a href="#!" class="h4">
+                support@goodthemes.co
+              </a>
+  
+            </div>
+          </div> <!-- / .row -->
+          <div class="row justify-content-center">
+            <div class="col-12">
+              
+              <!-- Form -->
+              <form method="POST" action="{{ url_for('main.contact') }}">
+                {{ form.hidden_tag() }}
+
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                      {{ render_land_field(form.full_name, placeholder="", type="name", class="form-control", label="Your name") }}
+                  </div>
+                  <div class="col-12 col-md-6">
+                      {{ render_land_field(form.email, placeholder="example@email.com", type="email", class="form-control", label="Your email") }}
+                  </div>
+                </div> <!-- / .row -->
+                <div class="row">
+                  <div class="col-12">
+                      <div class="form-group mb-7 mb-md-9">
+                        {{ render_land_field(form.message, class="form-control", rows="5", placeholder="Type your message here", label="Message") }}
+                      </div>
+                  </div>
+                </div> <!-- / .row -->
+                <div class="row justify-content-center">
+                  <div class="col-auto">
+                    
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-primary lift">
+                      Submit
+                    </button>
+  
+                  </div>
+                </div> <!-- / .row -->
+              </form>
+  
+            </div>
+          </div> <!-- / .row -->
+        </div> <!-- / .container -->
+      </section>
+{% endblock %}
+

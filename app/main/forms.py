@@ -1,6 +1,6 @@
 # forms.py
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SelectField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SelectField, IntegerField, TextAreaField
 from wtforms.validators import InputRequired, Email, Length
 from ..models import User
 
@@ -23,5 +23,15 @@ class RegisterForm(FlaskForm):
     password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
     room_id = SelectField('room', choices=[])
 
-class ResidentOfForm(FlaskForm):
+class AddStudentForm(FlaskForm):
+    first_name = StringField('first name', validators=[InputRequired()])
+    last_name = StringField('last name', validators=[InputRequired()])
+    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), check_email])
+    password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
     room_id = SelectField('room', choices=[])
+
+class ContactForm(FlaskForm):
+    full_name = StringField('full name', validators=[InputRequired()])
+    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email')])
+    message = TextAreaField('message')
+

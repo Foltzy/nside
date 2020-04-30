@@ -18,7 +18,7 @@ textarea {
 }
 
 textarea:focus, input:focus {
-  border-color: transparent !important;
+  border: 2px solid #999 !important;
 }
 
 input:focus::-webkit-input-placeholder { color:transparent; }
@@ -52,9 +52,7 @@ button:hover {
 	cursor: pointer;
 }
 
-iframe {
-	border: none !important;
-}
+
 
 
 /*//////////////////////////////////////////////////////////////////
@@ -90,11 +88,7 @@ iframe {
   display: -moz-box;
   display: -ms-flexbox;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-  background: #ededed;
+  background: #ffffff;
   position: relative;
   z-index: 1;
 }
@@ -168,7 +162,7 @@ iframe {
 
   display: block;
   width: 100%;
-  background: #e6e6e6;
+  background: #fff;
   height: 30px;
   border-radius: 3px;
   padding: 0 30px 0 10px;

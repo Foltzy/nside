@@ -2,82 +2,63 @@
 
 {% block title %} Login {% endblock %}
 
-{% block page_css %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-{% endblock %}
+{% from "security/_macros.html" import render_land_field %}
 
 {% block base_nav %}
-    <!-- navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" data-page="nav">
-        <img class="logo" src="{{ url_for('static', filename='img/squares.png') }}">
-        <a class="navbar-brand js-scroll-trigger" href="{{ url_for('main.index') }}">Abode</a>
-        <span class="virtuality-dorm">Dorm</span>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
-
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" target="_blank" href="https://www.surveymonkey.com/r/C9CM2BX">Feedback</a>
-            </li>
-        </ul>
-    </nav>
-    <!-- end nav -->
 {% endblock %}
-
-{% block header %}
-{% endblock %}
-
-{% from "security/_macros.html" import render_field %}
 
 {% block content %}
-    <!-- login section -->
-    <section id="login" class="login-section text-center">
-        <div class="limiter">
-            <div class="container-login100">
-                <div class="wrap-login100 p-l-30 p-r-30 p-t-40 p-b-20">
-                    <form class="login100-form" method="POST" action="{{ url_for('security.login') }}" name="login_user_form">
-                        <div class="sl-object obj-muted">
-                            <img class="about-svg" src="{{ url_for('static', filename='img/svg/shield.svg') }}">
-                        </div>
-                        <span class="login100-form-title p-b-5">
-                            Login to your account
-                            <img class="hasTooltip icon-qtip_display ml-1 mb-4" src="{{ url_for('static', filename='img/svg/info.svg') }}">
-                            <div class="hidden">
-                                <span>Use email: <i>abode@survey.com</i> and password: <i>survey</i> for fast access.</span>
-                            </div>
-                        </span>
-                        <span class="login100-form-subtitle p-b-20">
-                            All fields are required
-                        </span>
-
-                        {{ login_user_form.hidden_tag() }}
-
-                        {{ render_field(login_user_form.email, placeholder="Email", class_="input100") }}
-
-                        {{ render_field(login_user_form.password, placeholder="Password", class_="input100") }}
-                        
-                        <div class="container-login100-form-btn p-t-25">
-                            <button class="login100-form-btn" type="submit">
-                                Login
-                            </button>
-                        </div>
-
-                        <div class="text-center w-full p-t-75">
-                            <span class="txt1">
-                                Don't have an account? 
-                            </span>
-
-                            <a class="txt1 bo1 hov1" href="{{ url_for('security.register') }}">
-                                Sign up						
-                            </a>
-                        </div>
-                    </form>
-                </div>
+    <!-- CONTENT
+    ================================================== -->
+    <section class="section-border border-orange">
+        <div class="container d-flex flex-column">
+            <div class="row align-items-center justify-content-center no-gutters min-vh-100">
+            <div class="col-8 col-md-6 col-lg-7 offset-md-1 order-md-2 mt-auto mt-md-0 pt-8 pb-4 py-md-11">
+    
+                <!-- Image -->
+                <img src="{{ url_for('static', filename='landing_static/img/gif/gif_tester.gif') }}" alt="..." class="img-fluid">
+    
             </div>
-        </div>
+            <div class="col-12 col-md-5 col-lg-4 order-md-1 mb-auto mb-md-0 pb-8 py-md-11">
+                
+                <!-- Heading -->
+                <h1 class="mb-0 font-weight-bold text-center">
+                Login
+                </h1>
+    
+                <!-- Text -->
+                <p class="mb-6 text-center text-muted">
+                Login to see your room!
+                </p>
+    
+                <!-- Form -->
+                <form class="mb-6" method="POST" action="{{ url_for('security.login') }}" name="login_user_form">
+
+                    {{ login_user_form.hidden_tag() }}
+    
+                    {{ render_land_field(login_user_form.email, placeholder="example@email.com", type="email", class="form-control", label="Email") }}
+
+                    {{ render_land_field(login_user_form.password, placeholder="Enter your password", type="password", class="form-control", label="Password") }}
+        
+                    <!-- Submit -->
+                    <button class="btn btn-block btn-primary" type="submit">
+                        Login
+                    </button>
+    
+                </form>
+    
+                <!-- Text -->
+                <p class="mb-0 font-size-sm text-center text-muted">
+                Can't remember your password? Recover it <a href="{{ url_for('security.forgot_password') }}">here</a>.
+                </p>
+    
+            </div>
+            </div> <!-- / .row -->
+        </div> <!-- / .container -->
     </section>
-    <!-- end login section -->
 {% endblock %}
+
+
+
+
+

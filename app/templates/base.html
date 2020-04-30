@@ -10,7 +10,40 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Abode | {% block title %} Welcome {% endblock %}</title>
+  <title>Abode | {% block title %} Base {% endblock %}</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='landing_static/img/logo-favicon.png') }}" type="image/x-icon">
+
+  <!-- bootstrap and jquery -->
+  <script src="{{ url_for('static', filename='landing_static/js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- template libs -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/feather.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/flickity.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/flickity-fade.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/jarallax.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/vs2015.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/jquery.fancybox.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/theme.css') }}">
+
+  <script src="{{ url_for('static', filename='landing_static/js/flickity.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/flickity-fade.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/smooth-scroll.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/jarallax.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/jarallax-video.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/jarallax-element.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/countUp.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/highlight.pack.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/jquery.fancybox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/imagesloaded.pkgd.min.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='landing_static/js/theme.min.js') }}"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/basic.css') }}">
+  <script src="{{ url_for('static', filename='landing_static/js/imagerotator.js') }}"></script>
 
   <!-- custom css and js per page -->
   {% block page_js %}
@@ -18,122 +51,270 @@
   {% block page_css %}
   {% endblock %}
 
-  <!-- favicon -->
-  <link rel="shortcut icon" href="{{ url_for('static', filename='img/squares.png') }}" type="image/x-icon">
-
-  <!-- bootstrap and jquery -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-  <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-
-  <!-- template css and js -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/grayscale.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/grayscale.min.css') }}">
-  <script src="{{ url_for('static', filename='js/grayscale.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/grayscale.min.js') }}"></script>
-
-  <!-- Web Rotate js and css files -->
-  <!-- uncomment depending on the style desired -->
-  <script src="{{ url_for('static', filename='js/imagerotator.js') }}"></script>
-  <!-- <link rel="stylesheet" href="/css/basic.css"> -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/retina.css') }}">
-  <!-- <link rel="stylesheet" href="/css/round.css"> -->
-  <!-- <link rel="stylesheet" href="/css/thin.css"> -->
-  <!-- <link rel="stylesheet" href="/css/zoom_dark.css"> -->
-  <!-- <link rel="stylesheet" href="/css/zoom_light.css"> -->
-
-  <!-- select2 -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
-
-  <!-- qtip -->
-  <link href="https://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/qtip2/3.0.3/jquery.qtip.min.js"></script>
-
-  <!-- Custom fonts for this template -->
-  <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-
-  <!-- Plugin JavaScript -->
-  <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-  <!-- custom css and js -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
-  <script src="{{ url_for('static', filename='js/vanilla_cjs.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
-  <!-- trimpath query -->
-  <script src="{{ url_for('static', filename='js/query.js') }}"></script>
-  <!-- dynamic site data -->
-  <script src="{{ url_for('static', filename='js/site_data.js') }}"></script>
-  
-
 </head>
 
-<body id="page-top">
+<body>
+
+    <script>
+        jQuery(document).ready(function(){
+
+            jQuery('#wr360PlayerId').rotator({
+                licenseFileURL: '/static/landing_static/360_assets/license.lic',
+                configFileURL: '/static/landing_static/360_assets/W22_1_wr/W22_1_wr.xml',
+                graphicsPath: '/static/landing_static/img/basic',
+                alt: '360 degree view - W22_1_wr',
+                inBrowserFullScreen: false,
+                googleEventTracking: false,
+                fullScreenOnClick: true
+            });
+            
+        });
+    </script>
 
   {% block base_nav %}
-    <!-- navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav" data-page="nav">
-      <img class="logo" src="{{ url_for('static', filename='img/squares.png') }}">
-      <a class="navbar-brand js-scroll-trigger text-bold" href="{{ url_for('main.index') }}">Abode</a>
-      <span class="virtuality-dorm">Dorm</span>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <i class="fas fa-bars"></i>
-      </button>
+  <!-- ========== navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white" id="top">
+      <div class="container">
 
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" target="_blank" href="https://www.surveymonkey.com/r/C9CM2BX">Feedback</a>
-        </li>
-        {% if current_user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{{ url_for('security.logout') }}">Logout</a>
-          </li>
-        {% else %}
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="{{ url_for('security.login') }}">Login</a>
-          </li>
-        {% endif %}
+        <!-- === logo -->
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">
+          <img src="{{ url_for('static', filename='landing_static/img/logo-full-hor.png') }}" class="navbar-brand-img" alt="Abode Interior">
+        </a>
 
-        {% if current_user.has_role('admin') %}
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" target="_blank" href="{{ url_for('admin.index') }}">Admin</a>
-          </li>
-        {% endif %}
-      </ul>
-      {% if current_user.is_authenticated %}
-        <div class="dropdown">
-          <button class="dropbtn">Settings
-            <i class="fafa-caret-down"></i>
+        <!-- === toggler -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- === collapse -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+          <!-- === toggler -->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            X
           </button>
-          <div class="dropdown-content">
-            <p class="dropdownp">Logged in as: {{ name }}</p> 
-            {% block added_nav_links %}
-            {% endblock %}
-          </div>
+
+          <!-- === navigation -->
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" id="wr360PlayerId" href="#">Example</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('main.about_us') }}">About Us</a>
+            </li>
+            <li class="nav-item dropdown hovered">
+              <a class="nav-link dropdown-toggle" id="navbarPages" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
+                My Account
+              </a>
+              <div class="dropdown-menu dropdown-menu-sm" aria-labelledby="navbarPages">
+                <div class="row no-gutters">
+                  <div class="col-6">
+                    <div class="row no-gutters">
+                      <div class="col-12 col-lg-6">
+
+                        <!-- === list -->
+                        {% if current_user.is_authenticated %}
+                            <a class="dropdown-item">
+                                {{ current_user.first_name + " " + current_user.last_name }} 
+                            </a>
+                            <a class="dropdown-item" href="{{ url_for('main.display') }}">
+                                My Room
+                            </a>
+                            <a class="dropdown-item" href="{{ url_for('security.logout') }}">
+                                Logout
+                            </a>
+                        {% else %}
+                            <a class="dropdown-item" href="{{ url_for('security.login') }}">
+                                Login
+                            </a>
+                            <hr>
+                            <a class="dropdown-item">
+                                Can't login? Contact us below <br>
+                                    and suggest we add your school! 
+                            </a>
+                        {% endif %}
+
+                        <!-- todo[p]: could add a tab here for "example" or "example model" that opens to an auto full page model with the buttons and everything -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- / .row -->
+            </li>
+          </ul>
+
         </div>
-      {% endif %}
+
+      </div>
     </nav>
-    <!-- end nav -->
+  <!-- ========== / navbar -->
   {% endblock %}
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="full-alert">
+        <div class="alert alert-dark alert-dismissable fade show" role="alert">
+          {{ message }}
+          <button type="button" class="ml-6 close text-white" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
 
   {% block content %}
   {% endblock %}
 
   {% block footer %}
-    <!-- Footer -->
-    <footer class="footer-s small text-center text-navy">
-      <img class="footer-logo" src="{{ url_for('static', filename='img/squares.png') }}">
-      <div class="text-center text-black">
-        <span class="footer-text" title="Dedicated to Bumpy.">
-          Copyright &copy; Abode, Abode Interior, abodeinterior.net 2019 <!-- | <a href="#">Terms and Conditions</a> -->
-        </span>
+  <!-- ========== shape -->
+    <div class="position-relative">
+      <div class="shape shape-bottom shape-fluid-x svg-shim text-gray-200">
+        <svg viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"/>
+        </svg>
       </div>
+    </div>
+  <!-- ========== / shape -->
+
+  <!-- ========== footer -->
+    <footer class="py-8 py-md-11 bg-gray-200">
+      <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                
+                <!-- Button -->
+                <a href="#top" class="btn btn-white btn-rounded-circle shadow mt-custom-n14" data-toggle="smooth-scroll">
+                <i class="fe fe-arrow-up"></i>
+                </a>
+    
+            </div>
+        </div> <!-- / .row -->
+        <div class="row">
+          <div class="col-12 col-md-4 col-lg-3">
+        
+            <!-- === logo -->
+            <a href="{{ url_for('main.index') }}"><img src="{{ url_for('static', filename='landing_static/img/logo-full-hor.png') }}" alt="Abode Interior" class="footer-brand img-fluid mb-2"></a>
+
+            <!-- === logo subtext -->
+            <p class="text-gray-700 mb-2">
+              The complex move in process made easy.
+            </p>
+
+            <!-- === social -->
+            <ul class="list-unstyled list-inline list-social mb-6 mb-md-0">
+              <li class="list-inline-item list-social-item mr-3">
+                <a target="_blank" href="https://www.instagram.com/abode_site/" class="text-decoration-none">
+                    <!-- Icon -->
+                    <div class="icon text-secondary mb-3">
+                        <i class="fe-icon-20 fe fe-instagram"></i>
+                    </div>
+                </a>
+              </li>
+              <li class="list-inline-item list-social-item mr-3">
+                <a href="#" class="text-decoration-none">
+                    <!-- Icon -->
+                    <div class="icon text-secondary mb-3">
+                        <i class="fe-icon-20 fe fe-twitter"></i>
+                    </div>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+          <div class="col-6 col-md-4 col-lg-3">
+        
+            <!-- === heading -->
+            <h6 class="font-weight-bold text-uppercase text-gray-700">
+              Resources
+            </h6>
+
+            <!-- === list -->
+            <ul class="list-unstyled text-muted mb-6 mb-md-8 mb-lg-0">
+            {% if current_user.is_authenticated %}
+              <li class="mb-3">
+                <a href="{{ url_for('security.logout') }}" class="text-reset">
+                  Logout
+                </a>
+              </li>
+              <li class="mb-3">
+                <a href="{{ url_for('main.display') }}" class="text-reset">
+                  My Room
+                </a>
+              </li>
+              {% else %}
+              <li class="mb-3">
+                <a href="{{ url_for('security.login') }}" class="text-reset">
+                    Login
+                </a>
+                </li>
+            {% endif %}
+              <li class="mb-3">
+                <a href="{{ url_for('main.about_us') }}" class="text-reset">
+                  About Us
+                </a>
+              </li>
+            </ul>
+
+          </div>
+
+          <div class="col-lg-3 col-md-2">
+                <!-- Image -->
+                <div class="p-1 bg-white shadow-lg">
+                    <img src="{{ url_for('static', filename='landing_static/img/me_img.png') }}" class="img-fluid" alt="...">
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-2">
+                <h4 class="text-black">
+                    Ben Foltz
+                </h4>
+
+                <!-- === logo subtext -->
+                <p class="text-gray-700 mb-2">
+                    Hey everyone! I created this tool so that I could help other people. If I did let me know! 
+                  </p>
+      
+                  <!-- === social -->
+                  <ul class="list-unstyled list-inline list-social mb-6 mb-md-0">
+                    <li class="list-inline-item list-social-item mr-3">
+                      <a target="_blank" href="https://www.instagram.com/ben_foltzy/" class="text-decoration-none">
+                        <!-- Icon -->
+                        <div class="icon text-secondary mb-3">
+                            <i class="fe-icon-20 fe fe-instagram"></i>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="list-inline-item list-social-item mr-3">
+                      <a target="_blank" href="https://www.linkedin.com/in/ben-foltz/" class="text-decoration-none">
+                        <!-- Icon -->
+                        <div class="icon text-secondary mb-3">
+                            <i class="fe-icon-20 fe fe-linkedin"></i>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+
+            </div>
+        
+        </div> <!-- / .row -->
+      </div> <!-- / .container -->
     </footer>
-    <!-- end footer -->
+  <!-- ========== / footer -->
+    <!-- Text -->
+    <div class="row">
+        <div class="col-12 text-center font-size-sm text-muted bg-gray-200">
+            Copyright &copy; Abode, <span title="Dedicated to Bumpy.">Abode Interior</span>, abodeinterior.net · 2019
+        </div>
+    </div>
   {% endblock %}
   
 </body>
   
 </html>
+
+
 
