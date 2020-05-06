@@ -7,3 +7,4 @@ private.py
 node_modules/
 migrations/
 .DS_Store
+log.log
