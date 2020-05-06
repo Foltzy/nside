@@ -56,6 +56,7 @@ def create_app(config_name):
         user_datastore.find_or_create_role(name='admin')
         user_datastore.find_or_create_role(name='end-user')
         user_datastore.find_or_create_role(name='dean')
+        user_datastore.find_or_create_role(name='parent')
         user_datastore.find_or_create_role(name='student')
 
         # Create two Users for testing purposes -- unless they already exists.

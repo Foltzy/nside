@@ -48,6 +48,8 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String())
     active = db.Column(db.Boolean(), default=True)
     student = db.Column(db.Boolean(), default=False)
+    dean = db.Column(db.Boolean(), default=False)
+    parent = db.Column(db.Boolean(), default=False)
     dob = db.Column(db.DateTime())
     confirmed_at = db.Column(db.DateTime())
     last_seen = db.Column(db.DateTime(), default=datetime.utcnow)
@@ -213,7 +215,7 @@ class ResidentOf(db.Model):
     room = db.relationship("Room", back_populates="residents")
 
     def __repr__(self):
-        return "%r's resident, %r" % (self.room, self.user)
+        return "%r" % (self.room)
     
     def __str__(self):
         r = "null repr"

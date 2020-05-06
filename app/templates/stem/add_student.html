@@ -24,7 +24,7 @@
                             <img class="about-svg" src="{{ url_for('static', filename='img/svg/add-group.svg') }}">
                         </div>
                         <span class="login100-form-title p-b-5">
-                            Add Student
+                            Add User
                         </span>
                         <span class="login100-form-subtitle p-b-20">
                             All fields are required
@@ -32,17 +32,42 @@
 
                         {{ form.hidden_tag() }}
                     
-                        {{ render_field(form.first_name, placeholder="Student first name", class_="input100") }}
+                        {{ render_field(form.first_name, placeholder="User first name", class_="input100") }}
 
-                        {{ render_field(form.last_name, placeholder="Student last name", class_="input100") }}
+                        {{ render_field(form.last_name, placeholder="User last name", class_="input100") }}
 
-                        {{ render_field(form.email, placeholder="Student email", class_="input100") }}
+                        {{ render_field(form.email, placeholder="User email", class_="input100") }}
 
-                        {{ render_field(form.password, placeholder="Student password", class_="input100") }}
+                        {{ render_field(form.password, placeholder="User password", class_="input100") }}
 
                         <div class="content-divider">
                             <span class="fs-12">
-                                Select Students Room
+                                Select Role
+                            </span>
+                        </div>
+
+                        <div class="row col-12">
+                            {{ render_field(form.student, placeholder="Student") }}
+                            <span class="fs-12">
+                                Student
+                            </span>
+                        </div>
+                        <div class="row col-12">
+                            {{ render_field(form.parent, placeholder="Parent") }}
+                            <span class="fs-12">
+                                Parent
+                            </span>
+                        </div>
+                        <div class="row col-12">
+                            {{ render_field(form.dean, placeholder="Dean") }}
+                            <span class="fs-12">
+                                Dean
+                            </span>
+                        </div>
+
+                        <div class="content-divider">
+                            <span class="fs-12">
+                                Select Users Room
                             </span>
                         </div>
 

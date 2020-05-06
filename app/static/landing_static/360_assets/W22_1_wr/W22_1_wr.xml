@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
   <settings>
-    <preloader image="images/4.png?t=1588123254" />
-    <userInterface showZoomButtons="true" showToolTips="true" showHotspotsButton="true" showFullScreenButton="true" showTogglePlayButton="true" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="1" showProgressNumbers="true" showFullScreenToolbar="false" fullScreenBackColor="#FFFFFF" toolbarPosition="0" customCursorClass="default_cursor" viewerHint="" toolbarAutohide="false" showToolbarOnLoadStart="false" />
+    <preloader image="images/4.png?t=1588298043" />
+    <userInterface showZoomButtons="true" showToolTips="true" showHotspotsButton="true" showFullScreenButton="true" showTogglePlayButton="true" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="1" showProgressNumbers="true" showFullScreenToolbar="true" fullScreenBackColor="#FFFFFF" toolbarPosition="0" customCursorClass="default_cursor" viewerHint="" toolbarAutohide="false" showToolbarOnLoadStart="false" />
     <control dragSpeed="0.13" doubleClickZooms="true" disableMouseControl="false" showHighresOnFullScreen="true" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="true" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="false" doubleClickFullscreen="false" zoomSteps="1" zoomSpeed="300" singleClickZooms="false" pauseOnPreload="false" resumePreloadOnHover="false" mouseWheelDrag="false" mouseWheelDragZoomOnly="false" allowRotateInputInZoom="false" allowPanX="true" allowPanY="true" />
     <rotation firstImage="3" rotate="false" rotatePeriod="7" bounce="false" rotateDirection="-1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="true" flipHorizontalInput="false" flipVerticalInput="false" bounceRows="true" rowsOnSingleIndex="false" flipAxis="false" />
   </settings>
@@ -18,123 +18,123 @@
     </hotspot>
   </hotspots>
   <images rows="1">
-    <image src="images/1.png?t=1588123254">
-      <hotspot source="bed" offsetX="653" offsetY="1108" />
-      <hotspot source="closet" offsetX="630" offsetY="655" />
+    <image src="images/1.png?t=1588298043">
+      <hotspot source="bed" offsetX="359" offsetY="573" />
+      <hotspot source="closet" offsetX="346" offsetY="324" />
     </image>
-    <image src="images/2.png?t=1588123254">
-      <hotspot source="desk" offsetX="1196" offsetY="341" />
-      <hotspot source="bed" offsetX="963" offsetY="994" />
-      <hotspot source="closet" offsetX="620" offsetY="621" />
+    <image src="images/2.png?t=1588298043">
+      <hotspot source="desk" offsetX="658" offsetY="152" />
+      <hotspot source="bed" offsetX="529" offsetY="511" />
+      <hotspot source="closet" offsetX="341" offsetY="306" />
     </image>
-    <image src="images/3.png?t=1588123254">
-      <hotspot source="desk" offsetX="1310" offsetY="401" />
-      <hotspot source="bed" offsetX="903" offsetY="1015" />
-      <hotspot source="closet" offsetX="626" offsetY="578" />
+    <image src="images/3.png?t=1588298043">
+      <hotspot source="desk" offsetX="720" offsetY="185" />
+      <hotspot source="bed" offsetX="496" offsetY="522" />
+      <hotspot source="closet" offsetX="344" offsetY="282" />
     </image>
-    <image src="images/4.png?t=1588123254">
-      <hotspot source="desk" offsetX="1396" offsetY="478" />
-      <hotspot source="bed" offsetX="833" offsetY="1008" />
-      <hotspot source="closet" offsetX="666" offsetY="551" />
+    <image src="images/4.png?t=1588298043">
+      <hotspot source="desk" offsetX="768" offsetY="227" />
+      <hotspot source="bed" offsetX="458" offsetY="518" />
+      <hotspot source="closet" offsetX="366" offsetY="267" />
     </image>
-    <image src="images/5.png?t=1588123254">
-      <hotspot source="desk" offsetX="1166" offsetY="348" />
-      <hotspot source="bed" offsetX="766" offsetY="1001" />
-      <hotspot source="closet" offsetX="713" offsetY="541" />
+    <image src="images/5.png?t=1588298043">
+      <hotspot source="desk" offsetX="641" offsetY="155" />
+      <hotspot source="bed" offsetX="421" offsetY="515" />
+      <hotspot source="closet" offsetX="392" offsetY="262" />
     </image>
-    <image src="images/6.png?t=1588123254">
-      <hotspot source="desk" offsetX="1293" offsetY="395" />
-      <hotspot source="bed" offsetX="700" offsetY="974" />
-      <hotspot source="closet" offsetX="753" offsetY="521" />
+    <image src="images/6.png?t=1588298043">
+      <hotspot source="desk" offsetX="711" offsetY="181" />
+      <hotspot source="bed" offsetX="385" offsetY="500" />
+      <hotspot source="closet" offsetX="414" offsetY="251" />
     </image>
-    <image src="images/7.png?t=1588123254">
-      <hotspot source="desk" offsetX="1386" offsetY="468" />
-      <hotspot source="bed" offsetX="646" offsetY="938" />
-      <hotspot source="closet" offsetX="799" offsetY="505" />
+    <image src="images/7.png?t=1588298043">
+      <hotspot source="desk" offsetX="762" offsetY="221" />
+      <hotspot source="bed" offsetX="355" offsetY="480" />
+      <hotspot source="closet" offsetX="439" offsetY="242" />
     </image>
-    <image src="images/8.png?t=1588123254">
-      <hotspot source="desk" offsetX="1450" offsetY="555" />
-      <hotspot source="bed" offsetX="610" offsetY="894" />
+    <image src="images/8.png?t=1588298043">
+      <hotspot source="desk" offsetX="797" offsetY="269" />
+      <hotspot source="bed" offsetX="335" offsetY="456" />
     </image>
-    <image src="images/9.png?t=1588123254">
-      <hotspot source="desk" offsetX="1480" offsetY="651" />
-      <hotspot source="bed" offsetX="603" offsetY="848" />
-      <hotspot source="closet" offsetX="993" offsetY="531" />
+    <image src="images/9.png?t=1588298043">
+      <hotspot source="desk" offsetX="814" offsetY="322" />
+      <hotspot source="bed" offsetX="331" offsetY="430" />
+      <hotspot source="closet" offsetX="546" offsetY="256" />
     </image>
-    <image src="images/10.png?t=1588123254">
-      <hotspot source="desk" offsetX="1470" offsetY="755" />
-      <hotspot source="bed" offsetX="610" offsetY="794" />
-      <hotspot source="closet" offsetX="1023" offsetY="548" />
+    <image src="images/10.png?t=1588298043">
+      <hotspot source="desk" offsetX="808" offsetY="379" />
+      <hotspot source="bed" offsetX="335" offsetY="401" />
+      <hotspot source="closet" offsetX="562" offsetY="265" />
     </image>
-    <image src="images/11.png?t=1588123254">
-      <hotspot source="desk" offsetX="1400" offsetY="861" />
-      <hotspot source="bed" offsetX="570" offsetY="718" />
-      <hotspot source="closet" offsetX="1050" offsetY="571" />
+    <image src="images/11.png?t=1588298043">
+      <hotspot source="desk" offsetX="770" offsetY="438" />
+      <hotspot source="bed" offsetX="313" offsetY="359" />
+      <hotspot source="closet" offsetX="577" offsetY="278" />
     </image>
-    <image src="images/12.png?t=1588123254">
-      <hotspot source="desk" offsetX="1296" offsetY="938" />
-      <hotspot source="bed" offsetX="620" offsetY="645" />
-      <hotspot source="closet" offsetX="1040" offsetY="555" />
+    <image src="images/12.png?t=1588298043">
+      <hotspot source="desk" offsetX="713" offsetY="480" />
+      <hotspot source="bed" offsetX="341" offsetY="319" />
+      <hotspot source="closet" offsetX="572" offsetY="269" />
     </image>
-    <image src="images/13.png?t=1588123254">
-      <hotspot source="desk" offsetX="1150" offsetY="1005" />
-      <hotspot source="bed" offsetX="706" offsetY="615" />
-      <hotspot source="closet" offsetX="1063" offsetY="581" />
+    <image src="images/13.png?t=1588298043">
+      <hotspot source="desk" offsetX="632" offsetY="517" />
+      <hotspot source="bed" offsetX="388" offsetY="302" />
+      <hotspot source="closet" offsetX="584" offsetY="284" />
     </image>
-    <image src="images/14.png?t=1588123254">
-      <hotspot source="desk" offsetX="963" offsetY="1051" />
-      <hotspot source="bed" offsetX="786" offsetY="605" />
-      <hotspot source="closet" offsetX="1070" offsetY="618" />
+    <image src="images/14.png?t=1588298043">
+      <hotspot source="desk" offsetX="529" offsetY="542" />
+      <hotspot source="bed" offsetX="432" offsetY="297" />
+      <hotspot source="closet" offsetX="588" offsetY="304" />
     </image>
-    <image src="images/15.png?t=1588123254">
-      <hotspot source="desk" offsetX="766" offsetY="1061" />
-      <hotspot source="bed" offsetX="1200" offsetY="638" />
-      <hotspot source="closet" offsetX="1066" offsetY="651" />
+    <image src="images/15.png?t=1588298043">
+      <hotspot source="desk" offsetX="421" offsetY="548" />
+      <hotspot source="bed" offsetX="660" offsetY="315" />
+      <hotspot source="closet" offsetX="586" offsetY="322" />
     </image>
-    <image src="images/16.png?t=1588123254">
-      <hotspot source="desk" offsetX="586" offsetY="1028" />
-      <hotspot source="bed" offsetX="1280" offsetY="701" />
-      <hotspot source="closet" offsetX="1053" offsetY="691" />
+    <image src="images/16.png?t=1588298043">
+      <hotspot source="desk" offsetX="322" offsetY="529" />
+      <hotspot source="bed" offsetX="704" offsetY="350" />
+      <hotspot source="closet" offsetX="579" offsetY="344" />
     </image>
-    <image src="images/17.png?t=1588123254">
-      <hotspot source="desk" offsetX="426" offsetY="958" />
-      <hotspot source="bed" offsetX="1336" offsetY="778" />
-      <hotspot source="closet" offsetX="1010" offsetY="721" />
+    <image src="images/17.png?t=1588298043">
+      <hotspot source="desk" offsetX="234" offsetY="491" />
+      <hotspot source="bed" offsetX="735" offsetY="392" />
+      <hotspot source="closet" offsetX="555" offsetY="361" />
     </image>
-    <image src="images/18.png?t=1588123254">
-      <hotspot source="desk" offsetX="313" offsetY="874" />
-      <hotspot source="bed" offsetX="1360" offsetY="861" />
-      <hotspot source="closet" offsetX="963" offsetY="741" />
+    <image src="images/18.png?t=1588298043">
+      <hotspot source="desk" offsetX="172" offsetY="445" />
+      <hotspot source="bed" offsetX="748" offsetY="438" />
+      <hotspot source="closet" offsetX="529" offsetY="372" />
     </image>
-    <image src="images/19.png?t=1588123254">
-      <hotspot source="desk" offsetX="243" offsetY="771" />
-      <hotspot source="bed" offsetX="1340" offsetY="948" />
-      <hotspot source="closet" offsetX="909" offsetY="761" />
+    <image src="images/19.png?t=1588298043">
+      <hotspot source="desk" offsetX="133" offsetY="388" />
+      <hotspot source="bed" offsetX="737" offsetY="485" />
+      <hotspot source="closet" offsetX="500" offsetY="383" />
     </image>
-    <image src="images/20.png?t=1588123254">
-      <hotspot source="desk" offsetX="213" offsetY="678" />
-      <hotspot source="bed" offsetX="1290" offsetY="1025" />
-      <hotspot source="closet" offsetX="853" offsetY="758" />
+    <image src="images/20.png?t=1588298043">
+      <hotspot source="desk" offsetX="117" offsetY="337" />
+      <hotspot source="bed" offsetX="709" offsetY="528" />
+      <hotspot source="closet" offsetX="469" offsetY="381" />
     </image>
-    <image src="images/21.png?t=1588123254">
-      <hotspot source="desk" offsetX="243" offsetY="571" />
-      <hotspot source="bed" offsetX="1196" offsetY="1105" />
-      <hotspot source="closet" offsetX="793" offsetY="751" />
+    <image src="images/21.png?t=1588298043">
+      <hotspot source="desk" offsetX="133" offsetY="278" />
+      <hotspot source="bed" offsetX="658" offsetY="572" />
+      <hotspot source="closet" offsetX="436" offsetY="377" />
     </image>
-    <image src="images/22.png?t=1588123254">
-      <hotspot source="desk" offsetX="296" offsetY="485" />
-      <hotspot source="bed" offsetX="1073" offsetY="1158" />
-      <hotspot source="closet" offsetX="740" offsetY="738" />
+    <image src="images/22.png?t=1588298043">
+      <hotspot source="desk" offsetX="163" offsetY="231" />
+      <hotspot source="bed" offsetX="590" offsetY="601" />
+      <hotspot source="closet" offsetX="407" offsetY="370" />
     </image>
-    <image src="images/23.png?t=1588123254">
-      <hotspot source="desk" offsetX="393" offsetY="408" />
-      <hotspot source="bed" offsetX="919" offsetY="1165" />
-      <hotspot source="closet" offsetX="686" offsetY="715" />
+    <image src="images/23.png?t=1588298043">
+      <hotspot source="desk" offsetX="216" offsetY="188" />
+      <hotspot source="bed" offsetX="505" offsetY="605" />
+      <hotspot source="closet" offsetX="377" offsetY="357" />
     </image>
-    <image src="images/24.png?t=1588123254">
-      <hotspot source="desk" offsetX="500" offsetY="345" />
-      <hotspot source="bed" offsetX="779" offsetY="1158" />
-      <hotspot source="closet" offsetX="656" offsetY="691" />
+    <image src="images/24.png?t=1588298043">
+      <hotspot source="desk" offsetX="275" offsetY="154" />
+      <hotspot source="bed" offsetX="428" offsetY="601" />
+      <hotspot source="closet" offsetX="361" offsetY="344" />
     </image>
   </images>
 </config>

@@ -2028,3 +2028,30 @@ p
     position: fixed;
     z-index: 999999;
 }
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 75%;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.375rem;
+}
+
+.badge-primary {
+    color: #FFFFFF;
+    background-color: #335EEA;
+}
+
+.badge-success {
+    color: #FFFFFF;
+    background-color: #42BA96;
+}
+
+.badge-dark {
+    color: #FFFFFF;
+    background-color: #1B2A4E;
+}

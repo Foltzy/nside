@@ -13467,6 +13467,10 @@ body.compensate-for-scrollbar {
   font-size: 20px;
 }
 
+.fe-icon-25 {
+  font-size: 25px;
+}
+
 .badge-orange {
   color: #FFFFFF;
   background-color: #ed782f; 
@@ -13475,6 +13479,13 @@ body.compensate-for-scrollbar {
 .mt-custom-n14 {
   margin-top: -14rem;
 }
+
+@media (max-width: 768px) {
+  .mt-sm-custom-n8 {
+    margin-top: -8rem;
+  }
+}
+
 
 .btn-outline-red-dark {
   color: #ffffff;

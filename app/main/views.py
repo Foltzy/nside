@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from datetime import datetime
 from flask_mail import Message
+from flask_security import SQLAlchemyUserDatastore
 # files
 from .forms import LoginForm, RegisterForm, AddStudentForm, ContactForm
 from . import main as app
@@ -270,8 +271,11 @@ def linked_room(user_id):
 @roles_required('dean')
 def dean_panel():
     all_students = User.query.filter_by(student=True).all()
+    all_parents = User.query.filter_by(parent=True).all()
+    all_deans = User.query.filter_by(dean=True).all()
+    all_users = all_students + all_parents + all_deans
     name = current_user.first_name
-    return render_template('stem/dean_panel.html', name=name, students=all_students)
+    return render_template('stem/dean_panel.html', name=name, users=all_users)
 
 # ====================
 # ========== add student
@@ -294,13 +298,31 @@ def add_student():
         last_name =  form.last_name.data
         email = form.email.data
         password = form.password.data
-        student = True
+        student = form.student.data
+        parent = form.parent.data
+        dean = form.dean.data
+
         confirmed_at = datetime.utcnow()
 
-        user = User(first_name=first_name, last_name=last_name, email=email, password=password, student=student, confirmed_at=confirmed_at)
+        user = User(first_name=first_name, last_name=last_name, email=email, password=password, student=student, parent=parent, dean=dean, confirmed_at=confirmed_at)
         db.session.add(user)
         db.session.commit()
 
+
+        user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+        if user.student == True:
+            user_datastore.add_role_to_user(user.email, 'student')
+        elif user.parent == True:
+            user_datastore.add_role_to_user(user.email, 'parent')
+        elif user.dean == True:
+            user_datastore.add_role_to_user(user.email, 'dean')
+        else: 
+            flash("You must select a role", 'success')
+            return redirect(url_for('main.dean_panel'))
+
+        db.session.commit()
+
+        
         relationship = ResidentOf()
         relationship.user_id = user.id
         if form.room_id.data != "Room":
@@ -324,7 +346,7 @@ def delete_user(user_id):
     user = User.query.filter_by(id=user_id).first_or_404()
     db.session.delete(user)
     db.session.commit()
-    flash("User deleted", 'success')
+    flash("User " + user.first_name + " " + user.last_name + " deleted", 'success')
     return redirect(url_for('main.dean_panel'))
 
 # ====================

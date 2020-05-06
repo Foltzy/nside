@@ -23,23 +23,39 @@
                 </div>
                 <div class="small text-black-100">
                     <!-- todo[p]: fixed students cant login - however should they email they receive confirm their email address or should it automatically confirm? -->
-                    <a href="{{ url_for('main.add_student') }}"><button class="dean-btn">Add student</button></a>
+                    <a href="{{ url_for('main.add_student') }}"><button class="dean-btn">Add user</button></a>
 
                     <table class="table datatable-show-all p-table">
                         <thead class="p-thead">
                             <tr>
                                 <th>First Name</th>
                                 <th>Last Name</th>
+                                <th>Role</th>
                                 <th>Email</th>
                                 <th>Room</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for user in students %}
+                            {% for user in users %}
                                 <tr>
                                     <td>{{ user.first_name }}</td>
                                     <td>{{ user.last_name }}</td>
+                                    <td>
+                                        {% if user.student == True %}
+                                        <span class="badge badge-success">
+                                            Student
+                                        </span>
+                                        {% elif user.parent == True %}
+                                        <span class="badge badge-primary">
+                                            Parent
+                                        </span>
+                                        {% elif user.dean == True %}
+                                        <span class="badge badge-dark">
+                                            Dean
+                                        </span>
+                                        {% endif %}
+                                    </td>
                                     <td>{{ user.email }}</td>
                                     <!-- todo[p]: make this display room name instead of: [250's resident, test] -->
                                     <td>{{ user.rooms }}</td>
