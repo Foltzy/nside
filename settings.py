@@ -3,6 +3,7 @@ import private
 
 SECRET_KEY = private.SECRET_KEY
 
+# begin dynamic settings (paste/copy here)
 POSTGRES = {
     'user': private.DB_USERNAME,
     'pw': private.DB_PASSWORD,
@@ -12,6 +13,7 @@ POSTGRES = {
 }
 SQLALCHEMY_DATABASE_URI = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+# end dynamic settings 
 
 SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS", True)
 
