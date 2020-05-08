@@ -12,10 +12,9 @@
                                                                               
 
 # Abode Interior Documentation
-----------------------------
 ### What is Abode Interior?
 
-Universities don't provide room details, leading to confusion about what students actually need to bring. Abode fixes this problem. View at (www.abodeinterior.net)
+Universities don't provide room details, leading to confusion about what students actually need to bring. Abode fixes this problem. View at www.abodeinterior.net
 
 ### Final
 Required for production server. 
