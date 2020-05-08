@@ -5,6 +5,8 @@ blinker==1.4
 cffi==1.14.0
 click==7.1.2
 cryptography==2.9.2
+dnspython==1.16.0
+email-validator==1.1.0
 enum34==1.1.10
 Flask==1.1.2
 Flask-Admin==1.5.6
