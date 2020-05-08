@@ -1,3 +1,5 @@
+# app/__init__.py
+# imports
 from flask import Flask, render_template, url_for
 from flask_security import SQLAlchemyUserDatastore, utils
 import os
@@ -6,6 +8,19 @@ from datetime import datetime
 from .extensions import db, security, mail, migrate, admin
 from .main.forms import RegisterForm
 from .models import User, Role, College, Building, Room, ResidentOf, PostAdmin, UserAdmin
+
+
+# error handling -- err
+def crash_page(e):
+    return render_template('main/500.html'), 500
+
+def page_not_found(e):
+    return render_template('main/404.html'), 404
+
+def page_forbidden(e):
+    return render_template('main/403.html'), 403
+
+
 
 # sort of like an application factory
 def create_app(config_name):
@@ -28,13 +43,19 @@ def create_app(config_name):
     admin.add_view(PostAdmin(Room, db.session))
     admin.add_view(PostAdmin(ResidentOf, db.session))
 
+
+    # blueprint
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)   
 
-    ################
-    # CUSTOM FILTERS
-    # Example:
-    # https://stackoverflow.com/questions/19394844/how-to-get-the-user-object-from-the-user-key-in-flask-template
+    # error handlers -- err
+    # calls from above
+    app.register_error_handler(500, crash_page)
+    app.register_error_handler(404, page_not_found)
+    app.register_error_handler(403, page_forbidden)
+
+    
+    # custom filters -- fil
     def get_user_by_user_key(user_key):
         # your logic code here, e.g.
         user = user_datastore.find_user(id=user_key)
@@ -45,22 +66,21 @@ def create_app(config_name):
 
     app.jinja_env.filters['get_name_by_key'] = get_user_by_user_key
 
-    # Executes before the first request is processed.
+    # executes before the first request is processed
     @app.before_first_request
     def before_first_request():
 
-        # Create any database tables that don't exist yet.
+        # create any db that doesn't exist
         db.create_all()
 
-        # Create the Roles "admin" and "end-user" -- unless they already exist
+        # create roles -- admin (main), student, parent, dean
         user_datastore.find_or_create_role(name='admin')
         user_datastore.find_or_create_role(name='end-user')
         user_datastore.find_or_create_role(name='dean')
         user_datastore.find_or_create_role(name='parent')
         user_datastore.find_or_create_role(name='student')
 
-        # Create two Users for testing purposes -- unless they already exists.
-        # In each case, use Flask-Security utility function to encrypt the password.
+        # create management users 
         encrypted_password = utils.encrypt_password(app.config['STARTING_ADMIN_PASS'])
         if not user_datastore.get_user(app.config['STARTING_ADMIN1']):
             user_datastore.create_user(email=app.config['STARTING_ADMIN1'], password=encrypted_password, first_name='admin', last_name='user')
