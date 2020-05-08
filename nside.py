@@ -12,6 +12,7 @@ import sys
 import click
 from flask_migrate import Migrate, upgrade
 from app import create_app, db
+from app.models import User, Role # get my local objects
 
 # setup logging config
 from logging.config import dictConfig
