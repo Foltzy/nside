@@ -20,59 +20,89 @@
           <script>
             $(document).ready(function(){
               // hide the slideshow by default
-              $('#slideshow-container').hide();
+              $('#room-slideshow-container').hide();
+              //$('#lounge-slideshow-container').hide();
+              //$('#hall-slideshow-container').hide();
               $('#map-container').hide();
-              console.log('slideshow hidden')
+              console.log('Defaults:')
+              console.log('Room slideshow hidden')
+              console.log('Lounge slideshow hidden')
+              console.log('Hall slideshow hidden')
+              console.log('Map hidden')
 
-              $('#images').on('click', function() {
+              $('#room-images').on('click', function() {
                   $('#display-container').hide();
-                  $('#slideshow-container').show();
+                  //$('#lounge-slideshow-container').hide();
+                  //$('#hall-slideshow-container').hide();
+                  $('#room-slideshow-container').show();
+                  $('#map-container').hide();
+              });
+
+              $('#lounge-images').on('click', function() {
+                  $('#display-container').hide();
+                  $('#room-slideshow-container').hide();
+                  //$('#hall-slideshow-container').hide();
+                  //$('#lounge-slideshow-container').show();
+                  $('#map-container').hide();
+              });
+
+              $('#hall-images').on('click', function() {
+                  $('#display-container').hide();
+                  $('#room-slideshow-container').hide();
+                  //$('#lounge-slideshow-container').hide();
+                  //$('#hall-slideshow-container').show();
                   $('#map-container').hide();
               });
 
               $('.back-trigger').on('click', function() {
                   $('#display-container').show();
-                  $('#slideshow-container').hide();
+                  $('#room-slideshow-container').hide();
+                  //$('#hall-slideshow-container').hide();
+                  //$('#lounge-slideshow-container').hide();
                   $('#map-container').hide();
               });
 
               $('#map').on('click', function() {
                   $('#map-container').show();
-                  $('#slideshow-container').hide();
+                  $('#room-slideshow-container').hide();
+                  //$('#hall-slideshow-container').hide();
+                  //$('#lounge-slideshow-container').hide();
                   $('#display-container').hide();
               });
 
               $('#directions').on('click', function() {
                   $('#map-container').show();
-                  $('#slideshow-container').hide();
+                  //$('#hall-slideshow-container').hide();
+                  //$('#lounge-slideshow-container').hide();
+                  $('#room-slideshow-container').hide();
                   $('#display-container').hide();
               });
 
-              // TODO: add js to lower back button opacity when inactive
+              // todo[p]: use js to update images (appending more sliders does not work)
             });
           </script>
           <!-- end script -->
 
           {% if linked_room != None %}
-            <!-- slideshow -->
-            <div class="slideshow-container" id="slideshow-container">
+            <!-- room images slideshow -->
+            <div class="slideshow-container" id="room-slideshow-container">
               <div class="mySlides fade">
-                <div class="numbertext">1 / 4</div>
+                <div class="numbertext">1 / 4 (Room)</div>
                 <img class="img-display-main r-img1" src="{{ linked_room.room.img1 }}" style="width:100%">
               </div>
             
               <div class="mySlides fade">
-                <div class="numbertext">2 / 4</div>
+                <div class="numbertext">2 / 4 (Room)</div>
                 <img class="img-display-main r-img2" src="{{ linked_room.room.img2 }}" style="width:100%">
               </div>
             
               <div class="mySlides fade">
-                <div class="numbertext">3 / 4</div>
+                <div class="numbertext">3 / 4 (Room)</div>
                 <img class="img-display-main r-img3" src="{{ linked_room.room.img3 }}" style="width:100%">
               </div>
 
               <div class="mySlides fade">
-                <div class="numbertext">4 / 4</div>
+                <div class="numbertext">4 / 4 (Room)</div>
                 <img class="img-display-main r-img4" src="{{ linked_room.room.img4 }}" style="width:100%">
               </div>
 
@@ -391,7 +421,7 @@
                 <div class="card-body">
                   <div class="view-item">Room Images
                     <div class="view-btn-wrap">
-                        <button id="images" class="view-btn">View</button>
+                        <button id="room-images" class="view-btn">View</button>
                     </div>
                   </div>
                 </div>
