@@ -127,22 +127,24 @@
   {% block footer %}
   <!-- Site footer -->
   <footer class="site-footer">
-    <div class="row">
-      <div class="col-md-5 offset-md-1 footer-space">
-        <div class="row">
-          <div class="col-md-2">
-            <a href="{{ url_for('main.index') }}"><img class="logo-footer" src="{{ url_for('static', filename='img/olwert-logo-full-vert.png') }}"></a>
+    <div class="footer-container">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12 col-xl-5 offset-1 offset-xl-1">
+          <div class="row">
+            <div class="col-2">
+              <a href="{{ url_for('main.index') }}"><img class="logo-footer" src="{{ url_for('static', filename='img/olwert-logo-full-vert.png') }}"></a>
+            </div>
+            <div class="col-9 footer-text-space">
+              <p class="text-justify">What is Abode Interior?</p>
+              <p class="footer-text">Universities don't provide room details, leading to confusion about what students actually need to bring. Abode fixes this problem.</p>
+            </div>
           </div>
-          <div class="col-md-9">
-            <p class="text-justify">What is Abode Interior?</p>
-            <p class="footer-text">Universities don't provide room details, leading to confusion about what students actually need to bring. Abode fixes this problem.</p>
-          </div>
+          
+          <hr class="my-3">
+          <p class="copyright-text">Copyright &copy; Abode, <span title="Dedicated to Bumpy.">Abode Interior</span>, abodeinterior.net 2019</p>
         </div>
-        
-        <hr class="my-3">
-        <p class="copyright-text">Copyright &copy; Abode, <span title="Dedicated to Bumpy.">Abode Interior</span>, abodeinterior.net 2019</p>
+        <img class="bg-footer" src="{{ url_for('static', filename='img/bg_abode.png') }}">
       </div>
-      <img class="bg-footer" src="{{ url_for('static', filename='img/bg_abode.png') }}">
     </div>
   </footer>
   <!-- end footer -->

@@ -150,6 +150,14 @@ hr {
     margin-right: 10px;
 }
 
+@media (max-width: 530px) {
+    .logo {
+        width: 200px;
+        height: 40px;
+        margin-right: 10px;
+    }
+}
+
 /*************/
 /* animation */
 /*************/
@@ -1948,6 +1956,25 @@ p
     overflow-y: hidden;
 }
 
+@media (max-width: 1400px) {
+    .bg-footer {
+        display: none;
+    }
+}
+
+.footer-container {
+    padding: 45px 0 20px;
+}
+
+@media (max-width: 1400px) {
+    .footer-container {
+        padding: 45px 130px 20px 0px;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
 .p-college-name, .p-building-name {
     color: #999;
 }
@@ -1989,10 +2016,6 @@ p
 
 .dean-btn:hover {
     background-color: #20568f;
-}
-
-.footer-space {
-    padding: 45px 0 20px;
 }
 
 .p-thead {
@@ -2054,4 +2077,36 @@ p
 .badge-dark {
     color: #FFFFFF;
     background-color: #1B2A4E;
+}
+
+#toosmallpopup {
+    display: none;
+    background-color: #dd7c7a;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: inherit;
+    height: 100%;
+    width: 100%;
+    padding-top: 25%;
+    color: #ffffff;
+}
+
+@media (max-width: 1440px) {
+    #toosmallpopup {
+        display: block;
+    }
+}
+
+@media (max-width: 1440px) {
+    #display {
+        display: none;
+    }
+}
+
+@media (max-width: 800px) {
+    .footer-text-space {
+        margin-left: 15px;
+    }
 }
