@@ -12,13 +12,13 @@ from .models import User, Role, College, Building, Room, ResidentOf, PostAdmin, 
 
 # error handling -- err
 def crash_page(e):
-    return render_template('main/500.html'), 500
+    return render_template('security/500.html'), 500
 
 def page_not_found(e):
-    return render_template('main/404.html'), 404
+    return render_template('security/404.html'), 404
 
 def page_forbidden(e):
-    return render_template('main/403.html'), 403
+    return render_template('security/403.html'), 403
 
 
 
