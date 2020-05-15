@@ -13439,12 +13439,24 @@ body.compensate-for-scrollbar {
   color: #e1ded9;
 }
 
+.text-offwhite-200 {
+  color: #f5f2ef;
+}
+
 .text-greyblue-200 {
   color: #4395a6;
 }
 
 .bg-off-white {
   background-color: #e1ded9;
+}
+
+.bg-offwhite-200 {
+  background-color: #f5f2ef;
+}
+
+.bg-gradient-offwhite {
+  background-image: linear-gradient(to bottom, #f5f2ef, #e1ded9)
 }
 
 .bg-red-dark {
