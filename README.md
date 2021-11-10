@@ -21,4 +21,4 @@ Required for production server.
 Copyright © Abode, Abode Interior, abodeinterior.net 2019
 
 ### Versioning 
-0.0.1
+0.0.2
