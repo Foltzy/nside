@@ -29,7 +29,7 @@
   --warning: #FAD776;
   --danger: #DF4759;
   --light: #F9FBFD;
-  --dark: #1B2A4E;
+  --dark: #384C74;
   --primary-desat: #6C8AEC;
   --black: #161C2D;
   --white: #FFFFFF;
@@ -2133,7 +2133,7 @@ fieldset:disabled a.btn {
     box-shadow: none, 0 0 0 0 rgba(144, 128, 241, 0.5); }
   .btn-info.disabled, .btn-info:disabled {
     color: #FFFFFF;
-    background-color: #7C69EF;
+    background-color: #439fa6;
     border-color: #7C69EF; }
   .btn-info:not(:disabled):not(.disabled):active, .btn-info:not(:disabled):not(.disabled).active,
   .show > .btn-info.dropdown-toggle {
@@ -4193,7 +4193,7 @@ input[type="button"].btn-block {
 
 .badge-dark {
   color: #FFFFFF;
-  background-color: #1B2A4E; }
+  background-color: #384C74; }
   a.badge-dark:hover, a.badge-dark:focus {
     color: #FFFFFF;
     background-color: #0e1628; }
@@ -5400,7 +5400,7 @@ a.close.disabled {
   vertical-align: text-top !important; }
 
 .bg-primary {
-  background-color: #4395a6 !important; }
+  background-color: #335EEA !important; }
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
@@ -5456,7 +5456,7 @@ button.bg-light:focus {
   background-color: #d3e2f0 !important; }
 
 .bg-dark {
-  background-color: #1B2A4E !important; }
+  background-color: #384C74 !important; }
 
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,
@@ -5545,7 +5545,7 @@ button.bg-white:focus {
   border-color: #F9FBFD !important; }
 
 .border-dark {
-  border-color: #1B2A4E !important; }
+  border-color: #384C74 !important; }
 
 .border-primary-desat {
   border-color: #6C8AEC !important; }
@@ -13492,6 +13492,11 @@ body.compensate-for-scrollbar {
   background-color: #ed782f; 
 }
 
+.badge-orange-soft {
+  color: #ffffff;
+  background-color: #ed782f85; 
+}
+
 .mt-custom-n14 {
   margin-top: -14rem;
 }
@@ -13512,3 +13517,59 @@ body.compensate-for-scrollbar {
   color: #ffffff;
   background-color: #581817;
 }
+
+
+
+
+/* ========== */
+/* CUSTOM CSS */
+/* ========== */
+.display-content-wrapper .card {
+  border: 1px solid #D9E2EF !important;
+}
+
+#content
+{
+    width: 100%;
+    /* height originally: 450 new height for formatting: 550 */
+    height: 100%; 
+    /* border: 1px dotted #cecfd2; */
+}
+
+.view-height {
+  height: 60vh;
+  overflow-y: scroll;
+  scrollbar-gutter: 30px;  /* Firefox */
+}
+
+/* Orange nav tabs */
+/* #myTab .nav-item .nav-link.active { 
+  background-color: #ed782f;
+} */
+
+/* display map styles */
+.display-frame {
+  border: 1px solid #D9E2EF !important;
+  position: relative;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #FFFFFF;
+  background-clip: border-box;
+  border: 0px solid #F1F4F8;
+  border-radius: 0.375rem;
+}
+
+/* custom extra small font size */
+/* .font-size-xs {
+  font-size: 0.75rem !important; } */
+
+  /* custom badge background for add user role badge */
+  .bg-match-avatar {
+    background-color: #ABBCD5;
+    color: #FFFFFF;
+  }

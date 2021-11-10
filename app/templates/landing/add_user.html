@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %} Add User {% endblock %}
+
+{% from "security/_macros.html" import render_land_field, render_radio_field %}
+
+{% block content %}
+
+    <!-- CONTENT
+    ================================================== -->
+    <section class="pt-3 pt-md-8 pb-md-10 pb-10">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-md mb-md-5">
+                    
+                    <!-- Link -->
+                    <a href="{{ url_for('main.deanland') }}" class="font-weight-bold font-size-sm text-decoration-none mb-3">
+                        <i class="fe fe-arrow-left mr-1"></i> Dean Panel
+                    </a>
+        
+                    <!-- Heading -->
+                    <h1 class="display-4 mb-2">
+                        Add User
+                    </h1>
+
+                    <!-- Text -->
+                    <p class="font-size-lg text-gray-700 mb-5">
+                        Provide users with temporary passwords they can use to login, and view their room.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mb-md-10">
+                <div class="col-12 col-sm-12 col-md-8 mb-8 mb-md-5 order-md-1 order-sm-1">
+                    
+                    <!-- Card -->
+                    <div class="card card-border card-border-lg border-dark shadow-light">
+
+                        <div class="card-header">
+                            1. Input user information
+                        </div>
+
+                        <div class="card-body">
+                            
+                            <!-- Form -->
+                            <form method="POST" action="{{ url_for('main.studentland') }}" name="$root.addUser" id="add_user_form">
+
+                                {{ form.hidden_tag() }}
+                                
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        {{ render_land_field(form.first_name, label="First name", class_="form-control") }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ render_land_field(form.last_name, label="Last name", class_="form-control") }}
+                                    </div>
+                                </div> <!-- / .row -->
+                                <div class="row mb-5">
+                                    <div class="col-12 col-md-6">
+                                        {{ render_land_field(form.email, label="Email", class_="form-control", type="text") }}
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ render_land_field(form.password, label="Temp Password", class_="form-control", type="text") }}
+                                    </div>
+                                </div> <!-- / .row -->
+                                <div class="row mb-5">
+                                    <legend class="col-form-label col-sm-2 pt-0">Select role</legend>
+                                    <div class="col-10">
+
+                                        {{ render_radio_field(form.student, label="Student", value="option1", class_="form-check-input", id="cstudent") }}
+
+                                        {{ render_radio_field(form.parent, label="Parent", value="option2", class_="form-check-input", id="cparent") }}
+
+                                        {{ render_radio_field(form.dean, label="Dean", value="option3", class_="form-check-input", id="cdean") }}
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <legend class="col-form-label col-sm-2 pt-0">Select room</legend>
+                                    <div class="col-10">
+
+                                        <!-- TODO: add select functionality -->
+                                        <!-- college -->
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text bg-dark text-white" for="colleges">College</label>
+                                            </div>
+                                            <select class="custom-select" id="colleges">
+                                                <option disabled selected>College</option>
+                                                {% for college in colleges %}
+                                                    <option value="{{ college.id }}">{{ college.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <!-- building -->
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text bg-dark text-white" for="buildings">Building</label>
+                                            </div>
+                                            <select class="custom-select" id="buildings">
+                                                <option class="option-placeholder" disabled selected>Building</option>
+                                                {% for building in buildings %}
+                                                    <option class="option-value" value="{{ building.id }}">{{ building.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <!-- room -->
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text bg-dark text-white" for="rooms">Room</label>
+                                            </div>
+                                            <select class="custom-select" id="rooms" name="room_id">
+                                                <option class="option-placeholder" disabled selected>Room</option>
+                                                {% for room in rooms %}
+                                                    <option class="option-value" value="{{ room.id }}">{{ room.room_number }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        
+
+                                
+                                    </div>
+                                </div> <!-- / .row -->
+
+                            </form>
+            
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-4 order-md-2 order-sm-2">
+                    
+                    <!-- Card -->
+                    <div class="card card-border card-border-lg border-dark shadow-light">
+
+                        <div class="card-header">
+                            2. Preview user information
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="text-center">
+              
+                                <!-- Icon -->
+                                <div class="avatar avatar-xxl mb-3">
+                                    <span class="avatar-title rounded-circle text-uppercase" id="avatar">
+                                        <span id="first_letter">-</span>
+                                        <span id="second_letter">-</span>
+                                    </span>
+                                </div>
+                    
+                                <!-- Heading -->
+                                <h3 class="font-weight-bold mb-3">
+                                <span id="user_first" class="text-muted">First</span> <span id="user_last" class="text-muted">Last</span> 
+                                </h3>
+
+                                <!-- Text -->
+                                <p class="mb-3 mb-md-3">
+                                    <span id="user_role" class="badge bg-match-avatar">Role</span>
+                                </p>
+
+                                <!-- Text -->
+                                <p class="mb-3 mb-md-3">
+                                    <span id="user_email" class="text-muted ml-2">email@email.com</span>
+                                </p>
+
+                                <!-- Text -->
+                                <p class="mb-3 mb-md-3">
+                                    <span id="user_password" class="text-muted ml-2">•••••••••</span>
+                                </p>
+
+                                <!-- Text -->
+                                <p class="mb-8 mb-md-8">
+                                    <span id="user_room" class="text-muted ml-2">Room #</span>
+                                </p>
+
+                                <!-- Cancel -->
+                                <a onclick="return confirm('Are you sure you would like to cancel?');" class="btn btn-sm btn-danger mb-6 mb-md-3 lift order-md-2" href="{{ url_for('main.deanland') }}">
+                                    Cancel <i class="fe fe-trash ml-0 ml-md-2 ml-sm-3"></i>
+                                </a>
+                                
+                                <!-- Submit -->
+                                <button class="btn btn-success btn-sm ml-5 mb-6 ml-xs-5 ml-sm-3 ml-md-0 ml-lg-0 ml-xl-5 mb-md-3 lift order-md-1" type="submit" form="add_user_form" ng-disabled="$root.addUser.myfield.$invalid">
+                                    Add <i class="fe fe-arrow-right ml-0 ml-md-2 ml-sm-3"></i>
+                                </button>
+                                
+                            </div>
+            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}

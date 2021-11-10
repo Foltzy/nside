@@ -42,8 +42,17 @@
 
   <script src="{{ url_for('static', filename='landing_static/js/theme.min.js') }}"></script>
 
-  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/basic.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='landing_static/css/retina.css') }}">
   <script src="{{ url_for('static', filename='landing_static/js/imagerotator.js') }}"></script>
+  <script src="{{ url_for('static', filename='landing_static/js/custom.js') }}"></script>
+
+  <!-- trimpath query -->
+  <script src="{{ url_for('static', filename='js/query.js') }}"></script>
+
+  <!-- dynamic site data -->
+  <script src="{{ url_for('static', filename='js/site_data.js') }}"></script>
+
+  
 
   <!-- custom css and js per page -->
   {% block page_js %}
@@ -54,27 +63,6 @@
 </head>
 
 <body>
-
-    <script>
-        jQuery(document).ready(function(){
-
-            jQuery('#wr360PlayerId').rotator({
-                licenseFileURL: '/static/landing_static/360_assets/license.lic',
-                configFileURL: '/static/landing_static/360_assets/W22_1_wr/W22_1_wr.xml',
-                graphicsPath: '/static/landing_static/img/basic',
-                alt: '360 degree view - W22_1_wr',
-                inBrowserFullScreen: false,
-                googleEventTracking: false,
-                fullScreenOnClick: true,
-                apiReadyCallback: function(api, isFullScreen) {
-                    jQuery('#wr360PlayerId_fs_X').on('click', function() {
-                        jQuery('#wr360PlayerId_fs').hide();
-                    });
-                }
-            });
-            
-        });
-    </script>
 
   {% block base_nav %}
   <!-- ========== navbar -->
@@ -102,59 +90,121 @@
           <!-- === navigation -->
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" title="Click to open a full screen, interactive example room" id="wr360PlayerId" href="#">Example</a>
+                <!-- <a class="nav-link" title="Click to open a full screen, interactive example room" id="wr360PlayerId" href="#">Example</a> -->
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('main.about_us') }}">About Us</a>
             </li>
-            <li class="nav-item dropdown hovered">
-              <a class="nav-link dropdown-toggle" id="navbarPages" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDocumentation" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="false">
                 My Account
               </a>
-              <div class="dropdown-menu dropdown-menu-sm" aria-labelledby="navbarPages">
-                <div class="row no-gutters">
-                  <div class="col-6">
-                    <div class="row no-gutters">
-                      <div class="col-12 col-lg-6">
+              <div class="dropdown-menu dropdown-menu-sm" aria-labelledby="navbarDocumentation">
+                <div class="list-group list-group-flush">
 
-                        <!-- === list -->
-                        {% if current_user.is_authenticated %}
-                            <a class="dropdown-item">
-                                {{ current_user.first_name + " " + current_user.last_name }} 
-                            </a>
-                            <hr>
-                            <a class="dropdown-item" href="{{ url_for('main.display') }}">
-                                My Room
-                            </a>
-                            <a class="dropdown-item" href="{{ url_for('security.change_password') }}">
-                                Change Password
-                            </a>
-                            {% if current_user.has_role('dean') %}
-                                <a class="dropdown-item" href="{{ url_for('main.dean_panel') }}">
-                                    Dean Panel
-                                </a>
-                            {% endif %}
-                            <a class="dropdown-item" href="{{ url_for('security.logout') }}">
-                                Logout
-                            </a>
-                        {% else %}
-                            <a class="dropdown-item" href="{{ url_for('security.login') }}">
-                                Login
-                            </a>
-                            <hr>
-                            <a class="dropdown-item">
-                                You can only login if<br>
-                                    your school is added. 
-                            </a>
-                        {% endif %}
+                  {% if current_user.is_authenticated %}
+                    <div class="list-group-item mb-4">
 
-                        <!-- todo[p]: could add a tab here for "example" or "example model" that opens to an auto full page model with the buttons and everything -->
+                      <!-- Avatar -->
+                      {% if current_user.has_role('admin') %}
+                      <div class="avatar">
+                        <span class="avatar-title bg-dark text-uppercase rounded-circle">{{ current_user.first_name[:1] + current_user.last_name[:1] }}</span>
+                      </div>
+                      {% elif current_user.has_role('dean') %}
+                      <div class="avatar">
+                        <span class="avatar-title bg-primary text-uppercase rounded-circle">{{ current_user.first_name[:1] + current_user.last_name[:1] }}</span>
+                      </div>
+                      {% elif current_user.has_role('parent') %}
+                      <div class="avatar">
+                        <span class="avatar-title bg-success text-uppercase rounded-circle">{{ current_user.first_name[:1] + current_user.last_name[:1] }}</span>
+                      </div>
+                      {% elif current_user.has_role('student') %}
+                      <div class="avatar">
+                        <span class="avatar-title bg-warning text-uppercase text-dark rounded-circle">{{ current_user.first_name[:1] + current_user.last_name[:1] }}</span>
+                      </div>
+                      {% endif %}
+
+                      <!-- Content -->
+                      <div class="ml-4">
+
+                        <!-- Text -->
+                        <p class="font-size-sm text-gray-700 mb-0">
+                          {{ current_user.first_name + " " + current_user.last_name }}
+                        </p>
 
                       </div>
+
                     </div>
-                  </div>
+
+                    {% if current_user.has_role('dean') %}
+                      <!-- Heading -->
+                      <h6 class="dropdown-header text-primary">
+                        FOR DEANS
+                      </h6>
+
+                      <!-- List -->
+                      <a class="dropdown-item mb-5" href="{{ url_for('main.deanland') }}">
+                        Dean Panel
+                      </a>
+                    {% endif %}
+
+                    {% if current_user.has_role('admin') %}
+                      <!-- Heading -->
+                      <h6 class="dropdown-header text-primary">
+                        FOR ADMINS
+                      </h6>
+
+                      <!-- List -->
+                      <a class="dropdown-item mb-5" href="{{ url_for('admin.index') }}">
+                        Admin Panel
+                      </a>
+                    {% endif %}
+
+                    <!-- Heading -->
+                    <h6 class="dropdown-header text-primary">
+                      General
+                    </h6>
+
+                    <!-- List -->
+                    <a class="dropdown-item" href="{{ url_for('main.display') }}">
+                      My Room
+                    </a>
+
+                    <!-- List -->
+                    <a class="dropdown-item" href="{{ url_for('security.change_password') }}">
+                      Change Password
+                    </a>
+
+                    <!-- List -->
+                    <a class="dropdown-item" href="{{ url_for('security.logout') }}">
+                      Logout
+                    </a>
+                    
+                {% else %}
+
+                  <div class="list-group-item mb-4">
+
+                      <!-- Heading -->
+                      <h6 class="font-weight-bold text-uppercase text-primary mb-0">
+                        USE YOUR PROVIDED LOG IN CREDENTIALS HERE.
+                      </h6>
+
+                    </div>
+
+                  <!-- Heading -->
+                  <h6 class="dropdown-header text-primary">
+                    GENERAL
+                  </h6>
+
+                  <!-- List -->
+                  <a class="dropdown-item" href="{{ url_for('security.login') }}">
+                    Login
+                  </a>
+
+                {% endif %}
+
                 </div>
-              </div> <!-- / .row -->
+              </div>
             </li>
           </ul>
 
@@ -165,11 +215,11 @@
   <!-- ========== / navbar -->
   {% endblock %}
 
-  {% with messages = get_flashed_messages() %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      {% for message in messages %}
+      {% for category, message in messages %}
       <div class="full-alert">
-        <div class="alert alert-dark alert-dismissable fade show" role="alert">
+        <div class="alert alert-{{ category }} alert-dismissable fade show" role="alert">
           {{ message }}
           <button type="button" class="ml-6 close text-white" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">×</span>
@@ -287,7 +337,7 @@
         
             <!-- === heading -->
             <h6 class="font-weight-bold text-uppercase text-gray-700">
-                Resurces
+                Resources
             </h6>
 
             <!-- === list -->

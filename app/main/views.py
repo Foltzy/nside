@@ -17,8 +17,9 @@ import json
 import private
 
 
-# LANDING
-######################
+# ######################################################
+#    LANDING
+# ###################################################### 
 @app.route('/')
 @app.route('/index/')
 def index():
@@ -52,8 +53,181 @@ def about_us():
     return render_template('landing/about_us.html', form=form)
 
 
-# GA / STEM
-######################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ######################################################
+#    NEW WITH TEMPLATE
+# ###################################################### 
+# ====================
+# ========== new display page (w/ template)
+@app.route('/displayland')
+@login_required
+def displayland():
+
+    # FIND THE ROOM THE USER IS LINKED TO
+    # see if the  user is linked  to a room if not set to 'None'
+    # todo[p]: have a fail safe in place to catch users that don't have a linked room
+    if len(current_user.rooms) != 0:
+        linked_room = current_user.rooms[0]
+    else:
+        linked_room = None
+
+    return render_template('landing/display.html', linked_room=linked_room)
+
+# ====================
+# ========== new dean panel (w/ template)
+@app.route('/deanland')
+@roles_required('dean')
+def deanland():
+    all_students = User.query.filter_by(student=True).all()
+    all_parents = User.query.filter_by(parent=True).all()
+    all_deans = User.query.filter_by(dean=True).all()
+    all_users = all_students + all_parents + all_deans
+    name = current_user.first_name
+
+    return render_template('landing/dean_panel.html', name=name, users=all_users)    
+    
+
+# ====================
+# ========== new dean panel (w/ template)
+@app.route('/studentland/', methods=('GET', 'POST'))
+@roles_required('dean')
+def studentland():
+    form = AddStudentForm()
+    name = current_user.first_name
+
+    # for select2 fields
+    colleges = College.query.all()
+    buildings = Building.query.all()
+
+    # query all rooms in database for selectfield
+    form.room_id.choices = [(str(room.id), repr(room)) for room in Room.query.all()]
+
+    if form.validate_on_submit():
+
+        first_name = form.first_name.data
+        last_name =  form.last_name.data
+        email = form.email.data
+        password = form.password.data
+        student = form.student.data
+        parent = form.parent.data
+        dean = form.dean.data
+        confirmed_at = datetime.utcnow()
+
+        user = User(first_name=first_name, last_name=last_name, email=email, password=password, student=student, parent=parent, dean=dean, confirmed_at=confirmed_at)
+        db.session.add(user)
+        db.session.commit()
+
+
+        user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+        if user.student == True:
+            user_datastore.add_role_to_user(user.email, 'student')
+        elif user.parent == True:
+            user_datastore.add_role_to_user(user.email, 'parent')
+        elif user.dean == True:
+            user_datastore.add_role_to_user(user.email, 'dean')
+        else: 
+            flash("You must select a role", 'warning')
+            return redirect(url_for('main.deanland'))
+
+        db.session.commit()
+
+        
+        relationship = ResidentOf()
+        relationship.user_id = user.id
+        if form.room_id.data != "Room":
+            relationship.room_id = form.room_id.data
+        else:
+            relationship.room_id = None
+
+        db.session.add(relationship)
+        db.session.commit()
+
+        flash("Added " + form.first_name.data + " " + form.last_name.data, 'success')
+        return redirect(url_for('main.deanland'))
+
+    return render_template('landing/add_user.html', form=form, colleges=colleges, buildings=buildings, name=name, action="new")
+
+# ====================
+# ========== delete user
+@app.route('/user/delete/s<int:user_id>')
+@roles_required('dean')
+def deleteuser(user_id):
+    user = User.query.filter_by(id=user_id).first_or_404()
+    db.session.delete(user)
+    db.session.commit()
+    flash("User " + user.first_name + " " + user.last_name + " deleted", 'success')
+    return redirect(url_for('main.deanland'))
+
+# ====================
+# ========== new edit user (w/ template)
+@app.route('/editland')
+def editland():
+    return render_template('landing/edit_user.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ######################################################
+#    GA /STEM
+# ###################################################### 
 # ====================
 # ========== display
 @app.route('/display/')

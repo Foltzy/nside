@@ -32,22 +32,26 @@ $(document).ready(function(){
                 console.log(linked_room.linked_xml);
                 if (apiObj != null){
                     apiObj.reload(linked_room.linked_xml);
-                    console.log('LINKED ROOM reload complete');
+                    console.log(' == linked room reload complete ==');
                 }
             });
         });
         // /fetch
     }
 
+    // TODO
+    // Call with webrotate operator suggested that I pass the xml file as a variable
+    // that was deterimined before the .rotator loads
+
     // imagerotator 
     // tells webrotate what room to load first then replace with the linked room
     // tells webrotate API how to load xml's as well
     jQuery('#wr360PlayerId').rotator({
-        licenseFileURL: '/static/360_assets/license.lic',
-        configFileURL: '/static/360_assets/E24_1_final_wr/E24_1_final_wr.xml',
-        graphicsPath: '/static/img/basic',
-        zIndexLayersOn: false,
+        licenseFileURL: '/static/landing_static/360_assets/license.lic',
+        configFileURL: '/static/landing_static/360_assets/E24_1_final_wr/E24_1_final_wr.xml',
+        graphicsPath: '/static/landing_static/img/retina',
         responsiveBaseWidth: 600,
+        responsiveBaseHeight: 550,
         responsiveMinHeight: 0,
         googleEventTracking: false,
         apiReadyCallback: function(api){apiObj = api; loadLinked_room(apiObj);},

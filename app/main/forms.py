@@ -33,6 +33,16 @@ class AddStudentForm(FlaskForm):
     dean = BooleanField('dean')
     room_id = SelectField('room', choices=[])
 
+class AddUserForm(FlaskForm):
+    first_name = StringField('first name', validators=[InputRequired()])
+    last_name = StringField('last name', validators=[InputRequired()])
+    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), check_email])
+    password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
+    student = BooleanField('student')
+    parent = BooleanField('parent')
+    dean = BooleanField('dean')
+    room_id = SelectField('room', choices=[])
+
 class ContactForm(FlaskForm):
     full_name = StringField('full name', validators=[InputRequired()])
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email')])

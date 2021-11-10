@@ -13,22 +13,6 @@
     </div>
 {% endmacro %}
 
-<!-- render inout field -->
-{% macro render_land_field(field, label="Label") %}
-    <div class="form-group">
-        <label for="{{ type }}">{{ label }}</label>
-        {{ field(**kwargs)|safe }}
-
-        {% if field.errors %}
-            {% for error in field.errors %}
-                <div class="fielderr">
-                    <span class="err">{{ error }}</span>
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-{% endmacro %}
-
 
 
 
@@ -45,7 +29,7 @@
             <option></option>
             {% for choice in field.choices %}
                 <option value="{{ choice[0] }}">{{ choice[1] }}</option>
-                {% endfor %}
+            {% endfor %}
         </select>
         {% if field.errors %}
         {% for error in field.errors %}
@@ -70,3 +54,43 @@
     </div>
 {% endmacro %}
 
+
+
+
+<!-- =============================================== -->
+<!-- NEW LAND FIELDS -->
+<!-- =============================================== -->
+<!-- general input field -->
+{% macro render_land_field(field, label="Label") %}
+    <div class="form-group">
+        <label for="{{ type }}">{{ label }}</label>
+        {{ field(**kwargs)|safe }}
+
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="fielderr">
+                    <span class="err">{{ error }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+<!-- radio input field -->
+{% macro render_radio_field(field, label="Label") %}
+<div class="form-check mb-3">
+    {{ field(**kwargs)|safe }}
+    <label class="form-check-label ml-2" for="{{ name }}">
+        {{ label }}
+    </label>
+
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <div class="fielderr">
+                <span class="err">{{ error }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endmacro %}
