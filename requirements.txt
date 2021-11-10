@@ -4,7 +4,7 @@ Babel==2.8.0
 blinker==1.4
 cffi==1.14.0
 click==7.1.2
-cryptography==2.9.2
+cryptography==3.3.2
 dnspython==1.16.0
 email-validator==1.1.0
 enum34==1.1.10
