@@ -4,6 +4,24 @@
 
 {% from "security/_macros.html" import render_land_field %}
 
+{% block page_js %}
+<script>
+    jQuery(document).ready(function(){
+
+        jQuery('#wr360PlayerId').rotator({
+            licenseFileURL: '/static/360_assets/license.lic',
+            configFileURL: '/static/360_assets/W22_1_wr/W22_1_wr.xml',
+            graphicsPath: '/static/img/basic',
+            alt: '360 degree view - W22_1_wr',
+            inBrowserFullScreen: false,
+            googleEventTracking: false,
+            fullScreenOnClick: true
+        });
+        
+    });
+</script>
+{% endblock %}
+
 {% block content %}
 <!-- ========== index -->
     <section class="pt-4 pt-md-11">
@@ -12,7 +30,7 @@
             <div class="col-12 col-md-5 col-lg-6 order-md-2">
   
               <!-- Image -->
-              <img src="{{ url_for('static', filename='landing_static/img/gif/gif_tester.gif') }}" class="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0" alt="..." data-aos="fade-up" data-aos-delay="100">
+              <img src="{{ url_for('static', filename='img/gif/gif_tester.gif') }}" class="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0" alt="..." data-aos="fade-up" data-aos-delay="100">
   
             </div>
             <div class="col-12 col-md-7 col-lg-6 order-md-1" data-aos="fade-up">
@@ -372,7 +390,7 @@
                     <div class="img-skewed img-skewed-left">
     
                     <!-- Image -->
-                    <img src="{{ url_for('static', filename='landing_static/img/display_screenshot.png') }}" class="screenshot img-fluid img-skewed-item" alt="...">
+                    <img src="{{ url_for('static', filename='img/display_screenshot.png') }}" class="screenshot img-fluid img-skewed-item" alt="...">
     
                     </div>
     
@@ -394,16 +412,16 @@
                         <div class="row">
                         <div class="col-6 mt-8 mr-n5" data-aos="fade-up">
                             
-                            <img src="{{ url_for('static', filename='landing_static/img/IMG_7555.png') }}" alt="..." class="p-1 bg-white img-fluid mb-4 rounded">
+                            <img src="{{ url_for('static', filename='img/IMG_7555.png') }}" alt="..." class="p-1 bg-white img-fluid mb-4 rounded">
             
-                            <img src="{{ url_for('static', filename='landing_static/img/IMG_7556.png') }}" alt="..." class="p-1 bg-white img-fluid rounded">
+                            <img src="{{ url_for('static', filename='img/IMG_7556.png') }}" alt="..." class="p-1 bg-white img-fluid rounded">
             
                         </div>
                         <div class="col-6" data-aos="fade-up" data-aos-delay="100">
                             
-                            <img src="{{ url_for('static', filename='landing_static/img/IMG_7557.png') }}" alt="..." class="p-1 bg-white img-fluid mb-4 rounded">
+                            <img src="{{ url_for('static', filename='img/IMG_7557.png') }}" alt="..." class="p-1 bg-white img-fluid mb-4 rounded">
             
-                            <img src="{{ url_for('static', filename='landing_static/img/map-integration.png') }}" alt="..." class="p-1 bg-white img-fluid rounded">
+                            <img src="{{ url_for('static', filename='img/map-integration.png') }}" alt="..." class="p-1 bg-white img-fluid rounded">
             
                         </div>
                         </div> <!-- / .row -->
@@ -520,10 +538,10 @@
                         </span>
     
                     </div>
-                    <div class="col-12 col-md-4 bg-cover card-img-left" style="background-image: url(/static/landing_static/img/polak.png);" href="#!">
+                    <div class="col-12 col-md-4 bg-cover card-img-left" style="background-image: url(/static/img/polak.png);" href="#!">
     
                         <!-- Image (placeholder) -->
-                        <img src="{{ url_for('static', filename='landing_static/img/polak.png') }}" alt="..." class="img-fluid d-md-none invisible">
+                        <img src="{{ url_for('static', filename='img/polak.png') }}" alt="..." class="img-fluid d-md-none invisible">
     
                         <!-- Shape -->
                         <div class="shape shape-right shape-fluid-y svg-shim text-white d-none d-md-block">
@@ -619,7 +637,7 @@
                                 
                                 <!-- Image -->
                                 <div class="rounded w-150 mt-9 p-1 bg-white shadow-lg">
-                                <img src="{{ url_for('static', filename='landing_static/img/steps/step_1.png') }}" class="rounded img-fluid" alt="...">
+                                <img src="{{ url_for('static', filename='img/steps/step_1.png') }}" class="rounded img-fluid" alt="...">
                                 </div>
                 
                             </div>
@@ -627,7 +645,7 @@
                                 
                                 <!-- Image -->
                                 <div class="rounded w-150 p-1 bg-white shadow-lg">
-                                <img src="{{ url_for('static', filename='landing_static/img/steps/step_2.png') }}" class="rounded img-fluid" alt="...">
+                                <img src="{{ url_for('static', filename='img/steps/step_2.png') }}" class="rounded img-fluid" alt="...">
                                 </div>
                 
                             </div>
@@ -635,7 +653,7 @@
                                 
                                 <!-- Image -->
                                 <div class="rounded w-150 mt-11 float-right p-1 bg-white shadow-lg">
-                                <img src="{{ url_for('static', filename='landing_static/img/steps/step_3.png') }}" class="rounded img-fluid" alt="...">
+                                <img src="{{ url_for('static', filename='img/steps/step_3.png') }}" class="rounded img-fluid" alt="...">
                                 </div>
                 
                             </div>
@@ -777,7 +795,7 @@
                             <div class="img-skewed img-skewed-left">
             
                             <!-- Image -->
-                            <img src="{{ url_for('static', filename='landing_static/img/back-end.png') }}" class="screenshot img-fluid img-skewed-item" alt="...">
+                            <img src="{{ url_for('static', filename='img/back-end.png') }}" class="screenshot img-fluid img-skewed-item" alt="...">
             
                             </div>
             
@@ -815,7 +833,7 @@
 
                         <!-- Text -->
                         <p class="font-size-lg text-gray-800 mb-3 mb-md-5">
-                        Send us an email if you are interesting in learning more information about the product or if you want to add your school!
+                        Send us an email if you are interested in learning more information about the product or if you want to add your school!
                         </p>
                         
                         <!-- Form -->

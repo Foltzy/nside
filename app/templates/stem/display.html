@@ -1,519 +1,664 @@
-{% extends "gabase.html" %}
+{% extends "base.html" %}
 
-{% block title %} Room Display {% endblock %}
+{% block title %} New Display {% endblock %}
 
-{% block page_css %}
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% block page_js %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+<!-- dynamic site data -->
+<script src="{{ url_for('static', filename='js/site_data.js') }}"></script>
 {% endblock %}
 
 {% block content %}
-    <!-- 1440 and then it breaks -->
-    <div id="toosmallpopup">
-      <div class="text-center">We apologize for the inconvenience!</div>
-      <div class="text-center">You'll need to visit this page on a larger screen.</div>
-    </div>
+<!-- BENEFITS
+================================================== -->
+<section class="pt-3 pt-md-8 pb-md-10 pb-10">
 
+    <div class="current_userid" value="{{ current_user.id }}" style="display: none;"></div>
 
-    <!-- header -->
-    <header class="masthead" id="display">
+    <div class="container">
+        <div class="row justify-content-between display-content-wrapper">
+            <!-- ============================================================ -->
+            <!-- COLUMN START -->
+            <!-- ============================================================ -->
+            <div class="col-12 col-md-6 order-md-1">
 
-      <div class="current_userid" value="{{ current_user.id }}" style="display: none;"></div>
+                <div id="content" class="display-cont mb-10">
 
-      <div id="header" class="row header-container">
-        <!-- display -->
-        <div class="col-xs-12 col-sm-12 col-md-6">
-
-          <!-- slideshow + room display script -->
-          <script>
-            $(document).ready(function(){
-              // hide the slideshow by default
-              $('#room-slideshow-container').hide();
-              //$('#lounge-slideshow-container').hide();
-              //$('#hall-slideshow-container').hide();
-              $('#map-container').hide();
-              console.log('Defaults:')
-              console.log('Room slideshow hidden')
-              console.log('Lounge slideshow hidden')
-              console.log('Hall slideshow hidden')
-              console.log('Map hidden')
-
-              $('#room-images').on('click', function() {
-                  $('#display-container').hide();
-                  //$('#lounge-slideshow-container').hide();
-                  //$('#hall-slideshow-container').hide();
-                  $('#room-slideshow-container').show();
-                  $('#map-container').hide();
-              });
-
-              $('#lounge-images').on('click', function() {
-                  $('#display-container').hide();
-                  $('#room-slideshow-container').hide();
-                  //$('#hall-slideshow-container').hide();
-                  //$('#lounge-slideshow-container').show();
-                  $('#map-container').hide();
-              });
-
-              $('#hall-images').on('click', function() {
-                  $('#display-container').hide();
-                  $('#room-slideshow-container').hide();
-                  //$('#lounge-slideshow-container').hide();
-                  //$('#hall-slideshow-container').show();
-                  $('#map-container').hide();
-              });
-
-              $('.back-trigger').on('click', function() {
-                  $('#display-container').show();
-                  $('#room-slideshow-container').hide();
-                  //$('#hall-slideshow-container').hide();
-                  //$('#lounge-slideshow-container').hide();
-                  $('#map-container').hide();
-              });
-
-              $('#map').on('click', function() {
-                  $('#map-container').show();
-                  $('#room-slideshow-container').hide();
-                  //$('#hall-slideshow-container').hide();
-                  //$('#lounge-slideshow-container').hide();
-                  $('#display-container').hide();
-              });
-
-              $('#directions').on('click', function() {
-                  $('#map-container').show();
-                  //$('#hall-slideshow-container').hide();
-                  //$('#lounge-slideshow-container').hide();
-                  $('#room-slideshow-container').hide();
-                  $('#display-container').hide();
-              });
-
-              // todo[p]: use js to update images (appending more sliders does not work)
-            });
-          </script>
-          <!-- end script -->
-
-          {% if linked_room != None %}
-            <!-- room images slideshow -->
-            <div class="slideshow-container" id="room-slideshow-container">
-              <div class="mySlides fade">
-                <div class="numbertext">1 / 4 (Room)</div>
-                <img class="img-display-main r-img1" src="{{ linked_room.room.img1 }}" style="width:100%">
-              </div>
-            
-              <div class="mySlides fade">
-                <div class="numbertext">2 / 4 (Room)</div>
-                <img class="img-display-main r-img2" src="{{ linked_room.room.img2 }}" style="width:100%">
-              </div>
-            
-              <div class="mySlides fade">
-                <div class="numbertext">3 / 4 (Room)</div>
-                <img class="img-display-main r-img3" src="{{ linked_room.room.img3 }}" style="width:100%">
-              </div>
-
-              <div class="mySlides fade">
-                <div class="numbertext">4 / 4 (Room)</div>
-                <img class="img-display-main r-img4" src="{{ linked_room.room.img4 }}" style="width:100%">
-              </div>
-
-              <div style="text-align:center">
-                <a id="prev" onclick="plusSlides(-1)" class="previous"><img class="previoussvg" src="{{ url_for('static', filename='img/retina/left.svg') }}"></a>
-                <a id="next" onclick="plusSlides(1)" class="nextious"><img class="nextioussvg" src="{{ url_for('static', filename='img/retina/right.svg') }}"></a>
-              </div>
-            </div>
-            <!-- end slideshow -->
-          {% else %}
-          {% endif %}
-
-          <!-- room display -->
-          <div class="row r-display" id="display-container">
-            <div class="container d-flex h-100">
-              <div class="mx-auto text-center room-display">
-                <div id="content">
-                  <!-- wr360 container -->
-                  {% if linked_room == None %}
-                    <div class="hide no_link text-center">
-                      <div class="sl-object obj-muted">
-                          <img class="about-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}">
-                      </div>
-                      <br>You are not linked to a room.
+                    <div id="wr360PlayerId" class="wr360_player mb-10" style="background-color:#FFFFFF;">
                     </div>
-                  {% else %}
-                    <div id="wr360PlayerId" class="wr360_player" style="background-color:#FFFFFF;">
-                    </div>
-                  {% endif %}
-                  <!-- end wr360 container -->
-                </div> 
 
-                <!-- room sum -->
-                <div class="card info-card">
-                  <div class="info-card-sub">
-                    <img class="info-svg text-primary" src="{{ url_for('static', filename='img/svg/i-info.svg') }}">Objects in model reflect number and size, although location may vary.
-                  </div>
-                </div>
-                <!-- end room sum -->
-              </div>
-            </div>
-          </div>
-          <!-- end room display -->
-
-          <div class="map-container" id="map-container">
-            <iframe class="frame border-iframe" src="{{ linked_room.room.iframe_src }}" width="100%" height="625" allowfullscreen></iframe>
-          </div>
-        </div>
-        <!-- end display -->
+                    <!-- location may vary card -->
+                    <!-- <div class="alert alert-warning font-size-xs text-muted">
+                        <i class="fe fe-alert-circle"></i> 
+                        Objects in model reflect number and size, although location may vary.
+                    </div> -->
         
-        {% if linked_room != None %}
-          <!-- info -->
-          <div class="col-xs-12 col-sm-12 col-md-6">
-            <div class="row r-tabs">
-              <script>
-                // tabs 
-                function openTab(evt, section) {
-                  var i, x, baritems;
-                  x = document.getElementsByClassName("tab-content");
-                  for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                  }
-                  baritems = document.getElementsByClassName("bar-item");
-                  for (i = 0; i < x.length; i++) {
-                    baritems[i].className = baritems[i].className.replace(" tab-active", "");
-                  }
-                  document.getElementById(section).style.display = "block";
-                  evt.currentTarget.className += " tab-active";
-                }
-              </script>
-              <!-- tabs -->
-              <div class="tab-bar">
-                  <button class="bar-item tab-active" onclick="openTab(event, 'section1')">Summary</button>
-                  <button class="bar-item" onclick="openTab(event, 'section2')">Images</button>
-                  <button class="bar-item" onclick="openTab(event, 'section3')">Contact</button>
-                  <button class="bar-item" onclick="openTab(event, 'section4')">Help</button>
-              </div> 
-              <!-- end tabs -->
+                </div>
+
+                <div id="map-container" class="mb-10 mb-md-0">
+                    <iframe class="display-frame" src="{{ linked_room.room.iframe_src }}" width="100%" height="625" allowfullscreen></iframe>
+                </div>
+
+                <div id="carouselExampleIndicators" class="carousel slide">
+                    <ol class="carousel-indicators">
+                      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                      <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img class="d-block w-100" src="{{ linked_room.room.img1 }}" alt="First slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="{{ linked_room.room.img2 }}" alt="Second slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="{{ linked_room.room.img3 }}" alt="Third slide">
+                      </div>
+                      <div class="carousel-item">
+                        <img class="d-block w-100" src="{{ linked_room.room.img4 }}" alt="Thirdourth slide">
+                      </div>
+                    </div>
+
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+                
             </div>
+            <!-- ============================================================ -->
+            <!-- COLUMN END -->
+            <!-- ============================================================ -->
 
-            <!-- tab content -->
-            <div id="section1" class="tab-content">
-              <!-- viewing -->
-              <div class="card">
-                <div class="card-body model-btn-card">
-                  {% if linked_room != None %}
-                    <!-- todo[p]: fix this for each tab & get rid of no link option -->
-                    <!-- add a little "Viewing" above the line -->
-                    <div class="viewing text-black">
-                      <img class="mini-model-left-arrow back-trigger" title="Back to model" src="{{ url_for('static', filename='img/svg/left_arrow.svg') }}">
-                      <img class="mini-model back-trigger" title="Back to model" src="{{ url_for('static', filename='img/svg/back_model.svg') }}">
-                      <span class="p-college-name">{{ linked_room.room.building.college.name }} /</span>
-                      <span class="p-building-name">{{ linked_room.room.building.name }} /</span>
-                      <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+
+            <!-- ============================================================ -->
+            <!-- COLUMN START -->
+            <!-- ============================================================ -->
+            <div class="col-12 col-md-5 order-md-2">
+
+                <!-- Card -->
+                <div class="card mb-6">
+                    <div class="card-body">
+
+                        <!-- Link -->
+                        <a id="back-trigger" href="#" class="font-weight-bold font-size-sm text-decoration-none mb-3">
+                            <i class="fe fe-box mr-1"></i> View model
+                        </a>
+        
+                        <!-- Text -->
+                        <div class="font-size-md">
+                            <span class="text-muted">
+                                <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
+                            </span> 
+                            Room <span class="p-room-number">{{ linked_room.room.room_number }}</span>
+                        </div>
+
                     </div>
-                  {% else %}
-                    <div class="viewing text-black">
-                      <img class="mini-model" src="{{ url_for('static', filename='img/model-btn.png') }}">
-                      <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > 
-                      <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
-                      <span class="p-room-number">{{ linked_room.room.room_number }}</span>
-                    </div>
-                  {% endif %}
                 </div>
-              </div>
-              <!-- end viewing -->
 
-              <!-- room sum -->
-              <div class="card">
-                <div class="card-body addr_padding">
-                  <div class="text-black hall-title">{{ linked_room.room.building.name }}</div>
-                  <div class="text-black-50 addr features-spf"><span class="r-addr">{{ linked_room.room.building.address }}</span></div>
-                  <div class="text-black-50 features-spf"><a id="directions" href="#"><img class="plan-svg" src="{{ url_for('static', filename='img/svg/map.svg') }}"> View on map</a></div>
-                  <div class="text-black-50 features-spf"><img class="plan-svg" src="{{ url_for('static', filename='img/svg/map-allgrey.svg') }}"> No floor plan supplied</div>
-                  <div class="text-black-50 features-spf"><a class="r-site" href="{{ linked_room.room.building.college.website }}" target="_blank"><img class="earth-svg" src="{{ url_for('static', filename='img/svg/earth-forweb.svg') }}"></a>   <a class="r-site" href="{{ linked_room.room.building.college.website }}" target="_blank">{{ linked_room.room.building.college.website }}</a></div>
-                  <hr class="my-3">
-                  <div class="text-black-50 features-subtitle"><span class="r-desc">{{ linked_room.room.building.description }}</span></div>
+                <!-- Navigation (Tabs) -->
+                <ul class="nav nav-pills mb-6" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="sumary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="true">Summary</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="images-tab" data-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Images</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="help-tab" data-toggle="tab" href="#help" role="tab" aria-controls="help" aria-selected="false">Help</a>
+                    </li>
+                </ul>
+
+                <!-- ============================================================ -->
+                <!-- TAB CONTENT -->
+                <!-- ============================================================ -->
+                <div class="tab-content view-height" id="myTabContent">
+
+                    <!-- ============================================================ -->
+                    <!-- SUMMARY TAB -->
+                    <!-- ============================================================ -->
+                    <div class="tab-pane fade show active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+
+                        <!-- Card -->
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                
+                                <!-- List group -->
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex align-items-center">
+                                        
+                                        <!-- Text -->
+                                        <div class="mr-auto">
+                                            
+                                            <!-- Heading -->
+                                            <p class="font-weight-bold mb-1">
+                                                {{ linked_room.room.building.name }}
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm text-muted mb-2">
+                                                <span class="r-addr">{{ linked_room.room.building.address }}</span>
+                                            </p>
+
+                                            <div class="font-size-sm mb-3">
+                                                <a href="{{ linked_room.room.building.college.website }}" target="_blank" class="btn btn-info btn-rounded-circle btn-sm mr-2 r-site">
+                                                    <i class="fe fe-globe"></i> 
+                                                </a>
+                                                Website
+                                            </div>
+
+                                            <div class="font-size-sm mb-3">
+                                                <button class="btn btn-info btn-rounded-circle btn-sm mr-2 map-trigger">
+                                                    <i class="fe fe-map-pin"></i> 
+                                                </button>
+                                                View building on map
+                                            </div>
+
+                                            <div class="font-size-sm mb-3">
+                                                <button class="btn btn-info btn-rounded-circle btn-sm mr-2 disabled">
+                                                    <i class="fe fe-map"></i>
+                                                </button>
+                                                <span class="text-muted">No floor plan supplied</span>
+                                            </div>
+
+                                            <hr>
+
+                                            <p class="font-size-sm mb-0">
+                                                <span class="r-desc">{{ linked_room.room.building.description }}</span>
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Card -->
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                
+                                <!-- List group -->
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex align-items-center">
+                                        
+                                        <!-- Text -->
+                                        <div class="mr-auto">
+                                            
+                                            <!-- Heading -->
+                                            <p class="font-weight-bold mb-1">
+                                                Room features
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm text-muted mb-0">
+                                                The most important details about your room.
+                                            </p>
+
+                                            <hr>
+
+                                            <p class="mb-3">
+                                                <!-- Check -->
+                                                <span class="badge badge-lg badge-rounded-circle badge-info-soft mr-3">
+                                                    <i class="fe fe-user"></i>
+                                                </span>
+                                                <span class="font-size-sm font-weight-bold">Gender:</span> 
+                                                <span class="font-size-sm r-gend">{{ linked_room.room.gender }}</span>
+                                            </p>
+
+                                            <p class="mb-3">
+                                                <!-- Check -->
+                                                <span class="badge badge-lg badge-rounded-circle badge-info-soft mr-3">
+                                                    <i class="fe fe-maximize-2"></i>
+                                                </span>
+                                                <span class="font-size-sm font-weight-bold">Capacity:</span> 
+                                                <span class="font-size-sm r-capa">{{ linked_room.room.capacity }}</span>
+                                            </p>
+
+                                            <p class="mb-3">
+                                                <!-- Check -->
+                                                <span class="badge badge-lg badge-rounded-circle badge-info-soft mr-3">
+                                                    <i class="fe fe-wifi"></i>
+                                                </span>
+                                                <span class="font-size-sm font-weight-bold">Internet:</span> 
+                                                <span class="font-size-sm r-inte">{{ linked_room.room.building.internet }}</span>
+                                            </p>
+
+                                            <p class="mb-3">
+                                                <!-- Check -->
+                                                <span class="badge badge-lg badge-rounded-circle badge-info-soft mr-3">
+                                                    <i class="fe fe-wind"></i>
+                                                </span>
+                                                <span class="font-size-sm font-weight-bold">AC:</span> 
+                                                <span class="font-size-sm r-ac">{{ linked_room.room.ac }}</span>
+                                            </p>
+
+
+                                            <p class="mb-4">
+                                                <!-- Check -->
+                                                <span class="badge badge-lg badge-rounded-circle badge-info-soft mr-3">
+                                                    <i class="fe fe-sun"></i>
+                                                </span>
+                                                <span class="font-size-sm font-weight-bold">Heating:</span> 
+                                                <span class="font-size-sm r-heat">{{ linked_room.room.heating }}</span>
+                                            </p>
+
+                                            <!-- Heading -->
+                                            <p class="font-weight-bold mb-2">
+                                                Shared items
+                                            </p>
+
+                                            <!-- Table -->
+                                            <div class="table-responsive mb-0">
+                                                <table class="table table-sm font-size-sm table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col"></th>
+                                                        <th scope="col">Individual</th>
+                                                        <th scope="col">Total</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row">Outlets</th>
+                                                        <td>
+                                                            <span class="r-outl">{{ linked_room.room.outlet_count }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="r-outl-t">{{ linked_room.room.outlet_total }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Mirrors</th>
+                                                        <td>
+                                                            <span class="r-mirr">{{ linked_room.room.mirror_count }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="r-mirr-t">{{ linked_room.room.mirror_total }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Drawers</th>
+                                                        <td>
+                                                            <span class="r-draw">{{ linked_room.room.drawer_count }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="r-draw-t">{{ linked_room.room.drawer_total }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Closets</th>
+                                                        <td>
+                                                            <span class="r-clos">{{ linked_room.room.closet_count }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="r-clos-t">{{ linked_room.room.closet_total }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Shelves</th>
+                                                        <td>
+                                                            <span class="r-shel">{{ linked_room.room.shelf_count }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="r-shel-t">{{ linked_room.room.shelf_total }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Card -->
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                
+                                <!-- List group -->
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex align-items-center">
+                                        
+                                        <!-- Text -->
+                                        <div class="mr-auto">
+                                            
+                                            <!-- Heading -->
+                                            <p class="font-weight-bold mb-1">
+                                                Dimensions
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm text-muted mb-0">
+                                                "I wonder how big that is..."
+                                            </p>
+
+                                            <hr>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Room:</span> 
+                                                <span class="r-room-dims">{{ linked_room.room.full_dims }}</span>
+                                            </p>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Beds:</span> 
+                                                <span class="r-bed-dims">{{ linked_room.room.bed_dims }}</span>
+                                            </p>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Desk:</span> 
+                                                <span class="r-desk-dims">{{ linked_room.room.desk_dims }}</span>
+                                            </p>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Carpet:</span>
+                                                <span class="r-carp-dims">{{ linked_room.room.carpet_dims }}</span>
+                                            </p>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Shelves:</span> 
+                                                <span class="r-shel-dims">{{ linked_room.room.shelf_dims }}</span>
+                                            </p>
+
+                                            <p class="mb-0 font-size-sm">
+                                                <span class="font-weight-bold">Closets:</span> 
+                                                <span class="r-clos-dims">{{ linked_room.room.closet_dims }}</span>
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Card -->
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                
+                                <!-- List group -->
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex align-items-center">
+                                        
+                                        <!-- Text -->
+                                        <div class="mr-auto">
+                                            
+                                            <!-- Heading -->
+                                            <p class="font-weight-bold mb-1">
+                                                Commute
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm text-muted mb-0">
+                                                How far away are the essentials?
+                                            </p>
+
+                                            <hr>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Walk to nearest dining hall:</span> 
+                                                <span class="r-hall-com">{{ linked_room.room.to_hall }}</span>
+                                            </p>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Walk to nearest gym:</span> 
+                                                <span class="r-gym-com">{{ linked_room.room.to_gym }}</span>
+                                            </p>
+
+                                            <p class="mb-0 font-size-sm">
+                                                <span class="font-weight-bold">Drive to groceries:</span> 
+                                                <span class="r-groc-com">{{ linked_room.room.to_grocery }}</span>
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Card -->
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                
+                                <!-- List group -->
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex align-items-center">
+                                        
+                                        <!-- Text -->
+                                        <div class="mr-auto">
+                                            
+                                            <!-- Heading -->
+                                            <p class="font-weight-bold mb-1">
+                                                Provided
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm text-muted mb-0">
+                                                See what your school already provides.
+                                            </p>
+
+                                            <hr>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Refridgerator:</span> 
+                                                <span class="r-frid-pro">{{ linked_room.room.fridge }}</span>
+                                            </p>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Toaster:</span> 
+                                                <span class="r-toas-pro">{{ linked_room.room.toaster }}</span>
+                                            </p>
+
+                                            <p class="mb-3 font-size-sm">
+                                                <span class="font-weight-bold">Coffee machine:</span> 
+                                                <span class="r-coff-pro">{{ linked_room.room.coffee }}</span>
+                                            </p>
+
+                                            <p class="mb-0 font-size-sm">
+                                                <span class="font-weight-bold">Television:</span> 
+                                                <span class="r-tv-pro">{{ linked_room.room.tv }}</span>
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- IMAGES TAB -->
+                    <!-- ============================================================ -->
+                    <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+
+                        <!-- Card -->
+                        <div class="card mb-6">
+                            <div class="card-body">
+                                
+                                <!-- List group -->
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex align-items-center">
+                                        
+                                        <!-- Text -->
+                                        <div class="mr-auto">
+                                        
+                                            <!-- Heading -->
+                                            <p class="font-weight-bold mb-1">
+                                                Room Images
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm text-muted mb-0">
+                                                The classic way to view your room.
+                                            </p>
+
+                                        </div>
+                                        
+                                        <!-- Button -->
+                                        <button class="btn btn-sm btn-info room-img-trigger">View</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Card -->
+                        <div class="card mb-5">
+
+                            <!-- Image -->
+                            <div class="card-header">
+                                Image 1
+                            </div>
+
+                            <!-- Image -->
+                            <div class="card-img-top">
+                                <img src="{{ linked_room.room.img1 }}" alt="..." class="img-fluid">
+                            </div>
+                    
+                        </div>
+
+                        <!-- Card -->
+                        <div class="card mb-5">
+
+                            <!-- Image -->
+                            <div class="card-header">
+                                Image 2
+                            </div>
+
+                            <!-- Image -->
+                            <div class="card-img-top">
+                                <img src="{{ linked_room.room.img2 }}" alt="..." class="img-fluid">
+                            </div>
+                    
+                        </div>
+
+                        <!-- Card -->
+                        <div class="card mb-5">
+
+                            <!-- Image -->
+                            <div class="card-header">
+                                Image 3
+                            </div>
+
+                            <!-- Image -->
+                            <div class="card-img-top">
+                                <img src="{{ linked_room.room.img3 }}" alt="..." class="img-fluid">
+                            </div>
+                    
+                        </div>
+
+                        <!-- Card -->
+                        <div class="card mb-5">
+
+                            <!-- Image -->
+                            <div class="card-header">
+                                Image 4
+                            </div>
+
+                            <!-- Image -->
+                            <div class="card-img-top">
+                                <img src="{{ linked_room.room.img4 }}" alt="..." class="img-fluid">
+                            </div>
+                    
+                        </div>
+
+                    </div>
+
+                    <!-- ============================================================ -->
+                    <!-- CONTACT TAB -->
+                    <!-- ============================================================ -->
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+                        <!-- Card -->
+                        <div class="card mb-6">
+
+                            <div class="card-body">
+                                
+                                <!-- List group -->
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item d-flex align-items-center">
+                                        
+                                        <!-- Text -->
+                                        <div class="mr-auto">
+
+                                            <!-- Heading -->
+                                            <p class="font-weight-bold mb-1">
+                                                Ed Ryan
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm text-muted mb-2">
+                                                Dean of Residential Life
+                                            </p>
+
+                                            <hr>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm mb-1">
+                                                Email: <span class="text-muted">ryane@gilmour.org</span>
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm mb-1">
+                                                School phone: <span class="text-muted">440-473-8000 ext. 2201</span>
+                                            </p>
+
+                                            <!-- Text -->
+                                            <p class="font-size-sm mb-1">
+                                                Cell: <span class="text-muted">508-292-8574</span>
+                                            </p>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="help" role="tabpanel" aria-labelledby="help-tab">
+
+                    </div>
+
                 </div>
-              </div>
-              <!-- end room sum -->
 
-              <!-- facts -->
-              <div class="card">
-                <div class="card-body">
-                <div class="room-sum text-black">Room features</div>
-                  <hr class="my-3">
-                  <div class="small text-black-100">
-                    <div class="row rs-icon">
-                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/gender.svg') }}"> Gender:</div>
-                      <div class="col-md-4 text-black-50 mt-1"><span class="r-gend">{{ linked_room.room.gender }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/capacity.svg') }}"> Capacity:</div>
-                      <div class="col-md-4 text-black-50 mt-1"><span class="r-capa">{{ linked_room.room.capacity }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/wifi.svg') }}"> Internet:</div>
-                      <div class="col-md-4 text-black-50 mt-1"><span class="r-inte">{{ linked_room.room.building.internet }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/ac.svg') }}"> Air Conditioning:</div>
-                      <div class="col-md-4 text-black-50 mt-1"><span class="r-ac">{{ linked_room.room.ac }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-4"><img class="features-svg text-primary mb-2" src="{{ url_for('static', filename='img/svg/heating.svg') }}"> Heating:</div>
-                      <div class="col-md-4 text-black-50 mt-1"><span class="r-heat">{{ linked_room.room.heating }}</span></div>
-                    </div>
-
-                    <div class="row rs-icon mt-4">
-                      <div class="col-md-4 si">
-                        Shared items
-                      </div>
-                      <div class="col-md-4 text-black mt-1">
-                        Individual
-                      </div>
-                      <div class="col-md-4 text-black mt-1">
-                        Total 
-                      </div>
-                    </div>
-
-                    <div class="row rs-icon">
-                      <div class="col-md-4">Outlets:</div>
-                      <div class="col-md-4 text-black-50"><span class="r-outl">{{ linked_room.room.outlet_count }}</span></div>
-                      <div class="col-md-4 text-black-50"><span class="r-outl-t">{{ linked_room.room.outlet_total }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-4">Mirrors:</div>
-                      <div class="col-md-4 text-black-50"><span class="r-mirr">{{ linked_room.room.mirror_count }}</span></div>
-                      <div class="col-md-4 text-black-50"><span class="r-mirr-t">{{ linked_room.room.mirror_total }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-4">Drawers:</div>
-                      <div class="col-md-4 text-black-50"><span class="r-draw">{{ linked_room.room.drawer_count }}</span></div>
-                      <div class="col-md-4 text-black-50"><span class="r-draw-t">{{ linked_room.room.drawer_total }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-4">Closets:</div>
-                      <div class="col-md-4 text-black-50"><span class="r-clos">{{ linked_room.room.closet_count }}</span></div>
-                      <div class="col-md-4 text-black-50"><span class="r-clos-t">{{ linked_room.room.closet_total }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-4">Shelves:</div>
-                      <div class="col-md-4 text-black-50"><span class="r-shel">{{ linked_room.room.shelf_count }}</span></div>
-                      <div class="col-md-4 text-black-50"><span class="r-shel-t">{{ linked_room.room.shelf_total }}</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end facts -->
-
-              <!-- dims -->
-              <div class="card">
-                <div class="card-body">
-                  <div class="room-sum text-black">Dimensions</div>
-                  <hr class="my-3">
-                  <div class="small text-black-100">
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Room:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-room-dims">{{ linked_room.room.full_dims }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Beds:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-bed-dims">{{ linked_room.room.bed_dims }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Desk:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-desk-dims">{{ linked_room.room.desk_dims }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Carpet:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-carp-dims">{{ linked_room.room.carpet_dims }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Shelves:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-shel-dims">{{ linked_room.room.shelf_dims }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Closets:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-clos-dims">{{ linked_room.room.closet_dims }}</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end dims -->
-
-              <!-- commute -->
-              <div class="card">
-                <div class="card-body">
-                  <div class="room-sum text-black">Commute times</div>
-                  <!-- #TODO: add the to maps // check the guides -->
-                  <hr class="my-3">
-                  <div class="small text-black-100">
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="svg-walk text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> to nearest dining hall: </div>
-                        <div class="col-md-6 text-black-50"><span class="r-hall-com">{{ linked_room.room.to_hall }}</span></div>
-                      </div>
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="svg-walk text-primary mb-2" src="{{ url_for('static', filename='img/svg/walk.svg') }}"> to nearest gym: </div>
-                        <div class="col-md-6 text-black-50"><span class="r-gym-com">{{ linked_room.room.to_gym }}</span></div>
-                      </div>
-                      <div class="row rs-icon">
-                        <div class="col-md-6"><img class="svg-car text-primary mb-2" src="{{ url_for('static', filename='img/svg/car.svg') }}"> to groceries: </div>
-                        <div class="col-md-3 text-black-50"><span class="r-groc-com">{{ linked_room.room.to_grocery }}</span></div>
-                        <!-- <div class="col-md-3"><a href="{{ linked_room.room.to_grocery_map }}"><img class="commute-map-svg" src="{{ url_for('static', filename='img/svg/map.svg') }}"> View on map</a> </div> -->
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end commute -->
-
-              <!-- provided -->
-              <div class="card">
-                <div class="card-body">
-                  <div class="room-sum text-black">Provided by school</div>
-                  <hr class="my-3">
-                  <div class="small text-black-100">
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Refridgerator:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-frid-pro">{{ linked_room.room.fridge }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Toaster:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-toas-pro">{{ linked_room.room.toaster }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Coffee machine:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-coff-pro">{{ linked_room.room.coffee }}</span></div>
-                    </div>
-                    <div class="row rs-icon">
-                      <div class="col-md-6">Television:</div>
-                      <div class="col-md-6 text-black-50"><span class="r-tv-pro">{{ linked_room.room.tv }}</span></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- end provided -->
             </div>
-            
-            <div id="section2" class="tab-content" style="display: none">
-              <!-- viewing -->
-              <div class="card">
-                  <div class="card-body model-btn-card">
-                    {% if linked_room != None %}
-                      <!-- <span class="link-view"><img class="viewing-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}"></span> -->
-                      <div class="viewing text-black">
-                        <img class="mini-model-left-arrow back-trigger" src="{{ url_for('static', filename='img/svg/left_arrow.svg') }}">
-                        <img class="mini-model back-trigger" src="{{ url_for('static', filename='img/svg/back_model.svg') }}">
-                        <span class="p-college-name">{{ linked_room.room.building.college.name }} /</span>
-                        <span class="p-building-name">{{ linked_room.room.building.name }} /</span>
-                        <span class="p-room-number">{{ linked_room.room.room_number }}</span>
-                      </div>
-                    {% else %}
-                      <div class="viewing text-black">
-                        <img class="mini-model" src="{{ url_for('static', filename='img/model-btn.png') }}">
-                        <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > 
-                        <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
-                        <span class="p-room-number">{{ linked_room.room.room_number }}</span>
-                      </div>
-                    {% endif %}
-                  </div>
-                </div>
-                <!-- end viewing -->
-
-              <!-- images sliders -->
-              <div class="card">
-                <div class="card-body">
-                  <div class="view-item">Map
-                    <div class="view-btn-wrap">
-                      <button id="map" class="view-btn">View</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card">
-                <div class="card-body">
-                  <div class="view-item">Room Images
-                    <div class="view-btn-wrap">
-                        <button id="room-images" class="view-btn">View</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div id="section3" class="tab-content" style="display: none">
-              <!-- viewing -->
-              <div class="card">
-                  <div class="card-body model-btn-card">
-                    {% if linked_room != None %}
-                      <!-- <span class="link-view"><img class="viewing-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}"></span> -->
-                      <div class="viewing text-black">
-                        <img class="mini-model-left-arrow back-trigger" src="{{ url_for('static', filename='img/svg/left_arrow.svg') }}">
-                        <img class="mini-model back-trigger" src="{{ url_for('static', filename='img/svg/back_model.svg') }}">
-                        <span class="p-college-name">{{ linked_room.room.building.college.name }} /</span>
-                        <span class="p-building-name">{{ linked_room.room.building.name }} /</span>
-                        <span class="p-room-number">{{ linked_room.room.room_number }}</span>
-                      </div>
-                    {% else %}
-                      <div class="viewing text-black">
-                        <img class="mini-model" src="{{ url_for('static', filename='img/model-btn.png') }}">
-                        <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > 
-                        <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
-                        <span class="p-room-number">{{ linked_room.room.room_number }}</span>
-                      </div>
-                    {% endif %}
-                  </div>
-                </div>
-                <!-- end viewing -->
-
-              <div class="card">
-                <div class="card-body">
-                  <div class="text-black">Dean of Residential Life: Ed Ryan</div>
-                  <hr class="my-3">
-                  <div class="faq-subtitle"><span class="text-black">Email: </span><span class="text-black-50">ryane@gilmour.org</span></div>
-                  <div class="faq-subtitle"><span class="text-black">School phone: </span><span class="text-black-50">440-473-8000 ext. 2201</span></div>
-                  <div class="faq-subtitle"><span class="text-black">Cell: </span><span class="text-black-50">508-292-8574</span></div>
-                  
-              </div>
-            </div>
-          </div>
-
-          <div id="section4" class="tab-content" style="display: none">
-            <!-- viewing -->
-            <div class="card">
-                <div class="card-body model-btn-card">
-                  {% if linked_room != None %}
-                    <!-- <span class="link-view"><img class="viewing-svg" src="{{ url_for('static', filename='img/svg/link.svg') }}"></span> -->
-                    <div class="viewing text-black">
-                      <img class="mini-model-left-arrow back-trigger" src="{{ url_for('static', filename='img/svg/left_arrow.svg') }}">
-                      <img class="mini-model back-trigger" src="{{ url_for('static', filename='img/svg/back_model.svg') }}">
-                      <span class="p-college-name">{{ linked_room.room.building.college.name }} /</span>
-                      <span class="p-building-name">{{ linked_room.room.building.name }} /</span>
-                      <span class="p-room-number">{{ linked_room.room.room_number }}</span>
-                    </div>
-                  {% else %}
-                    <div class="viewing text-black">
-                      <img class="mini-model" src="{{ url_for('static', filename='img/model-btn.png') }}">
-                      <span class="p-college-name">{{ linked_room.room.building.college.name }}</span> > 
-                      <span class="p-building-name">{{ linked_room.room.building.name }}</span> >
-                      <span class="p-room-number">{{ linked_room.room.room_number }}</span>
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
-              <!-- end viewing -->
-
-              <div class="card">
-                <div class="card-body">
-                  <!-- <div class="text-black">First half:</div> -->
-                  <img class="help-img" src="{{ url_for('static', filename='img/abode_help_1.png') }}">
-
-                  <hr class="my-3">
-                  <!-- <div class="text-black">Second half:</div> -->
-                  <img class="help-img" src="{{ url_for('static', filename='img/abode_help_2.png') }}">
-              </div>
-            </div>
-          </div>
-          <!-- end tab content -->
-        </div>
-          <!-- end info -->
-        {% else %}
-        {% endif %}
-      </div>
-    </header>
-    <!-- end header -->
+            <!-- ============================================================ -->
+            <!-- COLUMN END -->
+            <!-- ============================================================ -->
+        </div> <!-- / .row -->
+    </div> <!-- / .container -->
+</section>
 {% endblock %}

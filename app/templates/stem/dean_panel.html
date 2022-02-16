@@ -1,77 +1,95 @@
-{% extends "gabase.html" %}
+{% extends "base.html" %}
 
 {% block title %} Dean Panel {% endblock %}
 
-{% block page_css %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css-hamburgers/hamburgers.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-{% endblock %}
-
-{% block header %}
-{% endblock %}
-
 {% block content %}
-<!-- todo[p]: figure out flash messages -->
-<!-- login section -->
-<section id="login" class="login-section">
-    <div class="limiter">
-        <div id="content-center" class="container-login100">
-            <div class="wrap-dean100 p-l-30 p-r-30 p-t-40 p-b-20">
-                <div class="small text-black-100">
-                    <a href="{{ url_for('main.display')}}">Room Display </a>/ Dean Panel
-                </div>
-                <div class="small text-black-100">
-                    <!-- todo[p]: fixed students cant login - however should they email they receive confirm their email address or should it automatically confirm? -->
-                    <a href="{{ url_for('main.add_student') }}"><button class="dean-btn">Add user</button></a>
 
-                    <table class="table datatable-show-all p-table">
-                        <thead class="p-thead">
+    <!-- CONTENT
+    ================================================== -->
+    <section class="pt-3 pt-md-8 pb-md-10 pb-10">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-md mb-md-10">
+                    
+                    <!-- Link -->
+                    <a href="{{ url_for('main.display') }}" class="font-weight-bold font-size-sm text-decoration-none mb-3">
+                        <i class="fe fe-arrow-left mr-1"></i> Back to my room
+                    </a>
+        
+                    <!-- Heading -->
+                    <h1 class="display-4 mb-2">
+                        Dean Panel
+                    </h1>
+
+                    <!-- Text -->
+                    <p class="font-size-lg text-gray-700 mb-5 mb-md-0">
+                        Link users with their rooms and manage who can see them, all from one place.
+                    </p>
+        
+                </div>
+                <div class="col-auto mb-6 mb-md-0">
+                    
+                    <!-- Buttons -->
+                    <a href="{{ url_for('main.add_user') }}" class="btn btn-primary-soft lift" data-toggle="smooth-scroll">
+                    Add User <i class="fe fe-plus d-none d-md-inline ml-3"></i>
+                    </a>
+        
+                </div>
+            </div> <!-- / .row -->
+
+            <div class="row">
+                <div class="col-12">
+                    </script>
+                    
+                    <!-- Table -->
+                    <div class="table-responsive mb-10">
+                        <table id="dean-table" class="table table-md font-size-md table-dark table-striped">
+                            <thead>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Role</th>
-                                <th>Email</th>
-                                <th>Room</th>
-                                <th>Action</th>
+                                <th scope="col">First name</th>
+                                <th scope="col">Last name</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Room</th>
+                                <th scope="col">Action</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in users %}
-                                <tr>
-                                    <td>{{ user.first_name }}</td>
-                                    <td>{{ user.last_name }}</td>
-                                    <td>
-                                        {% if user.student == True %}
-                                        <span class="badge badge-success">
-                                            Student
-                                        </span>
-                                        {% elif user.parent == True %}
-                                        <span class="badge badge-primary">
-                                            Parent
-                                        </span>
-                                        {% elif user.dean == True %}
-                                        <span class="badge badge-dark">
-                                            Dean
-                                        </span>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ user.email }}</td>
-                                    <!-- todo[p]: make this display room name instead of: [250's resident, test] -->
-                                    <td>{{ user.rooms }}</td>
-                                    <td><a href="{{ url_for('main.delete_user', user_id=user.id) }}"><img class="svg-trash" src="{{ url_for('static', filename='img/svg/delete.svg') }}"></a></td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                        <!-- todo[p]: if password is encrypted, then don't display it in the table -->
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.first_name }}</td>
+                                        <td>{{ user.last_name }}</td>
+                                        <td>
+                                            {% if user.student == True %}
+                                            <span class="badge badge-warning">Student</span>
+                                            {% elif user.parent == True %}
+                                            <span class="badge badge-success">Parent</span>
+                                            {% elif user.dean == True %}
+                                            <span class="badge badge-primary">Dean</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.rooms }}</td>
+                                        <td>
+                                            <a onclick="return confirm('Are you sure you would like to delete {{ user.first_name }} {{ user.last_name }}?');" class="btn btn-danger btn-rounded-circle btn-sm" href="{{ url_for('main.deleteuser', user_id=user.id) }}" id="delete_user">
+                                                <i class="fe fe-trash"></i> 
+                                            </a>
 
-                    <!-- todo[p]: add button to send students emails with their email, password etc. -->
+                                            <!-- tOdo; add edit functionality -->
+                                            <!-- <a class="btn btn-success btn-rounded-circle btn-sm" href="{{ url_for('main.editland') }}">
+                                                <i class="fe fe-edit-2"></i> 
+                                            </a> -->
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+        
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- end login section -->
-{% endblock %}
+            </div> <!-- / .row -->
+            
+        </div> <!-- / .container -->
+    </section>
 
+{% endblock %}
