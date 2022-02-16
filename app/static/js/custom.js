@@ -138,64 +138,64 @@ $(document).ready(function(){
     // =======================================
     // POPULATE SELECT FIELDS
     // =======================================
-    $('#rooms').empty();
-    $('#buildings').empty();
+    // $('#rooms').empty();
+    // $('#buildings').empty();
 
-    $('#buildings').on('change', function(e) {
-        // remove option except the placeholder
-        $('#rooms .option-value').remove();
-    });
+    // $('#buildings').on('change', function(e) {
+    //     // remove option except the placeholder
+    //     $('#rooms .option-value').remove();
+    // });
 
-    let building_select = document.getElementById('buildings');
-    let room_select = document.getElementById('rooms');
+    // let building_select = document.getElementById('buildings');
+    // let room_select = document.getElementById('rooms');
 
-    building_select.onchange = function() {
-        $(room_select).empty();
+    // building_select.onchange = function() {
+    //     $(room_select).empty();
 
-        building = building_select.value;
+    //     building = building_select.value;
 
-        fetch('/room/' + building).then(function(response) {
-            response.json().then(function(data) {
-                let optionHTML = '';
+    //     fetch('/room/' + building).then(function(response) {
+    //         response.json().then(function(data) {
+    //             let optionHTML = '';
 
-                optionHTML += '<option class="option-placeholder" disabled="" selected="">Room</option>';
+    //             optionHTML += '<option class="option-placeholder" disabled="" selected="">Room</option>';
                 
-                for (let room of data.rooms) {
-                    optionHTML += '<option class="option-value" value="' + room.id + '">' + room.room_number + '</option>'
-                }
+    //             for (let room of data.rooms) {
+    //                 optionHTML += '<option class="option-value" value="' + room.id + '">' + room.room_number + '</option>'
+    //             }
 
-                console.log('current optionHTML: ' + optionHTML);
-                room_select.innerHTML = optionHTML;
-            });
-        });
-    }
+    //             console.log('current optionHTML: ' + optionHTML);
+    //             room_select.innerHTML = optionHTML;
+    //         });
+    //     });
+    // }
 
-    $('#colleges').on('change', function() {
-        var $buildings = $('#buildings').empty();
+    // $('#colleges').on('change', function() {
+    //     var $buildings = $('#buildings').empty();
 
-        var college = $(this).val();
+    //     var college = $(this).val();
 
-        fetch('/building/' + college).then(function(response) {
-            response.json().then(function(data) {
-                //var option = new Option('building...', null, true, true);
+    //     fetch('/building/' + college).then(function(response) {
+    //         response.json().then(function(data) {
+    //             //var option = new Option('building...', null, true, true);
 
-                let optionHTML = '';
+    //             let optionHTML = '';
 
-                optionHTML += '<option class="option-placeholder" disabled="" selected="">Building</option>';
+    //             optionHTML += '<option class="option-placeholder" disabled="" selected="">Building</option>';
 
-                for (let building of data.buildings) {
-                    optionHTML += '<option class="option-value" value="' + building.id + '">' + building.name + '</option>'
-                }
+    //             for (let building of data.buildings) {
+    //                 optionHTML += '<option class="option-value" value="' + building.id + '">' + building.name + '</option>'
+    //             }
 
-                console.log('current optionHTML: ' + optionHTML);
+    //             console.log('current optionHTML: ' + optionHTML);
 
-                $buildings.html(optionHTML);
-            });
-        });
-    });
+    //             $buildings.html(optionHTML);
+    //         });
+    //     });
+    // });
 
-    $('#colleges').on('change', function() {
-        $('#buildings').empty();
-        $('#rooms').empty();
-    });
+    // $('#colleges').on('change', function() {
+    //     $('#buildings').empty();
+    //     $('#rooms').empty();
+    // });
 });
