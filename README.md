@@ -14,7 +14,7 @@
 # Abode Interior Documentation
 
 ## Independent Study
-This documentation is written in accordance to the Senior Independent Study for College of Wooster Computer Science graduates. My independent study is on the research, planning, and creation of this full stack web application and can be found at [IS FINAL LINK](#) and is documented below.
+This documentation is written in accordance to the Senior Independent Study for College of Wooster Computer Science graduates. My independent study is on the research, planning, and creation of this full stack web application and the final research paper can be found at [IS FINAL LINK](#) with software documentation below.
 
 &nbsp;
 
@@ -74,13 +74,14 @@ These are the official steps in order to run the Abode web application on a loca
      - The second file is called the `settings.py` and its sole function is to reference the previous file, instantiate these settings, and provide further configuration that does not need external security measures. If you are still confused on the function of these two files take a look at the `settings.py` within this repository.    
 3. Double check and finalize the configuration of the `settings.py` file. 
 4. Set up the virtual environment:
-     - Virtual environments are used to narrow the scope of our dependencies, this way they can only be accessed by our web application, reducing the chances of external interference with other projects.
+     - Virtual environments are used to narrow the scope of our dependencies, this way they can only be accessed by our web application, reducing the chances of external interference with other projects. Create a Python virtual environment with the bash command below.
         - `~$ python3 -m venv venv`
      - We can then activate our virtual environment and install our depenencies.
         - `~$ source venv/bin/activate`
         - `(venv)~$ pip install -r requirements.txt`   
 6. Run and test:
-     - Test by running `(venv)~$ flask run` 
+     - The command below is used for both development and production servers. Test tyour local copy by running the bash command below.
+        - `(venv)~$ flask run` 
      - You should now be able to view the application at [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
 &nbsp;
