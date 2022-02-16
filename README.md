@@ -80,8 +80,8 @@ These are the official steps in order to run the Abode web application on a loca
         - `~$ source venv/bin/activate`
         - `(venv)~$ pip install -r requirements.txt`   
 6. Run and test:
-     - The command below is used for both development and production servers. Test your local copy by running the bash command below.
-        - `(venv)~$ flask run` 
+     - The command below is used for both development and production servers. Test your local copy by running the bash command below within your main app directory. 
+        - `(venv)~/app$ flask run` 
      - You should now be able to view the application at [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
 &nbsp;
